@@ -11,7 +11,7 @@
   </div>
 </template>
 <script>
-import TheHeader from '~/applications/desktop/components/layout/TheHeader';
+import TheHeader from '~/components/layout/TheHeader';
 import Modals from './child/partials/Modals';
 import VCookieAgreement from '~/components/common/VCookieAgreement';
 import Cookies from 'js-cookie';

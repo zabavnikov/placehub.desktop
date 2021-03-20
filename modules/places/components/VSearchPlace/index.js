@@ -1,1 +1,1 @@
-module.exports = require(`./${process.env.DEVICE}.vue`).default;
+module.exports = require(`./desktop.vue`).default;

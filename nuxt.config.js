@@ -4,9 +4,9 @@ module.exports = {
   head: {
     titleTemplate: title => (title ? `${title} — ` : '') + 'PlaceHub - для тех, кому не сидится дома',
     meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      {charset: 'utf-8'},
+      {name: 'viewport', content: 'width=device-width, initial-scale=1'},
+      {hid: 'description', name: 'description', content: ''},
     ],
     link: [
       {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Montserrat:400,500,600&display=swap'}
@@ -21,7 +21,8 @@ module.exports = {
     './plugins/axios.js',
     './plugins/event-bus.js',
     './plugins/overlay.js',
-    './plugins/directives.js'
+    './plugins/directives.js',
+    './plugins/components.js'
   ],
 
   buildModules: [

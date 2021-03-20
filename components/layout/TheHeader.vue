@@ -10,7 +10,7 @@
         </ul>
       </v-dropdown>
 
-<!--      <n-link to="/places" class="mr-6 font-bold">Места</n-link>-->
+      <!--      <n-link to="/places" class="mr-6 font-bold">Места</n-link>-->
       <!--<n-link to="/images" class="mr-6 font-bold">Фотографии</n-link>-->
       <!--<span class="cursor-pointer" @click="$store.commit('modals/toggle', ['users', 'loginRegister'])">Войти</span>-->
 
@@ -47,32 +47,32 @@ export default {components: {VDropdown}}
 </script>
 
 <style lang="scss">
-  .header {
-    position: sticky;
-    top: 0;
-    height: var(--header-hegiht);
-    background-color: #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,.04);
-    z-index: 10;
+.header {
+  position: sticky;
+  top: 0;
+  height: var(--header-hegiht);
+  background-color: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,.04);
+  z-index: 10;
 
-    a {
-      display: flex;
-      align-items: center;
-      height: inherit;
-    }
-  }
-
-  .header-iconable {
-    @apply flex items-center justify-center;
-    width: var(--header-hegiht);
-    height: var(--header-hegiht);
-  }
-
-  .container {
-    max-width: 860px;
-    width: 100%;
+  a {
+    display: flex;
+    align-items: center;
     height: inherit;
-    margin-right: auto;
-    margin-left: auto;
   }
+}
+
+.header-iconable {
+  @apply flex items-center justify-center;
+  width: var(--header-hegiht);
+  height: var(--header-hegiht);
+}
+
+.container {
+  max-width: 860px;
+  width: 100%;
+  height: inherit;
+  margin-right: auto;
+  margin-left: auto;
+}
 </style>

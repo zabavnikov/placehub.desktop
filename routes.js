@@ -1,18 +1,16 @@
 import { sortRoutes } from '@nuxt/utils';
 import { readdirSync, existsSync } from 'fs';
 
-const routes = [
-    ...require(`./modules/users/routes.js`).default
-];
+const routes = [];
 
 // Ищем файл routes.js в каждом модуле, если нашли, то подключаем его.
-/*readdirSync('./modules').forEach(folder => {
+readdirSync('./modules').forEach(folder => {
   const file = `./modules/${folder}/routes.js`;
 
   if (existsSync(file)) {
     routes.push(...require(file).default);
   }
-});*/
+});
 
 module.exports = (nuxtRoutes, resolve) => {
   routes.forEach(route => {
