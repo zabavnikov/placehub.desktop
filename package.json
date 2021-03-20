@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "watch": "cross-env DEVICE=desktop nuxt       -c desktop.config.js",
+    "build": "cross-env DEVICE=desktop nuxt build -c desktop.config.js",
+    "start": "cross-env DEVICE=desktop nuxt start -c desktop.config.js"
+  },
+  "dependencies": {
+    "@nuxtjs/auth-next": "^5.0.0-1616003482.75c20e6",
+    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/toast": "^3.3.1",
+    "deepmerge": "^4.2.2",
+    "js-cookie": "^2.2.1",
+    "leaflet": "^1.7.1",
+    "nuxt": "2.15.3",
+    "tippy.js": "^6.3.1",
+    "vue2-leaflet": "^2.6.0",
+    "vuedraggable": "^2.24.3"
+  },
+  "devDependencies": {
+    "@nuxtjs/tailwindcss": "^3.4.3",
+    "cross-env": "^7.0.3",
+    "lodash": "^4.17.21",
+    "sass": "^1.32.8",
+    "sass-loader": "10.1.1",
+    "typed-graphqlify": "^3.1.0"
+  }
+}

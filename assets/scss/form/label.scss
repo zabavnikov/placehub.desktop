@@ -1,0 +1,30 @@
+.label {
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+  line-height: 28px;
+}
+
+.help {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #aaa;
+}
+
+.is-invalid {
+  .input {
+    border-color: red;
+  }
+
+  .help {
+    color: red;
+  }
+}
+
+.asterisk {
+  &:after {
+    content: '*';
+    color: red;
+  }
+}

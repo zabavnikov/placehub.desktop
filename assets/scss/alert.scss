@@ -1,0 +1,9 @@
+.alert {
+  padding: 16px;
+  border-radius: 4px;
+
+  &--warning {
+    background-color: #FFE0B2;
+    color: #795548;
+  }
+}

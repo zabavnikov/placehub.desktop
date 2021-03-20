@@ -1,0 +1,44 @@
+
+
+// Компонент находиться в режиме ожидания ответа от сервера.
+.loading {
+    position: relative;
+    pointer-events: none;
+    user-select: none;
+
+    &:before {
+        content: '';
+        position: absolute;
+        z-index: 2;
+        top: 50%;
+        left: 50%;
+        margin-top: -12px;
+        margin-left: -12px;
+        border: 6px solid rgba(0, 0, 0, 0.1);
+        border-left-color: #292934;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        animation: loading-spin 1.2s linear infinite;
+    }
+
+    &:after {
+        content: '';
+        z-index: 1;
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        background-color: rgba(255, 255, 255, .6);
+    }
+}
+
+@keyframes loading-spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}

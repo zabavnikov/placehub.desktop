@@ -1,0 +1,30 @@
+@import 'loading';
+@import 'form/index';
+@import '3rd-party/vue-tippy';
+@import 'alert';
+@import 'dropdown-menu';
+
+:root {
+  --header-hegiht: 52px;
+}
+
+body {
+  @apply text-sm;
+  background-color: #f6f7f7;
+  font-family: 'Montserrat', sans-serif;
+}
+
+[v-cloak] {
+  display: none;
+}
+
+.wh-ratio::before {
+  content: '';
+  padding-top: 100%;
+  float: left;
+}
+.wh-ratio::after {
+  content: '';
+  display: block;
+  clear: both;
+}

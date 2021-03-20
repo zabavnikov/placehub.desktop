@@ -1,0 +1,25 @@
+
+.tippy-box[data-theme~='dark'] {
+  .tippy-content {
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
+
+.tippy-box[data-theme~='simple'] {
+  background-color: #fff;
+  border-radius: 4px;
+  text-align: left;
+  font-size: inherit;
+  line-height: normal;
+  color: #000;
+  box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.12);
+
+  .tippy-content {
+    padding: 4px;
+  }
+
+  .tippy-arrow {
+    color: #fff;
+  }
+}
