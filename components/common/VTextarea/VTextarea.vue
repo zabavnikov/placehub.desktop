@@ -80,8 +80,10 @@ export default {
           .then(() => {
             const textarea = this.$refs.textarea;
 
-            textarea.style.height = 'auto';
-            textarea.style.height = textarea.scrollHeight + 'px';
+            if (textarea) {
+              textarea.style.height = 'auto';
+              textarea.style.height = textarea.scrollHeight + 'px';
+            }
           });
     },
 

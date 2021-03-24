@@ -55,7 +55,7 @@ export default {
 
   async asyncData({ $axios, $auth }) {
     const GQL = `{
-      user(id: ${$auth.user.id}) {
+      user(username: "${$auth.user.username}") {
         username
         name
         description

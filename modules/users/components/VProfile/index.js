@@ -1,2 +1,2 @@
-import VProfile from './Main';
+import VProfile from './Component';
 export default VProfile;

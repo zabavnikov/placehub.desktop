@@ -1,8 +1,7 @@
 <template>
   <article class="bg-white rounded shadow-sm overflow-hidden">
     <header class="flex items-center m-6">
-      <VProfile :user="content.user" :sub="content.date" />
-
+      <VProfile :user="content.user" :sub="content.created_at" />
       <v-dropdown v-if="$auth.loggedIn" class="flex-shrink-0 ml-auto">
         <ul class="dropdown-menu">
           <n-link :to="{name: 'posts.edit', params: {postId: content.id}}" class="dropdown-menu-item">Редактировать
@@ -19,9 +18,10 @@
             class="post-text m-6 block">{{ content.short_text }}
     </n-link>
 
+
     <div v-if="hasImages > 0" class="mb-6">
       <n-link :to="{name: 'posts.show', params: {postId: content.id}}" class="block relative">
-        <img :src="preview.url_small" width="100%" :alt="content.short_text" class="block">
+        <img :src="preview.presets[0]" width="100%" :alt="content.short_text" class="block">
         <div class="post-total-photos" v-if="content.images.length > 1">{{ content.images.length }} фото</div>
       </n-link>
     </div>
@@ -73,13 +73,12 @@ export default {
 
   computed: {
     preview() {
-      return this.content.ordered_images[0];
+      return this.content.images[0];
     },
     hasImages() {
       return this.content.images && this.content.images.length > 0;
     }
   },
-
   methods: {
     onDelete() {
       if (this.loading) {
