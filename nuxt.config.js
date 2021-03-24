@@ -91,6 +91,7 @@ module.exports = {
 
   tailwindcss: {
     viewer: false,
+    jit: true,
   },
 
   /*

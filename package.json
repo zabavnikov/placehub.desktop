@@ -13,12 +13,13 @@
     "nuxt": "2.15.3",
     "tippy.js": "^6.3.1",
     "typed-graphqlify": "^3.1.0",
-    "vue2-leaflet": "^2.6.0",
+    "vue2-leaflet": "^2.7.0",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^3.4.3",
+    "@nuxtjs/tailwindcss": "^4.0.2",
     "lodash": "^4.17.21",
+    "postcss": "^8.2.8",
     "sass": "^1.32.8",
     "sass-loader": "10.1.1"
   }

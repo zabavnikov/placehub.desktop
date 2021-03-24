@@ -2,7 +2,7 @@
   <div class="p-4 bg-white rounded shadow-sm" :class="{loading: parseProgress}">
     <VTextarea
         v-model="form.text"
-        :placeholder="`${$auth.user.one_of_names}, что нового?`"
+        placeholder="Привет, что нового?"
         parse-url
         @parse-url-progress="parseProgress = $event"
         @url="form.url_id = $event.id; form.url = $event"

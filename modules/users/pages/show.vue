@@ -37,6 +37,7 @@ export default {
     const getUser = GQLQuery('query($id: Int!)', {
       user: GQLParams({ id: '$id' }, {
         id:           GQLTypes.number,
+        username:     GQLTypes.string,
         one_of_names: GQLTypes.string,
         description:  GQLTypes.string,
         avatar:       GQLTypes.string,
