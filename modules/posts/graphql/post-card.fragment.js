@@ -6,13 +6,11 @@ export default fragment('PostCardFragment', 'Post', {
   user_id:      types.number,
   short_text:   types.string,
   image_order:  types.string,
-  images: params({
-    ordered: true,
-  }, {
+  images: {
     id:      types.number,
     presets: params({
       sizes: rawString('small')
     }, types.custom()),
-  }),
+  },
   ...ProfileCardFragment,
 });
