@@ -14,7 +14,6 @@
     </template>
   </the-layout>
 </template>
-
 <script>
 import VPost from '~/modules/posts/components/VPost';
 import VPagination from '~/components/common/VPagination';

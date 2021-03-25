@@ -10,11 +10,9 @@ export default fragment('PostCardFragment', 'Post', {
     ordered: true,
   }, {
     id:      types.number,
-    presets: {
-      small: types.string
-    },
-    // добавить image preset field
-    // params({names: ['small'])}
+    presets: params({
+      sizes: rawString('small')
+    }, types.custom()),
   }),
   ...ProfileCardFragment,
 });
