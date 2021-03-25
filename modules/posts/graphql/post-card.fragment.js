@@ -6,6 +6,7 @@ export default fragment('PostCardFragment', 'Post', {
   user_id:      types.number,
   short_text:   types.string,
   image_order:  types.string,
+  created_at:   types.string,
   images: {
     id:      types.number,
     presets: params({

@@ -1,45 +1,39 @@
 <template>
   <the-layout>
-    <template #sidebar>&nbsp;</template>
     <template #content>
-      <v-post
-          v-for="(post, index) in posts.data"
-          @delete="posts.data.splice(index, 1)"
-          :key="post.id"
-          :content="post"
-          class="mb-6">
-      </v-post>
-
-      <v-pagination :pagination="pagination"></v-pagination>
+      <v-post v-for="(post, index) in posts" @delete="posts.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
     </template>
   </the-layout>
 </template>
 
 <script>
-
+import { query as GQLQuery } from 'typed-graphqlify';
+import PostCardFragment from '~/modules/posts/graphql/post-card.fragment';
 import VPost from '~/modules/posts/components/VPost';
-import VPagination from '~/components/common/VPagination';
 
 export default {
-  components: { VPost, VPagination },
+  components: {
+    VPost
+  },
 
-  asyncData({ $axios, query }) {
-    const params = {};
-
-    if (query.tagId > 0) {
-      params.tagId = query.tagId;
+  data() {
+    return {
+      posts: [],
     }
+  },
 
-    return $axios
-        .$get(`/api/posts`, {
-          params
-        })
-        .then(posts => {
-          return {
-            posts,
-            pagination: {current_page: posts.current_page, total: posts.total, per_page: posts.per_page}
-          }
-        })
-  }
-}
+  async asyncData({ $axios }) {
+    const getPosts = GQLQuery({
+      posts: {
+        ...PostCardFragment
+      }
+    });
+
+    const { data } = await $axios.$post(`/gql`, {
+      query: getPosts.toString(),
+    });
+
+    return {...data};
+  },
+};
 </script>
