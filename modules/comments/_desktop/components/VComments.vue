@@ -1,14 +1,14 @@
 <template>
   <div class="comments">
-    <div class="flex items-center space-x-2 mb-3">
+<!--    <div class="flex items-center space-x-2 mb-3">
       <div class="text-xl font-bold">Комментарии</div>
       <div v-if="comments.count > 0" class="text-xl font-bold text-gray-500">{{ comments.count }}</div>
-    </div>
+    </div>-->
 
     <v-comment-form
       v-if="$auth.loggedIn"
-      :model-type="comments.modelType"
-      :model-id="comments.modelId"
+      :model-type="modelType"
+      :model-id="modelId"
       @create="onCreate">
     </v-comment-form>
     <div v-else class="text-xs">
@@ -17,10 +17,10 @@
 
     <div>
       <v-comment
-          v-for="comment in comments.list.data"
+          v-for="comment in comments"
           :key="comment.id"
-          :model-type="comments.modelType"
-          :model-id="comments.modelId"
+          :model-type="modelType"
+          :model-id="modelId"
           :comment="comment"
           :show-edit-form="showEditForm === comment.id"
           :show-reply-form="showReplyForm === comment.id"
@@ -33,8 +33,8 @@
             v-if="$auth.loggedIn"
             slot="edit-form"
             show-cancel
-            :model-type="comments.modelType"
-            :model-id="comments.modelId"
+            :model-type="modelType"
+            :model-id="modelId"
             :comment="comment"
             @cancel="showEditForm = false"
             @update="onUpdate(comment, $event)">
@@ -47,8 +47,8 @@
             class="mt-4"
             slot="reply-form"
             show-cancel
-            :model-type="comments.modelType"
-            :model-id="comments.modelId"
+            :model-type="modelType"
+            :model-id="modelId"
             :parent-comment-id="comment.id"
             @create="onCreateReply(comment, $event)"
             @cancel="showReplyForm = false">
@@ -60,8 +60,8 @@
           <v-comment
               v-for="reply in comment.replies"
               :key="reply.id"
-              :model-type="comments.modelType"
-              :model-id="comments.modelId"
+              :model-type="modelType"
+              :model-id="modelId"
               :comment="reply"
               :show-edit-form="showEditForm === reply.id"
               :show-reply-form="showReplyForm === reply.id"
@@ -74,8 +74,8 @@
                 v-if="$auth.loggedIn"
                 slot="edit-form"
                 show-cancel
-                :model-type="comments.modelType"
-                :model-id="comments.modelId"
+                :model-type="modelType"
+                :model-id="modelId"
                 :comment="reply"
                 @cancel="showEditForm = false"
                 @update="onUpdate(reply, $event)">
@@ -87,8 +87,8 @@
                 class="mt-4"
                 slot="reply-form"
                 show-cancel
-                :model-type="comments.modelType"
-                :model-id="comments.modelId"
+                :model-type="modelType"
+                :model-id="modelId"
                 :parent-comment-id="reply.id"
                 @create="onCreateReply(comment, $event)"
                 @cancel="showReplyForm = false">
@@ -156,8 +156,17 @@
 
     props: {
       comments: {
-        type: Object,
+        type: Array,
       },
+    },
+
+    computed: {
+      modelType() {
+        return 'posts';
+      },
+      modelId() {
+        return this.comments[0]['model_id'];
+      }
     },
 
     data() {
@@ -189,8 +198,7 @@
        * @param comment
        */
       onCreate(comment) {
-        this.comments.list.data.unshift(comment);
-        this.comments.count++;
+        this.comments.unshift(comment);
       },
 
       /**
@@ -207,7 +215,6 @@
         }
 
         parentComment.replies.push(reply);
-        this.comments.count++;
         this.showReplyForm = false;
       },
 
@@ -239,7 +246,7 @@
         }
 
         this.$axios
-          .$delete(`/api/comments/${this.comments.modelType}/${comment.id}`)
+          .$delete(`/api/comments/${this.modelType}/${comment.id}`)
           .then(() => {
             comment.deleted_at = true;
 
@@ -256,7 +263,7 @@
         this.$axios
           .$get('/api/comments/more', {
             params: {
-              model_id: this.comments.modelType,
+              model_id: this.modelType,
               branch_id: comment.id,
               offset: comment.replies.length,
             }

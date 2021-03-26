@@ -28,12 +28,6 @@ import VPostForm from '~/modules/posts/components/VPostForm';
 export default {
   components: {VPost, VPostForm},
 
-  data() {
-    return {
-      posts: [],
-    }
-  },
-
   async asyncData({ $axios, params }) {
     const getUser = GQLQuery('query($username: String!)', {
       user: GQLParams({ username: '$username' }, {
@@ -43,12 +37,10 @@ export default {
         description:  GQLTypes.string,
         avatar:       GQLTypes.string,
       }),
-      posts: GQLParams({ username: '$username' }, {
-        ...PostCardFragment
-      })
+      posts: GQLParams({ username: '$username' }, PostCardFragment)
     });
 
-    const { data } = await $axios.$post(`/gql`, {
+    const { data } = await $axios.$post('/gql', {
       query: getUser.toString(),
       variables: { username: params.username }
     });

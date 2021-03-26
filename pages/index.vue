@@ -1,5 +1,6 @@
 <template>
   <the-layout>
+    <template #sidebar>.</template>
     <template #content>
       <v-post v-for="(post, index) in posts" @delete="posts.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
     </template>
@@ -16,12 +17,6 @@ export default {
     VPost
   },
 
-  data() {
-    return {
-      posts: [],
-    }
-  },
-
   async asyncData({ $axios }) {
     const getPosts = GQLQuery({
       posts: {
@@ -29,7 +24,7 @@ export default {
       }
     });
 
-    const { data } = await $axios.$post(`/gql`, {
+    const { data } = await $axios.$post('/gql', {
       query: getPosts.toString(),
     });
 

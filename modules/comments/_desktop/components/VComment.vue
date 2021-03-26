@@ -4,15 +4,15 @@
 
     <div v-else class="comment-content">
       <div class="comment-column">
-        <n-link :to="{name: 'users.show', params: {username: comment.author.one_of_names}}" class="comment-author-avatar">
-          <img :src="comment.author.avatar" :alt="comment.author.one_of_names">
+        <n-link :to="{name: 'users.show', params: {username: comment.user.username}}" class="comment-user-avatar">
+          <img :src="comment.user.avatar" :alt="comment.user.one_of_names">
         </n-link>
       </div>
 
       <div class="comment-column">
         <div class="comment-header">
-          <n-link :to="{name: 'users.show', params: {username: comment.author.one_of_names}}" class="comment-author">
-            {{ comment.author.one_of_names }}
+          <n-link :to="{name: 'users.show', params: {username: comment.user.username}}" class="comment-user">
+            {{ comment.user.one_of_names }}
           </n-link>
           <div class="help">{{ new Date(comment.created_at).toLocaleString('ru-RU') }}</div>
         </div>
@@ -25,7 +25,7 @@
           </div>
 
           <span v-if="comment.parent && comment.parent_id !== comment.branch_id" class="text-gray-700">
-              <span class="underline cursor-pointer" title="Перейти к комментарию" @click="onScrollToParent(comment.parent_id)">{{ comment.parent.author.one_of_names }}</span>,
+              <span class="underline cursor-pointer" title="Перейти к комментарию" @click="onScrollToParent(comment.parent_id)">{{ comment.parent.user.one_of_names }}</span>,
           </span>
           <span class="comment-text whitespace-pre-line" v-text="comment.text"></span>
 
@@ -155,13 +155,13 @@
     margin-top: 4px;
   }
 
-  .comment-author {
+  .comment-user {
     font-size: 14px;
     font-weight: 600;
     color: #000;
   }
 
-  .comment-author-avatar {
+  .comment-user-avatar {
     display: block;
     width: 40px;
     height: 40px;
