@@ -47,7 +47,7 @@
         <VTags v-if="post.tags.length > 0" :tags="post.tags" route-name="posts" class="m-6" />
       </div>
 
-      <VComments :comments="comments" class="mt-3" id="comments"/>
+      <VComments :comments="postComments" class="mt-3" id="comments"/>
     </template>
   </the-layout>
 </template>
@@ -89,19 +89,24 @@ export default {
     }
   },*/
 
-  async asyncData({ $axios, params }) {
-    const getPost = GQLQuery('getPost($id: Int!, $for: String!)', {
+  async asyncData({ $axios, params, query, store }) {
+    const getPost = GQLQuery('getPost($id: Int!, $offset: Int)', {
       post: GQLParams({id: '$id'}, PostFragment),
-      comments: GQLParams({for: '$for'}, CommentCardFragment)
+      postComments: GQLParams({
+        subject_id: "$id",
+        offset: '$offset'
+      }, CommentCardFragment('PostComment'))
     });
 
     const { data } = await $axios.$post('/gql', {
       query: getPost.toString(),
       variables: {
         id: parseInt(params.postId),
-        for: 'posts',
+        offset: parseInt(query.offset) || undefined,
       }
     });
+
+    store.commit('comments/SET', data.postComments);
 
     return data;
   },

@@ -23,7 +23,7 @@
         @finish="upload = false"
       >
       </v-upload>
-      <div v-if="showCancel" @click="$emit('cancel')" class="cursor-pointer flex items-center space-x-1 ml-auto" style="line-height: normal">
+      <div v-if="showCancel" @click="$store.commit('comments/MODE_RESET')" class="cursor-pointer flex items-center space-x-1 ml-auto" style="line-height: normal">
         <span class="help" style="color: red;">отмена</span>
         <v-icon name="x" width="16" height="16" stroke="red"></v-icon>
       </div>
@@ -38,7 +38,7 @@
   import VAttachments from '~/components/common/VAttachments';
   import VUpload from '~/components/common/VUpload';
 
-  const formInitialState = {
+  const initialState = {
     parent_id: null,
     image_id: null,
     text: '',
@@ -66,20 +66,15 @@
         required: true,
       },
 
-      comment: {
+      selectedComment: {
         type: Object,
         default() {
-          return cloneDeep(formInitialState);
+          return cloneDeep(initialState);
         }
       },
 
       imageId: {
         type: Number,
-      },
-
-      parentCommentId: {
-        type: Number,
-        default: null
       },
 
       placeholder: {
@@ -104,7 +99,7 @@
 
     data() {
       return {
-        form: cloneDeep(this.comment),
+        form: {...this.selectedComment},
         errors: new Errors(),
         loading: false,
         upload: false
@@ -123,13 +118,19 @@
           }
         },
         immediate: true
-      }
+      },
     },
 
     computed: {
+      mode() {
+        return this.$store.state.comments.mode;
+      },
+      isReply() {
+        return this.mode === 'reply';
+      },
       isEdit() {
-        return this.comment.id > 0;
-      }
+        return this.mode === 'mode';
+      },
     },
 
     methods: {
@@ -142,14 +143,17 @@
 
         this.form.model_type = this.modelType;
         this.form.model_id   = this.modelId;
-        this.form.parent_id  = this.parentCommentId;
+
+        if (this.isReply) {
+          this.form.parent_id = this.selectedComment.id;
+        }
 
         if (!this.form.image_id) {
           this.form.image = null;
         }
 
         const options = {
-          url: `/api/comments/${this.isEdit ? this.comment.id : ''}`,
+          url: `/api/comments/${this.isEdit ? this.selectedComment.id : ''}`,
           data: this.form,
           method: this.isEdit ? 'put' : 'post',
         };
@@ -157,18 +161,18 @@
         this.$axios(options)
           .then(({ data }) => {
             if (this.isEdit) {
-              this.$emit('update', this.form);
+              this.$store.commit('comments/UPDATE_COMMENT', this.form);
             } else {
-              this.$emit('create', data);
-              if (this.textCreate) {
-                this.$toast.success(this.textCreate)
-              }
+              this.$store.commit('comments/ADD_COMMENT', data);
             }
 
-            this.form = cloneDeep(formInitialState);
+            this.form = cloneDeep(initialState);
           })
           .catch(error => this.errors.record(error))
-          .finally(() => this.loading = false);
+          .finally(() => {
+            this.loading = false;
+            this.$store.commit('comments/MODE_RESET');
+          });
       },
     }
   }

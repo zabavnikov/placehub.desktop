@@ -17,9 +17,7 @@
           <div class="help">{{ new Date(comment.created_at).toLocaleString('ru-RU') }}</div>
         </div>
 
-        <slot v-if="showEditForm" name="edit-form"></slot>
-
-        <div v-show="!showEditForm">
+        <div v-show="!isEdit">
           <div v-if="comment.hasOwnProperty('image') && comment.image !== null" class="mb-2">
             <img :src="comment.image.url" data-zoom />
           </div>
@@ -47,12 +45,29 @@
               :count="comment.likes_count"
               :is-liked="comment.liked_by_me">
             </v-like>
-            <div @click="$emit('reply', comment.id)" class="cursor-pointer help">Ответить</div>
+            <div @click="$store.commit('comments/MODE_REPLY', comment)" class="cursor-pointer help">Ответить</div>
           </div>
         </div>
 
         <!-- Форма ответа на комментарий. -->
-        <slot v-if="showReplyForm" name="reply-form"></slot>
+        <v-comment-form
+            v-if="isReply && $auth.loggedIn"
+            class="mt-4"
+            show-cancel
+            :model-type="modelType"
+            :model-id="modelId">
+        </v-comment-form>
+        <!-- / Форма ответа на комментарий. -->
+
+        <!-- Форма редактирования комментариев. -->
+        <v-comment-form
+            v-if="isEdit && $auth.loggedIn"
+            show-cancel
+            :model-type="modelType"
+            :model-id="modelId"
+            :selected-comment="comment">
+        </v-comment-form>
+        <!-- / Форма редактирования комментариев. -->
       </div>
 
       <div class="ml-4 flex-shrink-0">
@@ -61,15 +76,15 @@
             <div @click="$eventBus.$emit('modal', ['complaints', 'complaint', {modelType: `${modelType}_comments`, modelId: comment.id}])"
                  class="dropdown-menu-item">Пожаловаться
             </div>
-            <a @click="$emit('edit', comment.id)" class="dropdown-menu-item">Редактировать</a>
-            <a @click="$emit('delete')" class="dropdown-menu-item">Удалить</a>
+            <a @click="$store.commit('comments/MODE_EDIT', comment)" class="dropdown-menu-item">Редактировать</a>
+            <a @click="onDelete(comment)" class="dropdown-menu-item">Удалить</a>
           </ul>
         </v-dropdown>
       </div>
     </div>
 
     <!-- Ветка ответов. -->
-    <slot v-if="comment.replies && comment.replies.length > 0" name="replies"></slot>
+    <slot v-if="comment.branch && comment.branch.length > 0" name="replies"></slot>
 
     <div style="margin-left: 52px;">
       <slot name="more"></slot>
@@ -100,14 +115,23 @@
         type: Object,
         required: true,
       },
-      showEditForm: {
-        type: Boolean,
-        default: false,
+    },
+
+    computed: {
+      mode() {
+        return this.$store.state.comments.mode;
       },
-      showReplyForm: {
-        type: Boolean,
-        default: false,
-      }
+      selectedComment() {
+        return this.$store.state.comments.selectedComment;
+      },
+      isReply() {
+        return this.mode === 'reply'
+            && this.selectedComment.id === this.comment.id;
+      },
+      isEdit() {
+        return this.mode === 'edit'
+            && this.selectedComment.id === this.comment.id;
+      },
     },
 
     methods: {
@@ -121,6 +145,17 @@
           top: parent.offsetTop,
           behavior: 'smooth'
         });
+      },
+      onDelete(comment) {
+        if (! window.confirm('Вы подтверждаете действие?')) return;
+
+        this.$axios
+            .$delete(`/api/comments/${this.modelType}/${comment.id}`)
+            .then(() => {
+              comment.deleted_at = true;
+
+              this.$emit('deleted');
+            });
       },
     }
   }
