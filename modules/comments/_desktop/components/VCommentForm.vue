@@ -18,12 +18,12 @@
       <v-upload
         v-model="form.images"
         show-progress
-        :to="`${modelType}_comments`"
+        :to="`${subjectType}_comments`"
         @start="upload = true"
         @finish="upload = false"
       >
       </v-upload>
-      <div v-if="showCancel" @click="$store.commit('comments/MODE_RESET')" class="cursor-pointer flex items-center space-x-1 ml-auto" style="line-height: normal">
+      <div v-if="cancelable" @click="$store.commit('comments/MODE_RESET')" class="cursor-pointer flex items-center space-x-1 ml-auto" style="line-height: normal">
         <span class="help" style="color: red;">отмена</span>
         <v-icon name="x" width="16" height="16" stroke="red"></v-icon>
       </div>
@@ -56,25 +56,13 @@
     },
 
     props: {
-      modelType: {
-        type: String,
-        required: true,
-      },
-
-      modelId: {
-        type: Number,
-        required: true,
-      },
-
-      selectedComment: {
-        type: Object,
-        default() {
-          return cloneDeep(initialState);
-        }
-      },
-
       imageId: {
         type: Number,
+      },
+
+      disabled: {
+        type: Boolean,
+        default: false,
       },
 
       placeholder: {
@@ -87,19 +75,19 @@
         default: false,
       },
 
-      showCancel: {
+      cancelable: {
         type: Boolean,
         default: false,
       },
 
       textCreate: {
         type: String
-      }
+      },
     },
 
     data() {
       return {
-        form: {...this.selectedComment},
+        form: cloneDeep(initialState),
         errors: new Errors(),
         loading: false,
         upload: false
@@ -119,9 +107,24 @@
         },
         immediate: true
       },
+      selectedComment: {
+        handler(newValue) {
+          if (! this.disabled) {
+            if (this.isEdit) {
+              this.form = cloneDeep(newValue);
+            } else {
+              this.form = cloneDeep(initialState);
+            }
+          }
+        },
+        immediate: true
+      }
     },
 
     computed: {
+      selectedComment() {
+        return this.$store.state.comments.selectedComment;
+      },
       mode() {
         return this.$store.state.comments.mode;
       },
@@ -129,20 +132,26 @@
         return this.mode === 'reply';
       },
       isEdit() {
-        return this.mode === 'mode';
+        return this.mode === 'edit';
       },
+      subjectType() {
+        return this.$store.state.comments.subjectType;
+      },
+      subjectId() {
+        return this.$store.state.comments.subjectId;
+      }
     },
 
     methods: {
       onSubmit() {
-        if (this.loading) {
+        if (this.loading || this.disabled) {
           return;
         }
 
         this.loading = true;
 
-        this.form.model_type = this.modelType;
-        this.form.model_id   = this.modelId;
+        this.form.model_type = this.subjectType;
+        this.form.model_id   = this.subjectId;
 
         if (this.isReply) {
           this.form.parent_id = this.selectedComment.id;
@@ -165,8 +174,6 @@
             } else {
               this.$store.commit('comments/ADD_COMMENT', data);
             }
-
-            this.form = cloneDeep(initialState);
           })
           .catch(error => this.errors.record(error))
           .finally(() => {

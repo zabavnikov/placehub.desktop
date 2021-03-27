@@ -5,38 +5,13 @@
           <div v-if="comments.count > 0" class="text-xl font-bold text-gray-500">{{ comments.count }}</div>
         </div>-->
 
-    <v-comment-form
-        v-if="$auth.loggedIn"
-        :model-type="modelType"
-        :model-id="modelId">
-    </v-comment-form>
-    <div v-else class="text-xs">
-      Только авторизованные пользователи могут оставлять комментарии
-    </div>
+    <v-comment-form :disabled="mode !== null"></v-comment-form>
 
     <div>
-      <v-comment
-          v-for="(comment, indexComment) in comments"
-          :key="comment.id"
-          :model-type="modelType"
-          :model-id="modelId"
-          :comment="comment"
-          @deleted="comment.branch.splice(indexComment, 1)"
-      >
-
-        <!-- Ветка ответов. -->
+      <v-comment v-for="comment in comments" :key="comment.id" :comment="comment">
         <div class="replies" slot="replies">
-          <v-comment
-              v-for="(reply, indexReply) in comment.branch"
-              :key="reply.id"
-              :model-type="modelType"
-              :model-id="modelId"
-              :comment="reply"
-              @deleted="comment.branch.splice(indexReply, 1)"
-          >
-          </v-comment>
+          <v-comment v-for="reply in comment.branch" :key="reply.id" :comment="reply"></v-comment>
         </div>
-        <!-- / Ветка ответов. -->
 
         <div
             v-if="comment.replies_count > 3 && comment.replies_count > comment.branch.length && comment.parent_id === null"
@@ -53,8 +28,6 @@
         </div>
       </v-comment>
     </div>
-
-    <div @click="onClickMore(mutableComments)">показать еще</div>
   </div>
 </template>
 
@@ -101,15 +74,12 @@ export default {
   },
 
   computed: {
-    modelType() {
-      return 'posts';
-    },
-    modelId() {
-      return this.comments[0]['model_id'];
-    },
     comments() {
       return this.$store.state.comments.list;
-    }
+    },
+    mode() {
+      return this.$store.state.comments.mode;
+    },
   },
 
   methods: {

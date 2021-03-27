@@ -31,7 +31,7 @@
             <a
               v-for="image in comment.images"
               :key="image.id"
-              :style="{backgroundImage: `url(${image.url})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
+              :style="{backgroundImage: `url(${image.presets.square})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
               :href="image.url"
               target="_blank"
               class="wh-ratio rounded"
@@ -41,7 +41,7 @@
 
           <div class="flex items-center space-x-4 mt-3">
             <v-like
-              :to="`${modelType}_comments/${comment.id}`"
+              :to="`${subjectType}_comments/${comment.id}`"
               :count="comment.likes_count"
               :is-liked="comment.liked_by_me">
             </v-like>
@@ -49,31 +49,19 @@
           </div>
         </div>
 
-        <!-- Форма ответа на комментарий. -->
+        <!-- Форма ответа/редактирования на комментарий. -->
         <v-comment-form
-            v-if="isReply && $auth.loggedIn"
             class="mt-4"
-            show-cancel
-            :model-type="modelType"
-            :model-id="modelId">
+            v-if="$auth.loggedIn && isEdit || isReply"
+            cancelable>
         </v-comment-form>
-        <!-- / Форма ответа на комментарий. -->
-
-        <!-- Форма редактирования комментариев. -->
-        <v-comment-form
-            v-if="isEdit && $auth.loggedIn"
-            show-cancel
-            :model-type="modelType"
-            :model-id="modelId"
-            :selected-comment="comment">
-        </v-comment-form>
-        <!-- / Форма редактирования комментариев. -->
+        <!-- / Форма ответа/редактирования на комментарий. -->
       </div>
 
       <div class="ml-4 flex-shrink-0">
         <v-dropdown>
           <ul class="dropdown-menu">
-            <div @click="$eventBus.$emit('modal', ['complaints', 'complaint', {modelType: `${modelType}_comments`, modelId: comment.id}])"
+            <div @click="$eventBus.$emit('modal', ['complaints', 'complaint', {subjectType: `${subjectType}_comments`, modelId: comment.id}])"
                  class="dropdown-menu-item">Пожаловаться
             </div>
             <a @click="$store.commit('comments/MODE_EDIT', comment)" class="dropdown-menu-item">Редактировать</a>
@@ -103,14 +91,6 @@
     components: {VDropdown, VCommentForm, VLike},
 
     props: {
-      modelType: {
-        type: String,
-        required: true,
-      },
-      modelId: {
-        type: Number,
-        required: true,
-      },
       comment: {
         type: Object,
         required: true,
@@ -132,6 +112,9 @@
         return this.mode === 'edit'
             && this.selectedComment.id === this.comment.id;
       },
+      subjectType() {
+        return this.$store.state.comments.subjectType;
+      }
     },
 
     methods: {
@@ -150,7 +133,7 @@
         if (! window.confirm('Вы подтверждаете действие?')) return;
 
         this.$axios
-            .$delete(`/api/comments/${this.modelType}/${comment.id}`)
+            .$delete(`/api/comments/${this.subjectType}/${comment.id}`)
             .then(() => {
               comment.deleted_at = true;
 

@@ -3,14 +3,18 @@ import cloneDeep from 'lodash/cloneDeep';
 const initialState = {
   list: [],
   mode: null,
-  selectedComment: {}
+  selectedComment: {},
+  subjectType: null,
+  subjectId: null,
 }
 
 const state = () => (cloneDeep(initialState));
 
 const mutations = {
-  SET(state, comments) {
-    state.list = comments;
+  SET(state, {comments, subjectType, subjectId}) {
+    state.list        = comments;
+    state.subjectType = subjectType;
+    state.subjectId   = subjectId;
   },
 
   MODE_EDIT(state, selectedComment) {

@@ -106,7 +106,11 @@ export default {
       }
     });
 
-    store.commit('comments/SET', data.postComments);
+    store.commit('comments/SET', {
+      comments: data.postComments,
+      subjectType: 'posts',
+      subjectId: params.postId
+    });
 
     return data;
   },
