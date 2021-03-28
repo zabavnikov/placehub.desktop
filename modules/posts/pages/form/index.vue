@@ -9,24 +9,26 @@
 
 <script>
 import VPostForm from '~/modules/posts/components/VPostForm';
+import { query as GQLQuery, params as GQLParams, types } from 'typed-graphqlify';
+import PostFormFragment from '~/modules/posts/graphql/post-form.fragment';
 
 export default {
   components: {VPostForm},
 
-  asyncData({$axios, params}) {
-    return $axios
-        .$get('/api/posts/form/' + params.postId)
-        .then(post => {
-          if (
-              post.hasOwnProperty('ordered_images') &&
-              post.ordered_images.length === post.images.length
-          ) {
-            post.images = post.ordered_images;
-          }
-          return {
-            post
-          }
-        })
+
+  async asyncData({ $axios, params }) {
+    const getPost = GQLQuery('getPost($id: Int!)', {
+      post: GQLParams({id: '$id'}, PostFormFragment),
+    });
+
+    const { data } = await $axios.$post('/gql', {
+      query: getPost.toString(),
+      variables: {
+        id: parseInt(params.postId),
+      }
+    });
+
+    return data;
   },
 }
 </script>
