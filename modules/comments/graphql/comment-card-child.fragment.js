@@ -1,15 +1,13 @@
 import {types, fragment, params, rawString} from 'typed-graphqlify';
 import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
-import CommentCardChildFragment from '~/modules/comments/graphql/comment-card-child.fragment';
 
-export default fragment('CommentCardFragment', 'Comment', {
+export default fragment('CommentCardChildFragment', 'Comment', {
   id:            types.number,
   branch_id:     types.number,
   parent_id:     types.number,
   user_id:       types.number,
   model_id:      types.number,
   text:          types.string,
-  branch_replies_count: types.number,
   replies_count: types.number,
   likes_count: types.number,
   created_at:          types.string,
@@ -23,6 +21,5 @@ export default fragment('CommentCardFragment', 'Comment', {
     user_id: types.number,
     model_id: types.number,
   },
-  branch: CommentCardChildFragment,
   user: ProfileCardFragment
 });

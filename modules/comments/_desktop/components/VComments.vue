@@ -12,20 +12,6 @@
         <div class="replies" slot="replies">
           <v-comment v-for="reply in comment.branch" :key="reply.id" :comment="reply"></v-comment>
         </div>
-
-        <div
-            v-if="comment.replies_count > 3 && comment.replies_count > comment.branch.length && comment.parent_id === null"
-            class="cursor-pointer flex items-center space-x-1 mt-2"
-            style="line-height: normal"
-            @click="onClickMore(comment.branch)"
-            slot="more"
-        >
-          <v-icon name="corner-down-right"></v-icon>
-          <span class="underline font-bold">Показать еще</span>
-          <span class="underline font-bold">{{
-              (comment.replies_count - comment.branch.length) >= 5 ? 5 : comment.replies_count - comment.branch.length
-            }}</span>
-        </div>
       </v-comment>
     </div>
   </div>
@@ -62,8 +48,6 @@
 <script>
 import VComment from './VComment';
 import VCommentForm from './VCommentForm';
-import { query as GQLQuery, params as GQLParams, types } from 'typed-graphqlify';
-import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 
 export default {
   name: 'VComments',
@@ -81,28 +65,5 @@ export default {
       return this.$store.state.comments.mode;
     },
   },
-
-  methods: {
-    async onClickMore(list) {
-      const getPostComments = GQLQuery('getPostComments($subject_id: Int!, $offset: Int, $branch_id: Int)', {
-        postComments: GQLParams({
-          subject_id:   '$subject_id',
-          branch_id:    '$branch_id',
-          offset:       '$offset'
-        }, CommentCardFragment('PostComment'))
-      });
-
-      const { data } = await this.$axios.$post('/gql', {
-        query: getPostComments.toString(),
-        variables: {
-          subject_id: parseInt(this.modelId),
-          offset: list.length,
-          branch_id: list[0].branch_id,
-        }
-      });
-
-      data.postComments.forEach(comment => list.push(comment))
-    },
-  }
 }
 </script>

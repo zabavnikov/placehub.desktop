@@ -43,7 +43,7 @@
             <v-like
               :to="`${subjectType}_comments/${comment.id}`"
               :count="comment.likes_count"
-              :is-liked="comment.liked_by_me">
+              :is-liked="comment.like">
             </v-like>
             <div @click="$store.commit('comments/MODE_REPLY', comment)" class="cursor-pointer help">Ответить</div>
           </div>
@@ -72,10 +72,23 @@
     </div>
 
     <!-- Ветка ответов. -->
-    <slot v-if="comment.branch && comment.branch.length > 0" name="replies"></slot>
+    <div v-if="comment.branch">
+      <slot v-if="comment.branch.length > 0" name="replies"></slot>
 
-    <div style="margin-left: 52px;">
-      <slot name="more"></slot>
+      <div style="margin-left: 52px;">
+        <div
+            v-if="comment.branch_replies_count > 3 && comment.branch_replies_count > comment.branch.length && comment.parent_id === null"
+            class="cursor-pointer flex items-center space-x-1 mt-2"
+            style="line-height: normal"
+            @click="onClickMore(comment.branch)"
+        >
+          <v-icon name="corner-down-right"></v-icon>
+          <span class="underline font-bold">Показать еще</span>
+          <span class="underline font-bold">{{
+              (comment.branch_replies_count - comment.branch.length) >= 5 ? 5 : comment.branch_replies_count - comment.branch.length
+            }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -84,6 +97,8 @@
   import VCommentForm from './VCommentForm';
   import VLike from '~/components/common/VLike';
   import VDropdown from "~/components/ui/VDropdown";
+  import { query as GQLQuery, params as GQLParams, types } from 'typed-graphqlify';
+  import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 
   export default {
     name: 'VComment',
@@ -114,6 +129,9 @@
       },
       subjectType() {
         return this.$store.state.comments.subjectType;
+      },
+      subjectId() {
+        return this.$store.state.comments.subjectId;
       }
     },
 
@@ -139,6 +157,29 @@
 
               this.$emit('deleted');
             });
+      },
+
+      async onClickMore(list) {
+        const getComments = GQLQuery('getComments($subject_type: String!, $subject_id: Int!, $offset: Int, $branch_id: Int)', {
+          comments: GQLParams({
+            subject_id:   '$subject_id',
+            subject_type:   '$subject_type',
+            branch_id:    '$branch_id',
+            offset:       '$offset'
+          }, CommentCardFragment)
+        });
+
+        const { data } = await this.$axios.$post('/gql', {
+          query: getComments.toString(),
+          variables: {
+            subject_id: parseInt(this.subjectId),
+            subject_type: this.subjectType,
+            offset: list.length,
+            branch_id: list[0].branch_id,
+          }
+        });
+
+        data.comments.forEach(comment => list.push(comment))
       },
     }
   }
