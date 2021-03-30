@@ -47,6 +47,14 @@
       </div>
 
       <form v-else @submit.prevent="onSubmit" autocomplete="off" class="space-y-4">
+        <div>
+          <label class="label"><span v-html="parentLabel"></span> <span class="asterisk"></span></label>
+          <place-search
+              :value="place.parent_names"
+              :only="only"
+              @select="place.parent_id = $event.id; place.lat = $event.lat; place.lng = $event.lng"></place-search>
+        </div>
+
         <div v-if="place.type === 'localities'">
           <label for="locality-type-id" class="label">Тип населенного пункта <span class="asterisk"></span></label>
           <select v-model="place.category_id" id="locality-type-id" class="input">
@@ -76,14 +84,6 @@
         <div>
           <label for="name" class="label">{{ inputName }} <span class="asterisk"></span></label>
           <input type="text" class="input" id="name" v-model="place.name">
-        </div>
-
-        <div>
-          <label class="label"><span v-html="parentLabel"></span> <span class="asterisk"></span></label>
-          <place-search
-              :value="place.parent_names"
-              :only="only"
-              @select="place.parent_id = $event.id; place.lat = $event.lat; place.lng = $event.lng"></place-search>
         </div>
 
         <div>

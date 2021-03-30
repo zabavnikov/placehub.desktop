@@ -1,64 +1,113 @@
 <template>
-  <div class="v-overlay">
-    <div @click="onClose" class="v-overlay-close"></div>
-    <slot></slot>
-  </div>
+  <transition name="fade">
+    <div v-if="transitionBackdrop" class="v-overlay">
+      <div class="v-overlay-placement" :class="{[`v-overlay-placement-${placement}`]: true}">
+        <transition name="slide-up">
+          <div v-if="transition" class="v-overlay-content" :style="{width, padding: offset}">
+            <div ref="target">
+              <slot></slot>
+            </div>
+          </div>
+        </transition>
+      </div>
+    </div>
+  </transition>
 </template>
 
 <script>
-  export default {
-    name: 'VOverlay',
+import { ref } from '@vue/composition-api'
+import { onClickOutside } from '@vueuse/core';
 
-    mounted() {
-      document.addEventListener('keydown', this.handler);
-      document.body.style.overflow = 'hidden';
-      document.body.style.marginRight = '-17px';
-      document.body.style.paddingRight = '34px';
+export default {
+  setup(props, { emit }) {
+    const target = ref(null)
+    onClickOutside(target, () => emit('close'));
+    return { target }
+  },
+  props: {
+    placement: {
+      type: String,
+      default: 'center',
     },
-
-    beforeDestroy() {
-      document.removeEventListener('keydown', this.handler)
-      document.body.style.overflow = 'auto';
-      document.body.style.marginRight = 'initial';
-      document.body.style.paddingRight = 'initial';
+    offset: {
+      type: String,
     },
-
-    methods: {
-      handler(event) {
-        if (event.key === 'Escape') {
-          this.onClose();
-        }
-      },
-
-      onClose() {
-        this.$overlay.toggle();
+    width: {
+      type: String,
+      default: 'auto'
+    }
+  },
+  data() {
+    return {
+      transitionBackdrop: false,
+      transition: false,
+    }
+  },
+  watch: {
+    $route() {
+      this.$emit('close');
+    }
+  },
+  mounted() {
+    document.addEventListener('keydown', this.handler);
+    document.body.style.overflowY = 'hidden';
+    this.transitionBackdrop = true;
+    this.$nextTick(() => {
+      this.transition = true;
+    });
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.handler)
+    document.body.style.overflowY = 'auto';
+    this.$overlay.hide();
+  },
+  methods: {
+    handler(event) {
+      if (event.key === 'Escape') {
         this.$emit('close');
       }
-    }
-  }
+    },
+  },
+}
 </script>
 
 <style lang="scss">
-  .v-overlay {
-    display: flex;
-    align-items: flex-start;
+.v-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99999;
+  background-color: rgba(0, 0, 0, .52);
+  overflow-y: auto;
+}
+.v-overlay-placement {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  &-center {
     justify-content: center;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 99999;
-    background-color: rgba(0,0,0,.4);
-    overflow-y: auto;
-    padding-right: 17px;
+    align-items: center;
+    padding: 16px;
   }
-
-  .v-overlay-close {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
+  &-bottom {
+    justify-content: flex-end;
+    padding-top: 56px;
   }
+  &-top {
+    justify-content: flex-start;
+    padding: 56px 8px 8px;
+  }
+}
+.v-overlay-backdrop {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+.v-overlay-content {
+  position: relative;
+}
 </style>

@@ -3,12 +3,8 @@
     <div class="flex items-center h-full">
       <n-link to="/" class="mr-6 font-bold"><span class="uppercase">PlaceHub</span><sup>alpha</sup></n-link>
       <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {username: $auth.user.username}}" class="button button-success">Написать</n-link>
-      <v-dropdown v-if="$auth.loggedIn">
-        <div slot="trigger" class="header-iconable"><v-icon name="plus-circle"></v-icon></div>
-        <ul class="dropdown-menu">
-          <n-link to="/places/create" class="dropdown-menu-item">Добавить геообъект</n-link>
-        </ul>
-      </v-dropdown>
+
+      <n-link v-if="$auth.loggedIn" to="/places/create" class="dropdown-menu-item ml-3">Добавить геообъект</n-link>
 
       <!--      <n-link to="/places" class="mr-6 font-bold">Места</n-link>-->
       <!--<n-link to="/images" class="mr-6 font-bold">Фотографии</n-link>-->

@@ -47,7 +47,7 @@ Vue.directive('loggedIn', {
   bind: function (element, binding, vnode) {
     loggedIn = event => {
       if (!vnode.context.$auth.loggedIn) {
-        vnode.context.$toast.info('Войдите в профиль.');
+        vnode.context.$overlay.show('auth:login');
         event.preventDefault();
       }
     };

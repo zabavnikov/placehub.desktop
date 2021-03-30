@@ -80,7 +80,7 @@
               type="button"
               v-tooltip="storyModeTooltip"
               class="post-form-tool">
-            <v-icon name="pen-tool" :stroke="storyMode && !storyModeNotAvailable ? 'black' : '#b0bec5'"></v-icon>
+            <v-icon name="type" :stroke="storyMode ? 'black' : '#b0bec5'"></v-icon>
           </button>
         </div>
 
@@ -187,14 +187,7 @@ export default {
     isEdit() {
       return this.post.id > 0;
     },
-    storyModeNotAvailable() {
-      return this.form.images.length === 0;
-    },
     storyModeTooltip() {
-      if (this.storyModeNotAvailable) {
-        return 'Загрузите хотя одно изображение, чтобы режим истории стал доступен.';
-      }
-
       return this.storyMode ? 'Отключить режим истории' : 'Включить режим истории';
     }
   },
@@ -218,10 +211,6 @@ export default {
 
   methods: {
     onToggleStoryMode() {
-      if (this.storyModeNotAvailable) {
-        return;
-      }
-
       this.storyMode = !this.storyMode;
       Cookie.set('storyMode', this.storyMode ? 'on' : 'off');
     },
@@ -252,6 +241,7 @@ export default {
 
               this.form = cloneDeep(formInitialState);
               this.errors.clear();
+              Cookie.set('storyMode', 'off');
             }
           })
           .catch(error => this.errors.record(error))

@@ -18,7 +18,7 @@
         if (this.$auth.loggedIn) {
           this.$emit('click');
         } else {
-          this.$toast.info('Войдите в профиль')
+          this.$overlay.show('auth:login')
         }
       }
     }
