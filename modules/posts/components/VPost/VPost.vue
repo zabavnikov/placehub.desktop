@@ -2,16 +2,12 @@
   <article class="bg-white rounded shadow-sm overflow-hidden">
     <header class="flex items-center m-6">
       <VProfile :user="content.user" :sub="content.created_at" />
-      <v-dropdown v-if="$auth.loggedIn" class="flex-shrink-0 ml-auto">
-        <ul class="dropdown-menu">
-          <n-link :to="{name: 'posts.edit', params: {postId: content.id}}" class="dropdown-menu-item">Редактировать
-          </n-link>
-          <li @click="$eventBus.$emit('modal', ['complaints', 'complaint', {modelType: 'posts', modelId: content.id}])"
-              class="dropdown-menu-item">Пожаловаться
-          </li>
-          <li v-if="$auth.user.id === content.user_id" @click="onDelete" class="dropdown-menu-item">Удалить</li>
-        </ul>
-      </v-dropdown>
+      <d-content-card-menu
+          model-type="posts"
+          :model-id="content.id"
+          route-name="posts"
+          route-params="postId">
+      </d-content-card-menu>
     </header>
 
     <n-link v-if="content.short_text " :to="{name: 'posts.show', params: {postId: content.id}}"
@@ -46,13 +42,13 @@
 </template>
 
 <script>
-import VDropdown from '~/components/ui/VDropdown';
+import DContentCardMenu from '~/components/common/DContentCardMenu';
 import VLike from '~/components/common/VLike';
 import VUrl from '~/modules/urls/components/VUrl';
 import VProfile from '~/modules/users/components/VProfile';
 
 export default {
-  components: {VUrl, VLike, VDropdown, VProfile},
+  components: {DContentCardMenu, VUrl, VLike, VProfile},
 
   props: {
     content: {

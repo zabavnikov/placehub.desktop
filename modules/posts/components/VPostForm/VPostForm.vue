@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 bg-white rounded shadow-sm" :class="{loading: parseProgress}">
+  <div class="p-4 bg-white rounded-lg shadow-sm" :class="{loading: parseProgress}">
     <VTextarea
         v-model="form.text"
         placeholder="Привет, что нового?"

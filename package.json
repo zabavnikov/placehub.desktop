@@ -12,7 +12,7 @@
     "@vueuse/core": "^4.6.3",
     "js-cookie": "^2.2.1",
     "leaflet": "^1.7.1",
-    "nuxt": "2.15.3",
+    "nuxt": "2.15.4",
     "tippy.js": "^6.3.1",
     "typed-graphqlify": "^3.1.0",
     "vue2-leaflet": "^2.7.0",

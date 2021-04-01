@@ -14,7 +14,7 @@
           <n-link :to="{name: 'users.show', params: {username: comment.user.username}}" class="comment-user">
             {{ comment.user.one_of_names }}
           </n-link>
-          <div class="help">{{ new Date(comment.created_at).toLocaleString('ru-RU') }}</div>
+          <div class="help">{{ comment.created_at }}</div>
         </div>
 
         <div v-show="!isEdit">

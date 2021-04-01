@@ -10,7 +10,9 @@ export default fragment('CommentCardChildFragment', 'Comment', {
   text:          types.string,
   replies_count: types.number,
   likes_count: types.number,
-  created_at:          types.string,
+  created_at:     params({
+    relative: true
+  }, types.string),
   images: {
     id:      types.number,
     presets: params({

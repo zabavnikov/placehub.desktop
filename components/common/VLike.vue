@@ -1,7 +1,7 @@
 <template>
   <v-logged-in @click="onClick" :class="classes" :title="like.isLiked ? 'Вам понравилось' : 'Мне нравится'">
       <v-icon :stroke="like.isLiked ? 'red' : color" name="heart" :width="width" :height="height"></v-icon>
-      <div class="v-like__count help">{{ like.count }}</div>
+<!--      <div class="v-like__count help">{{ like.count }}</div>-->
   </v-logged-in>
 </template>
 
