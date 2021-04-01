@@ -8,7 +8,7 @@
 
 .tippy-box[data-theme~='simple'] {
   background-color: #fff;
-  border-radius: 4px;
+  @apply rounded-lg;
   text-align: left;
   font-size: inherit;
   line-height: normal;

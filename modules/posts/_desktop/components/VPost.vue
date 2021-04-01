@@ -1,5 +1,5 @@
 <template>
-  <article class="p-4 bg-white rounded shadow-sm">
+  <article class="p-4 bg-white rounded-lg shadow-xl">
     <header class="flex items-center">
       <div class="flex items-center">
         <n-link :to="{name: 'users.show', params: {username: content.user.username}}" class="flex items-center space-x-1 mr-4">

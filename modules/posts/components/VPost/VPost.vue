@@ -1,5 +1,5 @@
 <template>
-  <article class="bg-white rounded shadow-sm overflow-hidden">
+  <article class="card bg-white rounded-lg shadow-xs overflow-hidden">
     <header class="flex items-center m-6">
       <VProfile :user="content.user" :sub="content.created_at" />
       <d-content-card-menu
@@ -22,7 +22,6 @@
       </n-link>
     </div>
 
-
     <VUrl v-if="content.url" :url="content.url" :compact="hasImages" class="m-6" />
 
     <footer class="flex items-center m-6">
@@ -32,7 +31,7 @@
       </div>
       <div class="flex items-center space-x-6 ml-auto">
         <n-link :to="`/posts/${content.id}#comments`" class="flex items-center space-x-2">
-          <v-icon name="message-circle" stroke="#aaa"></v-icon>
+          <v-icon name="chat-alt" stroke="#aaa"></v-icon>
           <span>{{ content.comments_count }}</span>
         </n-link>
         <v-like :to="`posts/${content.id}`" :count="content.likes_count" :is-liked="content.liked_by_me"></v-like>
