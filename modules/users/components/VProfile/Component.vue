@@ -1,6 +1,6 @@
 <template>
-  <n-link :to="{name: 'users.show', params: {username: user.username}}" class="flex items-center space-x-2">
-    <img :src="user.avatar" :alt="user.one_of_names" class="w-10 h-10 rounded-full">
+  <n-link :to="{name: 'users.show', params: {username: user.username}}" :class="{'card-profile--small': small}" class="card-profile flex items-center space-x-2">
+    <img :src="user.avatar" :alt="user.one_of_names" :class="avatarClasses" class="rounded-full">
     <div>
       <div class="font-semibold text-gray-800">{{ user.one_of_names }}</div>
       <div v-if="sub" class="text-xs text-gray-600">{{ sub }}</div>
@@ -17,6 +17,15 @@ export default {
     },
     sub: {
       type: String,
+    },
+    small: {
+      type: Boolean,
+      default: false,
+    }
+  },
+  computed: {
+    avatarClasses() {
+      return this.small ? 'w-6 h-6' : 'w-10 w-10';
     }
   }
 }

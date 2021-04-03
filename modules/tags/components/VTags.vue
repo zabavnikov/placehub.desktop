@@ -3,7 +3,7 @@
     <n-link
         v-for="tag in tags"
         :key="tag.id"
-        :to="{name: routeName, query: {tagId: tag.id}}"
+        :to="{name: routeName, query: {tags: tag.id}}"
         class="hover:underline"
     >
       #{{ tag.name }}

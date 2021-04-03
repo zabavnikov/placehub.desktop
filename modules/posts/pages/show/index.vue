@@ -11,7 +11,7 @@
           <figure v-for="image in post.images" :key="image.id">
             <div class="relative">
               <a :href="image.url" target="_blank">
-                <img :src="image.presets.small" :alt="image.id" width="100%" class="block">
+                <img :src="image.presets.small" :alt="image.id" width="100%" class="block" style="border-bottom: 1px solid #f1f1f1">
               </a>
 <!--              <div v-if="$auth.loggedIn" class="post-image-tools space-x-4">
                 <v-like :to="`posts_images/${image.id}`" :count="image.likes_count" :is-liked="image.liked_by_me" color="white"></v-like>

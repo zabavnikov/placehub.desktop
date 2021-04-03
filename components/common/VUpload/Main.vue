@@ -3,7 +3,7 @@
     <input ref="file" type="file" :accept="accept" :multiple="multiple" :disabled="progress > 0" @change="onUpload">
     <div class="flex items-center">
       <div :style="{backgroundColor: isError ? 'red' : undefined}" @click="$refs.file.click()">
-        <slot><v-icon name="image" stroke="#b0bec5"></v-icon></slot>
+        <slot><v-icon name="photograph" stroke="#b0bec5"></v-icon></slot>
       </div>
     </div>
   </div>

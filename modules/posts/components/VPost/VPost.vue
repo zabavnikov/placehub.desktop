@@ -1,7 +1,7 @@
 <template>
   <article class="card bg-white rounded-lg shadow-xs overflow-hidden">
     <header class="flex items-center m-6">
-      <VProfile :user="content.user" :sub="content.created_at" />
+      <v-profile :user="content.user" :sub="content.created_at"></v-profile>
       <d-content-card-menu
           model-type="posts"
           :model-id="content.id"
@@ -45,9 +45,10 @@ import DContentCardMenu from '~/components/common/DContentCardMenu';
 import VLike from '~/components/common/VLike';
 import VUrl from '~/modules/urls/components/VUrl';
 import VProfile from '~/modules/users/components/VProfile';
+import VTag from '~/components/ui/VTag';
 
 export default {
-  components: {DContentCardMenu, VUrl, VLike, VProfile},
+  components: {DContentCardMenu, VUrl, VLike, VProfile, VTag},
 
   props: {
     content: {

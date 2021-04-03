@@ -16,14 +16,15 @@
           @loading="loading = $event"/>
     </div>
 
-    <div v-if="form.tags.length > 0" class="mt-4">
-      <ul class="flex flex-wrap">
-        <li v-for="(tag, index) in form.tags" :key="tag.id" class="flex items-center space-x-1 mr-3 mb-1">
-          <span>{{ tag.name }}</span>
-          <v-icon @click="form.tags.splice(index, 1)" name="x" width="16" height="16"
-                  class="cursor-pointer"></v-icon>
-        </li>
-      </ul>
+    <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
+      <v-tag
+          v-for="(tag, index) in form.tags"
+          :key="tag.id"
+          :name="tag.name"
+          editable
+          @delete="form.tags.splice(index, 1)"
+      >
+      </v-tag>
     </div>
 
     <div v-if="form.place && Object.keys(form.place).length > 0"
@@ -72,7 +73,7 @@
               class="post-form-tool"
               v-tooltip="`Карта`"
               :style="{backgroundColor: errors.first('place_id') ? 'red' : undefined}">
-            <v-icon name="map-pin" stroke="#b0bec5"></v-icon>
+            <v-icon name="location-marker" stroke="#b0bec5"></v-icon>
           </button>
 
           <button
@@ -80,7 +81,7 @@
               type="button"
               v-tooltip="storyModeTooltip"
               class="post-form-tool">
-            <v-icon name="type" :stroke="storyMode ? 'black' : '#b0bec5'"></v-icon>
+            <v-icon name="collection" :stroke="storyMode ? 'black' : '#b0bec5'"></v-icon>
           </button>
         </div>
 
@@ -137,6 +138,7 @@ import VUpload from '~/components/common/VUpload';
 import VTagsSelect from '~/modules/tags/components/VTagsSelect';
 import VUrl from "~/modules/urls/components/VUrl";
 import VProgressBar from "~/components/ui/VProgressBar";
+import VTag from '~/components/ui/VTag';
 
 const formInitialState = {
   id: null,
@@ -168,7 +170,8 @@ export default {
     VChoosePlace,
     VTextarea,
     VPostFormAccess,
-    VProgressBar
+    VProgressBar,
+    VTag
   },
 
   data() {

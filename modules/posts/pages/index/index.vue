@@ -3,43 +3,43 @@
     <template #sidebar>&nbsp;</template>
     <template #content>
       <v-post
-          v-for="(post, index) in posts.data"
-          @delete="posts.data.splice(index, 1)"
+          v-for="(post, index) in posts"
+          @delete="posts.splice(index, 1)"
           :key="post.id"
           :content="post"
           class="mb-6">
       </v-post>
 
-      <v-pagination :pagination="pagination"></v-pagination>
     </template>
   </the-layout>
 </template>
 
 <script>
-
+import { params as GQLParams, query as GQLQuery } from 'typed-graphqlify';
 import VPost from '../../components/VPost';
-import VPagination from '~/components/common/VPagination';
+import PostCardFragment from '~/modules/posts/graphql/post-card.fragment';
 
 export default {
   components: { VPost },
 
-  asyncData({ $axios, query }) {
-    const params = {};
+  watchQuery: ['tags'],
 
-    if (query.tagId > 0) {
-      params.tagId = query.tagId;
-    }
+  async asyncData({ $axios, query }) {
+    const getPosts = GQLQuery('query($tags: String)', {
+      posts: GQLParams({
+        tags: '$tags'
+      }, PostCardFragment),
+    });
 
-    return $axios
-        .$get(`/api/posts`, {
-          params
-        })
-        .then(posts => {
-          return {
-            posts,
-            pagination: {current_page: posts.current_page, total: posts.total, per_page: posts.per_page}
-          }
-        })
-  }
+    const { data } = await $axios.$post('/gql', {
+      query: getPosts.toString(),
+      variables: {
+        tags: `${query.tags}` || undefined
+      }
+    });
+
+    return {...data};
+  },
+
 }
 </script>

@@ -11,7 +11,7 @@
         <div :style="{backgroundImage: `url(${image.presets.square})`}" class="form-images__image wh-ratio rounded">
           <div class="form-images__delete"
                @dblclick="onDelete(index)">
-            <v-icon name="trash-2" stroke="white" width="16px"></v-icon>
+            <v-icon name="trash" stroke="white" width="16px"></v-icon>
           </div>
         </div>
 

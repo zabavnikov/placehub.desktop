@@ -1,5 +1,6 @@
 import {types, fragment, params, rawString} from 'typed-graphqlify';
 import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
+import TagsFragment from '~/modules/tags/graphql/tags.fragment';
 
 export default fragment('PostCardFragment', 'Post', {
   id:             types.number,
@@ -17,4 +18,5 @@ export default fragment('PostCardFragment', 'Post', {
     }, types.custom()),
   },
   user: ProfileCardFragment,
+  tags: TagsFragment,
 });

@@ -18,5 +18,5 @@ export default fragment('PostFormFragment', 'Post', {
     }, types.custom()),
   },
   //...PlaceCardFragment,
-  ...TagsFragment,
+  tags: TagsFragment,
 });
