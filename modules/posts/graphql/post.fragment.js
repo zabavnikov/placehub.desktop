@@ -7,7 +7,7 @@ export default fragment('PostFragment', 'Post', {
   id:           types.number,
   user_id:      types.number,
   place_id:     types.number,
-  short_text:   types.string,
+  text:         types.string,
   image_order:  types.string,
   created_at:   types.string,
   images: {

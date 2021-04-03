@@ -1,7 +1,7 @@
 <template>
   <transition name="fade">
     <div v-if="transitionBackdrop" class="v-overlay">
-      <div class="v-overlay-placement" :class="{[`v-overlay-placement-${placement}`]: true}">
+      <div class="v-overlay-placement" :class="{[`v-overlay-placement--${placement}`]: isPlacement}">
         <transition name="slide-up">
           <div v-if="transition" class="v-overlay-content" :style="{width, padding: offset}">
             <div ref="target">
@@ -41,6 +41,11 @@ export default {
     return {
       transitionBackdrop: false,
       transition: false,
+    }
+  },
+  computed: {
+    isPlacement() {
+      return this.placement !== 'none';
     }
   },
   watch: {
@@ -86,16 +91,19 @@ export default {
   display: flex;
   flex-direction: column;
   min-height: 100%;
-  &-center {
-    justify-content: center;
-    align-items: center;
+
+  &--center {
     padding: 16px;
+
+    .v-overlay-content {
+      margin: auto;
+    }
   }
-  &-bottom {
+  &--bottom {
     justify-content: flex-end;
     padding-top: 56px;
   }
-  &-top {
+  &--top {
     justify-content: flex-start;
     padding: 56px 8px 8px;
   }

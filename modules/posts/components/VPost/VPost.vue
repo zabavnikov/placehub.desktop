@@ -10,19 +10,9 @@
       </d-content-card-menu>
     </header>
 
-    <n-link v-if="content.short_text " :to="{name: 'posts.show', params: {postId: content.id}}"
-            class="post-text m-6 block">{{ content.short_text }}
-    </n-link>
+    <component :is="full ? 'VPostBodyFull' : 'VPostBody'" :post="content"></component>
 
-
-    <div v-if="hasImages > 0" class="mb-6">
-      <n-link :to="{name: 'posts.show', params: {postId: content.id}}" class="block relative">
-        <img :src="preview.presets.small" width="100%" :alt="content.short_text" class="block">
-        <div class="post-total-photos" v-if="content.images.length > 1">{{ content.images.length }} фото</div>
-      </n-link>
-    </div>
-
-    <VUrl v-if="content.url" :url="content.url" :compact="hasImages" class="m-6" />
+    <VUrl v-if="content.url" :url="content.url" :compact="true" class="m-6" />
 
     <footer class="flex items-center m-6">
       <div v-if="content.place" class="text-gray-500">
@@ -48,7 +38,17 @@ import VProfile from '~/modules/users/components/VProfile';
 import VTag from '~/components/ui/VTag';
 
 export default {
-  components: {DContentCardMenu, VUrl, VLike, VProfile, VTag},
+  name: 'VPost',
+
+  components: {
+    DContentCardMenu,
+    VUrl,
+    VLike,
+    VProfile,
+    VTag,
+    VPostBody: () => import('./VPostBody'),
+    VPostBodyFull: () => import('./VPostBodyFull')
+  },
 
   props: {
     content: {
@@ -64,15 +64,6 @@ export default {
   data() {
     return {
       loading: false
-    }
-  },
-
-  computed: {
-    preview() {
-      return this.content.images[0];
-    },
-    hasImages() {
-      return this.content.images && this.content.images.length > 0;
     }
   },
   methods: {
@@ -104,7 +95,7 @@ export default {
 .post-text {
   font-size: 12px;
   font-weight: 500;
-  line-height: 20px;
+  line-height: 24px;
   white-space: pre-line;
 }
 

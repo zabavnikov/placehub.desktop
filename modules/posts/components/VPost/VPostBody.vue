@@ -1,0 +1,36 @@
+<template>
+  <div>
+    <n-link
+        v-if="post.short_text" :to="{name: 'posts.show', params: {postId: post.id}}"
+        class="post-text m-6 block"
+        v-text="post.short_text"></n-link>
+
+    <div v-if="hasImages > 0" class="mb-6">
+      <n-link :to="{name: 'posts.show', params: {postId: post.id}}" class="block relative">
+        <img :src="preview.presets.small" width="100%" :alt="post.short_text" class="block">
+        <div class="post-total-photos" v-if="post.images.length > 1">{{ post.images.length }} фото</div>
+      </n-link>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: 'VPostBody',
+
+  props: {
+    post: {
+      type: Object,
+      required: true,
+    },
+  },
+  computed: {
+    preview() {
+      return this.post.images[0];
+    },
+    hasImages() {
+      return this.post.images && this.post.images.length > 0;
+    }
+  },
+}
+</script>
