@@ -17,6 +17,9 @@ export default fragment('PostCardFragment', 'Post', {
       sizes: rawString('small')
     }, types.custom()),
   },
+  like: {
+    is_liked: types.boolean
+  },
   user: ProfileCardFragment,
   tags: TagsFragment,
 });

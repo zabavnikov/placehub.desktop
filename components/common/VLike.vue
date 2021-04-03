@@ -14,7 +14,7 @@ export default {
     },
 
     isLiked: {
-      type: Object,
+      type: Boolean,
     },
 
     count: {
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       like: {
-        isLiked: this.isLiked && this.isLiked.hasOwnProperty('model_id'),
+        isLiked: this.isLiked,
         count: this.count,
       },
       loading: false,
