@@ -2,9 +2,11 @@
   <header class="header px-6">
     <div class="flex items-center h-full">
       <n-link to="/" class="mr-6 font-bold"><span class="uppercase">PlaceHub</span><sup>alpha</sup></n-link>
-      <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {username: $auth.user.username}}" class="button button-success">Написать</n-link>
+      <div class="py-2">
+        <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {username: $auth.user.username}}" class="button button-success">Написать</n-link>
+      </div>
 
-      <n-link v-if="$auth.loggedIn" to="/places/create" class="dropdown-menu-item ml-3">Добавить геообъект</n-link>
+      <n-link v-if="$auth.loggedIn" to="/places/create" class="ml-3 text-base uppercase">Добавить место</n-link>
 
       <!--      <n-link to="/places" class="mr-6 font-bold">Места</n-link>-->
       <!--<n-link to="/images" class="mr-6 font-bold">Фотографии</n-link>-->
