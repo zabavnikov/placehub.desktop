@@ -4,9 +4,9 @@ import CommentCardChildFragment from '~/modules/comments/graphql/comment-card-ch
 
 export default fragment('CommentCardFragment', 'Comment', {
   id:            types.number,
+  user_id:       types.number,
   branch_id:     types.number,
   parent_id:     types.number,
-  user_id:       types.number,
   model_id:      types.number,
   text:          types.string,
   branch_replies_count: types.number,
@@ -22,8 +22,7 @@ export default fragment('CommentCardFragment', 'Comment', {
     }, types.custom()),
   },
   like: {
-    user_id: types.number,
-    model_id: types.number,
+    is_liked: types.boolean,
   },
   branch: CommentCardChildFragment,
   user: ProfileCardFragment

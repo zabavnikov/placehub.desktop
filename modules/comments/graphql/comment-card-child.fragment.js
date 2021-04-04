@@ -3,9 +3,9 @@ import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
 
 export default fragment('CommentCardChildFragment', 'Comment', {
   id:            types.number,
+  user_id:       types.number,
   branch_id:     types.number,
   parent_id:     types.number,
-  user_id:       types.number,
   model_id:      types.number,
   text:          types.string,
   replies_count: types.number,
@@ -20,8 +20,7 @@ export default fragment('CommentCardChildFragment', 'Comment', {
     }, types.custom()),
   },
   like: {
-    user_id: types.number,
-    model_id: types.number,
+    is_liked: types.boolean,
   },
   user: ProfileCardFragment
 });
