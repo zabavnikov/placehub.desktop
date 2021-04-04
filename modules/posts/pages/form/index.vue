@@ -15,7 +15,6 @@ import PostFormFragment from '~/modules/posts/graphql/post-form.fragment';
 export default {
   components: {VPostForm},
 
-
   async asyncData({ $axios, params }) {
     const getPost = GQLQuery('getPost($id: Int!)', {
       post: GQLParams({id: '$id'}, PostFormFragment),
