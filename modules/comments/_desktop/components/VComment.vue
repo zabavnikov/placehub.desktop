@@ -1,5 +1,5 @@
 <template>
-  <div class="comment" :id="`comment-${comment.id}`">
+  <div class="comment p-6" :id="`comment-${comment.id}`">
     <div v-if="comment.deleted_at" class="comment-deleted"><div>Комментарий удален</div></div>
 
     <div v-else class="comment-content">
@@ -12,9 +12,8 @@
       <div class="comment-column">
         <div class="comment-header">
           <n-link :to="{name: 'users.show', params: {username: comment.user.username}}" class="comment-user">
-            {{ comment.user.one_of_names }}
+            {{ comment.user.one_of_names }} <span class="text-gray-400 mx-0.5">&middot;</span> <span class="text-gray-400 text-xs">{{ comment.created_at }}</span>
           </n-link>
-          <div class="help">{{ comment.created_at }}</div>
         </div>
 
         <div v-show="!isEdit">
@@ -27,23 +26,23 @@
           </span>
           <span class="comment-text whitespace-pre-line" v-text="comment.text"></span>
 
-          <div v-if="comment.images && comment.images.length" class="grid grid-cols-4 gap-3 mt-3">
+          <div v-if="comment.images && comment.images.length" class="grid grid-cols-4 gap-3 mt-4">
             <a
               v-for="image in comment.images"
               :key="image.id"
               :style="{backgroundImage: `url(${image.presets.square})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
               :href="image.url"
               target="_blank"
-              class="wh-ratio rounded"
+              class="wh-ratio rounded-lg"
             >
             </a>
           </div>
 
-          <div class="flex items-center space-x-4 mt-3">
+          <div class="flex items-center space-x-4 mt-4">
             <v-like
               :to="`${subjectType}_comments/${comment.id}`"
               :count="comment.likes_count"
-              :is-liked="comment.like">
+              :is-liked="comment.like.is_liked">
             </v-like>
             <div @click="$store.commit('comments/MODE_REPLY', comment)" class="cursor-pointer help">Ответить</div>
           </div>
@@ -186,10 +185,6 @@
 </script>
 
 <style lang="scss">
-  .comment {
-    padding: 12px;
-  }
-
   .comment-content {
     display: flex;
 
@@ -207,11 +202,11 @@
   }
 
   .comment-header {
-    margin-bottom: 4px;
+    margin-bottom: 8px;
   }
 
   .comment-footer {
-    margin-top: 4px;
+    margin-top: 8px;
   }
 
   .comment-user {

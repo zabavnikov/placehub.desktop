@@ -5,9 +5,11 @@
           <div v-if="comments.count > 0" class="text-xl font-bold text-gray-500">{{ comments.count }}</div>
         </div>-->
 
-    <v-comment-form :disabled="mode !== null"></v-comment-form>
+    <div class="bg-white card rounded-t-lg p-4">
+      <v-comment-form :disabled="mode !== null"></v-comment-form>
+    </div>
 
-    <div>
+    <div class="bg-white card rounded-b-lg">
       <v-comment v-for="comment in comments" :key="comment.id" :comment="comment">
         <div class="replies" slot="replies">
           <v-comment v-for="reply in comment.branch" :key="reply.id" :comment="reply"></v-comment>
@@ -28,17 +30,19 @@
       padding-left: 56px;
 
       .comment {
-        padding-left: 0;
+        padding: 24px 0 0;
+        margin-top: 24px;
+        border-top: 1px dotted #f1f1f1;
       }
 
       .comment-content > .comment-column:first-child {
-        width: 32px;
+        width: 24px;
       }
 
-      .comment-author-avatar,
-      .comment-author-avatar img {
-        width: 32px;
-        height: 32px;
+      .comment-user-avatar,
+      .comment-user-avatar img {
+        width: 24px;
+        height: 24px;
       }
     }
   }
