@@ -178,7 +178,7 @@
           }
         });
 
-        data.comments.forEach(comment => list.push(comment))
+        data.comments.forEach(comment => this.$store.commit('comments/ADD_COMMENT_INTO_BRANCH', comment))
       },
     }
   }

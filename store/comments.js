@@ -49,6 +49,19 @@ const mutations = {
     }
   },
 
+  ADD_COMMENT_INTO_BRANCH(state, newComment) {
+    const list = state.list;
+
+    list.forEach(comment => {
+      if (comment.id === newComment.branch_id) {
+        if (! comment.hasOwnProperty('branch')) {
+          comment.branch = [];
+        }
+        comment.branch.push(newComment);
+      }
+    })
+  },
+
   /**
    * @param state
    * @param newComment

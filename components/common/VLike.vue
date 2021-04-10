@@ -32,7 +32,7 @@ export default {
     },
     color: {
       type: String,
-      default: '#aaa'
+      default: '#ccc'
     }
   },
 
