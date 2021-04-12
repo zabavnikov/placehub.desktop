@@ -58,6 +58,10 @@ export default {
     zoom: {
       type: Number,
       default: 2,
+    },
+    suggestion: {
+      type: Boolean,
+      default: false,
     }
   },
 
@@ -88,10 +92,7 @@ export default {
     onDragEnd(event) {
       const {lat, lng} = event.target.getLatLng();
 
-      this.$emit('dragend', [
-        lat.toFixed(6),
-        lng.toFixed(6)
-      ]);
+      this.markerChangedPosition(lat, lng);
     },
 
     onClick(event) {
@@ -99,10 +100,20 @@ export default {
 
       const {lat, lng} = event.latlng;
 
+      this.markerChangedPosition(lat, lng);
+    },
+
+    markerChangedPosition(lat, lng) {
       this.$emit('dragend', [
         lat.toFixed(6),
         lng.toFixed(6)
       ]);
+
+      if (this.suggestion) {
+        this.$axios
+            .$get(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json`)
+            .then(response => this.$emit('suggestion', response))
+      }
     },
   }
 }

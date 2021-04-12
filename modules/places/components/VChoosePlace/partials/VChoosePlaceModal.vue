@@ -12,7 +12,7 @@
         <v-map
           :lat-lng="payload.latLng"
           :zoom="zoom"
-          @dragend="$emit('dragend', $event)"
+          @dragend="onDragEnd"
         >
         </v-map>
       </div>
@@ -66,6 +66,12 @@
         return 2;
       }
     },
+
+    methods: {
+      onDragEnd(event) {
+        this.$emit('dragend', event);
+      }
+    }
   }
 </script>
 

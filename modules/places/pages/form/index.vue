@@ -95,11 +95,13 @@
               :name="place.parent_names"
               draggable
               clickable
+              suggestion
               style="height: 480px;"
               class="mt-2 rounded overflow-hidden"
               @zoom="place.zoom = $event"
               @select="place.parent_id = $event.id"
-              @dragend="place.lat = $event[0]; place.lng = $event[1]"
+              @dragend="onDragEnd"
+              @suggestion="onSuggestion"
           >
           </v-map>
         </div>

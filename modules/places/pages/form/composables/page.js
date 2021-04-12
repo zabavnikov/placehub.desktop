@@ -120,5 +120,11 @@ export default {
         })
         .catch(error => this.confirmDialog = false);
     },
+    onDragEnd(event) {
+      this.place.lat = event[0]; this.place.lng = event[1];
+    },
+    onSuggestion(event) {
+      console.log(event)
+    }
   },
 }
