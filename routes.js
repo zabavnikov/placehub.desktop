@@ -1,5 +1,5 @@
-import { sortRoutes } from '@nuxt/utils';
-import { readdirSync, existsSync } from 'fs';
+import {sortRoutes} from '@nuxt/utils';
+import {existsSync, readdirSync} from 'fs';
 
 const routes = [];
 

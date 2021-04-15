@@ -1,4 +1,4 @@
-import { types, fragment } from 'typed-graphqlify';
+import {fragment, types} from 'typed-graphqlify';
 
 export default {
   place: fragment('PlaceFragment', 'Place', {

@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import { query as GQLQuery, params as GQLParams, types as GQLTypes } from 'typed-graphqlify';
+import {params as GQLParams, query as GQLQuery, types as GQLTypes} from 'typed-graphqlify';
 import PostCardFragment from '~/modules/posts/graphql/post-card.fragment';
 import VPost from '~/modules/posts/components/VPost';
 import VPostForm from '~/modules/posts/components/VPostForm';

@@ -52,10 +52,10 @@
 </template>
 
 <script>
-  import VDropdown from '~/components/ui/VDropdown';
-  import VLike from '~/components/common/VLike';
+import VDropdown from '~/components/ui/VDropdown';
+import VLike from '~/components/common/VLike';
 
-  export default {
+export default {
     components: {VLike, VDropdown},
 
     props: {

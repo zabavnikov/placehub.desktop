@@ -39,11 +39,11 @@
 </template>
 
 <script>
-  import VSeasonSelector from '~/components/common/VSeasonSelector';
-  import VRatingStars from '~/components/common/VRatingStars';
-  import VTextarea from '~/components/common/VTextarea';
+import VSeasonSelector from '~/components/common/VSeasonSelector';
+import VRatingStars from '~/components/common/VRatingStars';
+import VTextarea from '~/components/common/VTextarea';
 
-  const formInitialState = {
+const formInitialState = {
     visit_type_id: null,
     rating: 0,
     season: 'summer',

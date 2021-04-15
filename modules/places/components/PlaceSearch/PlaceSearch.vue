@@ -20,9 +20,9 @@
 </template>
 
 <script>
-  import debounce from 'lodash/debounce';
+import debounce from 'lodash/debounce';
 
-  export default {
+export default {
     props: {
       id: String,
       value: String,

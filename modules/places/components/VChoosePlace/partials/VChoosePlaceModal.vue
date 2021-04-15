@@ -36,12 +36,12 @@
 </template>
 
 <script>
-  import VOverlay from '~/components/common/VOverlay';
-  import VMap from "../../VMap";
-  import PlaceSearch from "../../PlaceSearch/PlaceSearch";
-  import { zoom } from '~/modules/places/config';
+import VOverlay from '~/components/common/VOverlay';
+import VMap from "../../VMap";
+import PlaceSearch from "../../PlaceSearch/PlaceSearch";
+import {zoom} from '~/modules/places/config';
 
-  export default {
+export default {
     components: { PlaceSearch, VOverlay, VMap },
 
     props: {

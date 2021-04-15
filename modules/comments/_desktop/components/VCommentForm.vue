@@ -32,13 +32,13 @@
 </template>
 
 <script>
-  import cloneDeep from 'lodash/cloneDeep';
-  import Errors from '~/utils/errors';
-  import VTextarea from '~/components/common/VTextarea';
-  import VAttachments from '~/components/common/VAttachments';
-  import VUpload from '~/components/common/VUpload';
+import cloneDeep from 'lodash/cloneDeep';
+import Errors from '~/utils/errors';
+import VTextarea from '~/components/common/VTextarea';
+import VAttachments from '~/components/common/VAttachments';
+import VUpload from '~/components/common/VUpload';
 
-  const initialState = {
+const initialState = {
     parent_id: null,
     image_id: null,
     text: '',

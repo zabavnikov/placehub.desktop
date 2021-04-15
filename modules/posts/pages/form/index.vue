@@ -9,7 +9,7 @@
 
 <script>
 import VPostForm from '~/modules/posts/components/VPostForm';
-import { query as GQLQuery, params as GQLParams, types } from 'typed-graphqlify';
+import {params as GQLParams, query as GQLQuery} from 'typed-graphqlify';
 import PostFormFragment from '~/modules/posts/graphql/post-form.fragment';
 
 export default {

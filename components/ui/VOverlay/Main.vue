@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import { ref } from '@vue/composition-api'
-import { onClickOutside } from '@vueuse/core';
+import {ref} from '@vue/composition-api'
+import {onClickOutside} from '@vueuse/core';
 
 export default {
   setup(props, { emit }) {

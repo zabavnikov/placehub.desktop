@@ -24,7 +24,7 @@
 </style>
 
 <script>
-import { query as GQLQuery, params as GQLParams, types } from 'typed-graphqlify';
+import {params as GQLParams, query as GQLQuery} from 'typed-graphqlify';
 import VComments from "~/modules/comments/_desktop/components/VComments";
 import VCommentForm from "~/modules/comments/_desktop/components/VCommentForm";
 import VLike from "~/components/common/VLike";

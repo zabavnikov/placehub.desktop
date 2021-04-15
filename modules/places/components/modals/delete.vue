@@ -12,9 +12,9 @@
 </template>
 
 <script>
-  import VOverlay from '~/components/common/VOverlay';
+import VOverlay from '~/components/common/VOverlay';
 
-  export default {
+export default {
     components: { VOverlay },
 
     computed: {

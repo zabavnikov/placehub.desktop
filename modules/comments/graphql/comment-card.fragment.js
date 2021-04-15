@@ -1,4 +1,4 @@
-import {types, fragment, params, rawString} from 'typed-graphqlify';
+import {fragment, params, rawString, types} from 'typed-graphqlify';
 import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
 import CommentCardChildFragment from '~/modules/comments/graphql/comment-card-child.fragment';
 

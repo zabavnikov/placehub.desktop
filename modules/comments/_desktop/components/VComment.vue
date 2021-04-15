@@ -93,13 +93,13 @@
 </template>
 
 <script>
-  import VCommentForm from './VCommentForm';
-  import VLike from '~/components/common/VLike';
-  import VDropdown from "~/components/ui/VDropdown";
-  import { query as GQLQuery, params as GQLParams, types } from 'typed-graphqlify';
-  import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
+import VCommentForm from './VCommentForm';
+import VLike from '~/components/common/VLike';
+import VDropdown from "~/components/ui/VDropdown";
+import {params as GQLParams, query as GQLQuery} from 'typed-graphqlify';
+import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 
-  export default {
+export default {
     name: 'VComment',
 
     components: {VDropdown, VCommentForm, VLike},

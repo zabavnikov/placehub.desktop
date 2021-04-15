@@ -1,6 +1,4 @@
-import {types, fragment, params, rawString} from 'typed-graphqlify';
-import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
-import PlaceCardFragment from '~/modules/places/graphql/place-card.fragment';
+import {fragment, params, rawString, types} from 'typed-graphqlify';
 import TagsFragment from '~/modules/tags/graphql/tags.fragment';
 
 export default fragment('PostFormFragment', 'Post', {
@@ -8,7 +6,7 @@ export default fragment('PostFormFragment', 'Post', {
   user_id:      types.number,
   place_id:     types.number,
   text:         types.string,
-  images_order:  types.string,
+  image_order:  types.string,
   is_draft:     types.boolean,
   images: {
     id:   types.number,

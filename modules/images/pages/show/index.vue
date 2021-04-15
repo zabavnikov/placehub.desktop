@@ -21,7 +21,7 @@
 
 <script>
 import VComments from "~/modules/comments/_desktop/components/VComments";
-import VTags  from "~/modules/tags/components/VTags";
+import VTags from "~/modules/tags/components/VTags";
 
 export default {
   components: {VComments,VTags},

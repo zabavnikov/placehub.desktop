@@ -26,10 +26,10 @@
 </template>
 
 <script>
-  import VOverlay from '~/components/common/VOverlay';
-  import VTextarea from '~/components/common/VTextarea';
+import VOverlay from '~/components/common/VOverlay';
+import VTextarea from '~/components/common/VTextarea';
 
-  export default {
+export default {
     components: { VOverlay, VTextarea },
 
     data() {

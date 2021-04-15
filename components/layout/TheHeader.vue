@@ -41,6 +41,7 @@
 
 <script>
 import VDropdown from "~/components/ui/VDropdown/VDropdown";
+
 export default {components: {VDropdown}}
 </script>
 
