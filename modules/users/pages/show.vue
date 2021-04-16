@@ -13,8 +13,8 @@
     </template>
 
     <template #content>
-      <v-post-form v-if="$auth.loggedIn" @create="posts.unshift($event)" class="mb-4"></v-post-form>
-      <v-post v-for="(post, index) in posts" @delete="posts.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
+      <v-post-form v-if="$auth.loggedIn" @create="posts.data.unshift($event)" class="mb-4"></v-post-form>
+      <v-post v-for="(post, index) in posts.data" @delete="posts.data.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
     </template>
   </the-layout>
 </template>
@@ -37,12 +37,16 @@ export default {
         description:  GQLTypes.string,
         avatar:       GQLTypes.string,
       }),
-      posts: GQLParams({ username: '$username' }, PostCardFragment)
+      posts: GQLParams({ username: '$username' }, {
+        data: PostCardFragment
+      })
     });
 
     const { data } = await $axios.$post('/gql', {
       query: getUser.toString(),
-      variables: { username: params.username }
+      variables: {
+        username: params.username,
+      }
     });
 
     return {...data};

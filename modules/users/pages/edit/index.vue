@@ -1,5 +1,5 @@
 <template>
-  <the-layout reverse heading="Профиль пользователя">
+  <the-layout reverse heading="Редактирование профиля">
     <template #sidebar>
       <img :src="$auth.user.avatar" :alt="user.name" class="rounded" width="100%" />
       <input type="file" @change="onUpload" class="mt-2" />

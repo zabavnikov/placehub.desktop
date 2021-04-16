@@ -8,4 +8,13 @@ export default ({ app, $axios, error }) => {
       }
     }
   });
+
+  $axios.onResponse(({ data }) => {
+    if (data.hasOwnProperty('errors')) {
+      data.errors.forEach(graphqlError => {
+        if (graphqlError.extensions.category === 'NOT_FOUND') error(404);
+        if (graphqlError.extensions.category === 'FORBIDDEN') error(403);
+      });
+    }
+  })
 }

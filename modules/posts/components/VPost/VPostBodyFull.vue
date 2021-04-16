@@ -1,6 +1,6 @@
 <template>
         <div>
-        <div class="m-6 post-text">{{ post.text }}</div>
+        <div class="m-6 text-base whitespace-pre-line">{{ post.text }}</div>
 
         <div v-if="post.images.length > 0">
           <figure v-for="image in post.images" :key="image.id">

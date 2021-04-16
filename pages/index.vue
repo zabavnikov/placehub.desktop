@@ -3,8 +3,8 @@
     <template #sidebar>&nbsp;</template>
     <template #content>
       <v-post
-          v-for="(post, index) in posts"
-          @delete="posts.splice(index, 1)"
+          v-for="(post, index) in posts.data"
+          @delete="posts.data.splice(index, 1)"
           :key="post.id"
           :content="post"
           class="mb-6">
@@ -25,10 +25,12 @@ export default {
   watchQuery: ['tags'],
 
   async asyncData({ $axios, query }) {
-    const getPosts = GQLQuery('query($tags: String)', {
+    const getPosts = GQLQuery('getPosts($tags: String)', {
       posts: GQLParams({
         tags: '$tags'
-      }, PostCardFragment),
+      }, {
+        data: PostCardFragment
+      }),
     });
 
     const { data } = await $axios.$post('/gql', {

@@ -2,7 +2,7 @@
   <div>
     <n-link
         v-if="post.short_text" :to="{name: 'posts.show', params: {postId: post.id}}"
-        class="post-text m-6 block"
+        class="text-base whitespace-pre-line m-6 block"
         v-text="post.short_text"></n-link>
 
     <div v-if="hasImages > 0" class="mb-6">
