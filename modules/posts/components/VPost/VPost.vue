@@ -15,14 +15,14 @@
     <VUrl v-if="content.url" :url="content.url" :compact="true" class="m-6" />
 
     <footer class="flex items-center m-6">
-      <div v-if="content.place" class="text-gray-500">
-        <div style="font-size: 12px; font-weight: 500;">{{ content.place.name }}</div>
-        <div class="help">{{ content.place.parent_names }}</div>
+      <div v-if="content.place" class="text-base">
+        <div class="text-gray-600">{{ content.place.name }}</div>
+        <div class="text-gray-400">{{ content.place.parent_names }}</div>
       </div>
       <div class="flex items-center space-x-6 ml-auto">
         <n-link :to="`/posts/${content.id}#comments`" class="flex items-center space-x-2">
-          <v-icon name="chat-alt" stroke="#aaa"></v-icon>
-          <span>{{ content.comments_count }}</span>
+          <v-icon name="chat" stroke="#aaa"></v-icon>
+          <span class="text-base">{{ content.comments_count }}</span>
         </n-link>
         <v-like :to="`posts/${content.id}`" :count="content.likes_count" :is-liked="content.like.is_liked"></v-like>
       </div>

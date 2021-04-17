@@ -8,7 +8,7 @@
           [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-1']: true,
         }">
       <div v-for="(image, index) in images" :key="image.id" :id="`post-image-${image.id}`" class="post-images-wrap">
-        <div :style="{backgroundImage: `url(${image.presets.square})`}" class="form-images__image wh-ratio rounded">
+        <div :style="{backgroundImage: `url(${image.presets.small_fill})`}" class="form-images__image wh-ratio rounded">
           <div class="form-images__delete"
                @dblclick="onDelete(index)">
             <v-icon name="trash" stroke="white" width="16px"></v-icon>

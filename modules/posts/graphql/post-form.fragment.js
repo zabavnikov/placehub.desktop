@@ -12,7 +12,7 @@ export default fragment('PostFormFragment', 'Post', {
     id:   types.number,
     text: types.string,
     presets: params({
-      sizes: rawString('square')
+      sizes: rawString('small_fill')
     }, types.custom()),
   },
   //...PlaceCardFragment,

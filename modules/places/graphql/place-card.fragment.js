@@ -1,10 +1,21 @@
 import {fragment, types} from 'typed-graphqlify';
 
-export default {
-  place: fragment('PlaceFragment', 'Place', {
-    id:           types.number,
-    parent_id:    types.number,
-    name:         types.string,
-    parent_names: types.string,
-  })
+const fields = {
+  id:           types.number,
+  parent_id:    types.number,
+  name:         types.string,
 };
+
+export default fragment('PlaceFragment', 'Place', {
+  ...fields,
+  parent_names: types.string,
+  parent: {
+    ...fields,
+    parent: {
+      ...fields,
+      parent: {
+        ...fields,
+      }
+    }
+  }
+});
