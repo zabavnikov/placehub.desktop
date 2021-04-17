@@ -15,7 +15,7 @@ export default fragment('PostCardFragment', 'Post', {
   images: {
     id: types.number,
     presets: params({
-      sizes: rawString('small')
+      sizes: rawString('small_fill')
     }, types.custom()),
   },
   like: {

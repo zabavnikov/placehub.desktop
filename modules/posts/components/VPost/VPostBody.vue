@@ -7,7 +7,7 @@
 
     <div v-if="hasImages > 0" class="mb-6">
       <n-link :to="{name: 'posts.show', params: {postId: post.id}}" class="block relative">
-        <img :src="preview.presets.small" width="100%" :alt="post.short_text" class="block">
+        <img :src="preview.presets.small_fill" width="100%" :alt="post.short_text" class="block">
         <div class="post-total-photos" v-if="post.images.length > 1">{{ post.images.length }} фото</div>
       </n-link>
     </div>
