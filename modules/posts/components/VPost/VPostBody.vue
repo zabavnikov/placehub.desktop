@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="m-6">
-      <div v-if="post.tags.length > 0" class="mb-4 flex flex-wrap text-base text-gray-500">
+      <div v-if="post.tags && post.tags.length > 0" class="mb-4 flex flex-wrap text-base text-gray-500">
         <n-link to="/" v-for="tag in post.tags" :key="tag.id" class="mr-2 hover:text-gray-800">#{{ tag.name }}</n-link>
       </div>
       <n-link

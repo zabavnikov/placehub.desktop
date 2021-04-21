@@ -25,7 +25,7 @@ export default {
   },
   computed: {
     avatarClasses() {
-      return this.small ? 'w-6 h-6' : 'w-10 w-10';
+      return this.small ? 'w-6 h-6' : 'w-9 h-9';
     }
   }
 }
