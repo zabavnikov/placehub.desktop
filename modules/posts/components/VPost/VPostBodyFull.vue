@@ -5,8 +5,8 @@
         <div v-if="post.images.length > 0">
           <figure v-for="image in post.images" :key="image.id">
             <div class="relative">
-              <a :href="image.url" target="_blank">
-                <img :src="image.presets.small" :alt="image.id" width="100%" class="block" style="border-bottom: 1px solid #f1f1f1">
+              <a :href="image.url" target="_blank" class="block">
+                <img :src="image.presets.small" :alt="image.id" width="100%" class="block">
               </a>
 <!--              <div v-if="$auth.loggedIn" class="post-image-tools space-x-4">
                 <v-like :to="`posts_images/${image.id}`" :count="image.likes_count" :is-liked="image.liked_by_me" color="white"></v-like>
@@ -27,7 +27,7 @@
                 text-create="Комментарий добавлен в общий список"
                 @create="comments.list.data.unshift($event); commentableImageId = null; comments.count++" />-->
 
-            <figcaption v-if="image.text" class="m-6" style="line-height: 20px; font-size: 12px; font-weight: 500; white-space: pre-line;">{{ image.text }}</figcaption>
+            <figcaption v-if="image.text" class="m-6 text-base">{{ image.text }}</figcaption>
           </figure>
         </div>
 

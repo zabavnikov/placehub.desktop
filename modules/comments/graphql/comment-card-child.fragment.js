@@ -8,6 +8,7 @@ export default fragment('CommentCardChildFragment', 'Comment', {
   parent_id:     types.number,
   model_id:      types.number,
   text:          types.string,
+  branch_replies_count: types.number,
   replies_count: types.number,
   likes_count: types.number,
   created_at:     params({
