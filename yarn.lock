@@ -1518,7 +1518,7 @@
   dependencies:
     tslib "^2.2.0"
 
-"@vueuse/core@^4.8.2":
+"@vueuse/core@^4.9.0":
   version "4.9.0"
   resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-4.9.0.tgz#a0d048654bdf26b9838d5a6b9b33c5182130902d"
   integrity sha512-vkGB6T9IgsdvbEyEVLaNu+JlMXonqx/mUX5El1u252ZTOa9khsVIAWWEMfxFyXz245V2hJi+O+TZv6rwyHbOLg==
@@ -6870,7 +6870,7 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.17, postcss@^7.0.2
     source-map "^0.6.1"
     supports-color "^6.1.0"
 
-postcss@^8.1.10, postcss@^8.1.6, postcss@^8.2.1, postcss@^8.2.10, postcss@^8.2.9:
+postcss@^8.1.10, postcss@^8.1.6, postcss@^8.2.1, postcss@^8.2.10, postcss@^8.2.12, postcss@^8.2.9:
   version "8.2.12"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.2.12.tgz#81248a1a87e0f575cc594a99a08207fd1c4addc4"
   integrity sha512-BJnGT5+0q2tzvs6oQfnY2NpEJ7rIXNfBnZtQOKCIsweeWXBXeDd5k31UgTdS3d/c02ouspufn37mTaHWkJyzMQ==
