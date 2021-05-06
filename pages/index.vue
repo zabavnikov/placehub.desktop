@@ -2,6 +2,8 @@
   <the-layout>
     <template #sidebar>&nbsp;</template>
     <template #content>
+      <div @click="$wnd.show(getModal)">WND</div>
+
       <v-post
           v-for="(post, index) in posts.data"
           @delete="posts.data.splice(index, 1)"
@@ -9,7 +11,6 @@
           :content="post"
           class="mb-6">
       </v-post>
-
     </template>
   </the-layout>
 </template>
@@ -42,6 +43,12 @@ export default {
 
     return {...data};
   },
+
+  methods: {
+    getModal() {
+      return () => import('~/components/ui/VButton')
+    }
+  }
 
 }
 </script>

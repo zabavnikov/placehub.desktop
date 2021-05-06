@@ -22,7 +22,8 @@ module.exports = {
     './plugins/event-bus.js',
     './plugins/overlay.js',
     './plugins/directives.js',
-    './plugins/components.js'
+    './plugins/components.js',
+    './plugins/wnd.js'
   ],
 
   buildModules: [
@@ -98,6 +99,9 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    extractCSS: true
+    extractCSS: true,
+    babel: {
+      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
+    },
   },
 };
