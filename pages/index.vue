@@ -2,7 +2,7 @@
   <the-layout>
     <template #sidebar>&nbsp;</template>
     <template #content>
-      <div @click="$wnd.show(() => import('~/components/ui/VButton'), {
+      <div @click="$overlay.show(() => import('~/components/ui/VButton'), {
         props: {
           test: 'кнопка'
         },

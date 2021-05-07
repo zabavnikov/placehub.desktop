@@ -45,5 +45,5 @@ class Overlay {
 }
 
 export default (ctx, inject) => {
-  inject('wnd', new Overlay())
+  inject('overlay', new Overlay())
 }
