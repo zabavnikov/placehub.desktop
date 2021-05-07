@@ -23,7 +23,6 @@ module.exports = {
     './plugins/overlay.js',
     './plugins/directives.js',
     './plugins/components.js',
-    './plugins/wnd.js'
   ],
 
   buildModules: [
