@@ -1,52 +1,49 @@
 import Vue from 'vue';
 
-const v = new Vue({
-  data() {
-    return {
-      wnd: null,
+class Overlay {
+  static id = 'overlay-container';
+
+  constructor() {
+    this.overlayInstance = null;
+  }
+
+  show(component, data) {
+    if (! Overlay.isOverlayContainerExists()) {
+      this.overlayInstance = Vue.extend({
+        render: (h) => h(component, data),
+      });
+
+      this.overlayInstance = new this.overlayInstance().$mount();
+
+      Overlay.createOverlayContainer()
+          .appendChild(this.overlayInstance.$el);
+    } else {
+      this.hide();
     }
-  },
-  methods: {
-    async show(callback, data = {}) {
-      this._destroy();
-      this._create(callback(), data);
-    },
+  }
 
-    hide() {
-      this._destroy();
-    },
+  hide() {
+    document.body.removeChild(Overlay.getOverlayContainer());
+    this.overlayInstance = null;
+  }
 
-    _create(asyncComponent, data) {
-      this.wnd = Vue.extend({
-        render(createElement) {
-          return createElement(asyncComponent, {
-            props: {...data}
-          })
-        },
-      })
+  static createOverlayContainer() {
+    const overlayContainer = document.createElement('div');
+    overlayContainer.setAttribute('id', Overlay.id);
+    document.body.appendChild(overlayContainer);
 
-      const body = document.body;
+    return overlayContainer;
+  }
 
-      const container = document.createElement('div');
-      const containerChild = document.createElement('div');
-      container.setAttribute('id', 'wnd');
+  static getOverlayContainer() {
+    return document.getElementById(Overlay.id);
+  }
 
-      container.appendChild(containerChild);
-      body.appendChild(container);
-
-      new this.wnd().$mount('#wnd > div');
-    },
-
-    _destroy() {
-      const el = document.getElementById('wnd');
-      if (el) {
-        document.body.removeChild(document.getElementById('wnd'));
-      }
-      this.wnd = null;
-    }
-  },
-})
+  static isOverlayContainerExists() {
+    return Overlay.getOverlayContainer() !== null;
+  }
+}
 
 export default (ctx, inject) => {
-  inject('wnd', v)
+  inject('wnd', new Overlay())
 }

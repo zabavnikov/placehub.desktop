@@ -2,7 +2,14 @@
   <the-layout>
     <template #sidebar>&nbsp;</template>
     <template #content>
-      <div @click="$wnd.show(getModal)">WND</div>
+      <div @click="$wnd.show(() => import('~/components/ui/VButton'), {
+        props: {
+          test: 'кнопка'
+        },
+        on: {
+          click: show
+        },
+      })">WND</div>
 
       <v-post
           v-for="(post, index) in posts.data"
@@ -45,8 +52,8 @@ export default {
   },
 
   methods: {
-    getModal() {
-      return () => import('~/components/ui/VButton')
+    show(text) {
+      console.log(text)
     }
   }
 
