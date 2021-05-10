@@ -18,7 +18,7 @@
         if (this.$auth.loggedIn) {
           this.$emit('click');
         } else {
-          this.$overlay.show('auth:login')
+          this.$overlay.show(() => import('~/components/layout/TheLoginOverlay'));
         }
       }
     }

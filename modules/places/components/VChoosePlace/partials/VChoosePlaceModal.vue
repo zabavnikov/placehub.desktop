@@ -1,5 +1,5 @@
 <template>
-  <v-overlay @close="$eventBus.$emit('modal', ['places', 'choose'])">
+<!--  <v-overlay @close="$eventBus.$emit('modal', ['places', 'choose'])">
     <div class="choose-place rounded overflow-hidden">
       <div class="choose-place-map">
         <place-search
@@ -23,26 +23,25 @@
           <div class="mt-2">После добавления места, <b>повторите поиск</b>.</div>
         </div>
 
-        <!--<div v-if="isPlaceSelected" class="mb-4 p-2 rounded bg-blue-200">
+        &lt;!&ndash;<div v-if="isPlaceSelected" class="mb-4 p-2 rounded bg-blue-200">
           Уточнить местоположение можно перетаскиванием маркера на карте.
         </div>
         <div v-if="isCustomLatLng" class="mb-4 cursor-pointer underline" @click="$emit('reset')">
           Нажмите, чтобы сбросить координаты выбранные в ручную.
-        </div>-->
+        </div>&ndash;&gt;
         <button type="button" @click="$eventBus.$emit('modal', ['places', 'choose'])" class="button button-success w-full">Готово</button>
       </div>
     </div>
-  </v-overlay>
+  </v-overlay>-->
 </template>
 
 <script>
-import VOverlay from '~/components/common/VOverlay';
 import VMap from "../../VMap";
 import PlaceSearch from "../../PlaceSearch/PlaceSearch";
 import {zoom} from '~/modules/places/config';
 
 export default {
-    components: { PlaceSearch, VOverlay, VMap },
+    components: { PlaceSearch, VMap },
 
     props: {
       isCustomLatLng: {

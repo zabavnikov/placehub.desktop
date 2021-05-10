@@ -1,5 +1,4 @@
 <template>
-  <v-overlay @close="onClose">
     <div class="p-4 bg-white rounded" style="width: 480px;">
       <div class="mb-4 text-2xl">{{ payload.isBan ? 'Бан' : 'Жалоба' }}</div>
       <form @submit.prevent="onSubmit">
@@ -22,15 +21,13 @@
         </div>
       </form>
     </div>
-  </v-overlay>
 </template>
 
 <script>
-import VOverlay from '~/components/common/VOverlay';
 import VTextarea from '~/components/common/VTextarea';
 
 export default {
-    components: { VOverlay, VTextarea },
+    components: { VTextarea },
 
     data() {
       return {

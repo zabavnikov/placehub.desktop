@@ -1,5 +1,5 @@
 <template>
-  <v-overlay @close="onClose">
+<!--  <v-overlay @close="onClose">
     <div class="p-6 bg-white rounded">
       <div>Будет удалено нас. пунктов: {{ payload.count.localities }}</div>
       <div>Будет удалено мест: {{ payload.count.poi }}</div>
@@ -8,15 +8,11 @@
         <button type="button" class="button button-success ml-4" @click="onClose">Отмена</button>
       </div>
     </div>
-  </v-overlay>
+  </v-overlay>-->
 </template>
 
 <script>
-import VOverlay from '~/components/common/VOverlay';
-
 export default {
-    components: { VOverlay },
-
     computed: {
       payload() {
         return this.$eventBus.modals.places.delete.data;

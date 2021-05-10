@@ -17,11 +17,10 @@
 </template>
 
 <script>
-import VOverlay from '~/components/common/VOverlay';
 import VTextarea from "~/components/common/VTextarea";
 
 export default {
-  components: {VOverlay, VTextarea},
+  components: {VTextarea},
 
   props: {
     value: {

@@ -2,15 +2,6 @@
   <the-layout>
     <template #sidebar>&nbsp;</template>
     <template #content>
-      <div @click="$overlay.show(() => import('~/components/ui/VButton'), {
-        props: {
-          test: 'кнопка'
-        },
-        on: {
-          click: show
-        },
-      })">WND</div>
-
       <v-post
           v-for="(post, index) in posts.data"
           @delete="posts.data.splice(index, 1)"

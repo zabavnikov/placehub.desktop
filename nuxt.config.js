@@ -91,16 +91,5 @@ module.exports = {
 
   tailwindcss: {
     viewer: false,
-    jit: true,
-  },
-
-  /*
-  ** Build configuration
-  */
-  build: {
-    extractCSS: true,
-    babel: {
-      plugins: [['@babel/plugin-proposal-private-methods', { loose: true }]],
-    },
   },
 };

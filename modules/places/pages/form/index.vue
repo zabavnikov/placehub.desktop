@@ -107,19 +107,8 @@
         </div>
 
         <div class="mt-6">
-          <button type="button" @click="confirmDialog = true" class="button button-success">Продолжить</button>
+          <button type="button" @click="showOverlay" class="button button-success">Продолжить</button>
         </div>
-
-        <v-overlay v-if="confirmDialog" @close="confirmDialog = false">
-          <div class="p-4 bg-white rounded" style="width: 320px;">
-            Нажмите кнопку <b>{{ isEdit ? 'Сохранить' : 'Создать' }}</b>, если вся информация заполенена верно.
-            <hr class="my-4">
-            <div class="flex justify-end space-x-2">
-              <button class="button" @click="confirmDialog = false">Отмена</button>
-              <button class="button button-success">{{ isEdit ? 'Сохранить' : 'Создать' }}</button>
-            </div>
-          </div>
-        </v-overlay>
       </form>
     </template>
   </the-layout>
@@ -129,6 +118,18 @@
 import Page from '~/modules/places/pages/form/composables/page';
 
 export default {
-  mixins: [Page]
+  mixins: [Page],
+  methods: {
+    showOverlay() {
+      this.$overlay.show(() => import('~/modules/places/components/overlays/ConfirmationPlaceCreation'), {
+        props: {
+          isEdit: this.isEdit
+        },
+        on: {
+          submit: this.onSubmit
+        }
+      })
+    }
+  }
 }
 </script>

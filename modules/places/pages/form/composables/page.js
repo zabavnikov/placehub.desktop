@@ -1,6 +1,5 @@
 import VMap from "~/modules/places/components/VMap";
 import PlaceSearch from "../../../components/PlaceSearch/PlaceSearch";
-import VOverlay from "~/components/common/VOverlay/VOverlay";
 
 const localityRegionState = {
   parent_id: null,
@@ -19,7 +18,6 @@ export default {
   components: {
     VMap,
     PlaceSearch,
-    VOverlay,
   },
 
   data() {

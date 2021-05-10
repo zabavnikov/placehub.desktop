@@ -1,49 +1,27 @@
-import Vue from 'vue';
+import { ref, defineComponent } from '@vue/composition-api';
 
-class Overlay {
-  static id = 'overlay-container';
+export default (ctx, inject) => {
+  class Overlay {
+    constructor() {
+      this.component = ref(undefined);
+    }
 
-  constructor() {
-    this.overlayInstance = null;
-  }
-
-  show(component, data) {
-    if (! Overlay.isOverlayContainerExists()) {
-      this.overlayInstance = Vue.extend({
-        render: (h) => h(component, data),
+    show(component, props = {}) {
+      this.component.value = defineComponent({
+        render(createElement) {
+          return createElement(component, props)
+        }
       });
+    }
 
-      this.overlayInstance = new this.overlayInstance().$mount();
+    hide() {
+      this.component.value = undefined;
+    }
 
-      Overlay.createOverlayContainer()
-          .appendChild(this.overlayInstance.$el);
-    } else {
-      this.hide();
+    is() {
+      return this.component.value !== undefined;
     }
   }
 
-  hide() {
-    document.body.removeChild(Overlay.getOverlayContainer());
-    this.overlayInstance = null;
-  }
-
-  static createOverlayContainer() {
-    const overlayContainer = document.createElement('div');
-    overlayContainer.setAttribute('id', Overlay.id);
-    document.body.appendChild(overlayContainer);
-
-    return overlayContainer;
-  }
-
-  static getOverlayContainer() {
-    return document.getElementById(Overlay.id);
-  }
-
-  static isOverlayContainerExists() {
-    return Overlay.getOverlayContainer() !== null;
-  }
-}
-
-export default (ctx, inject) => {
-  inject('overlay', new Overlay())
+  inject('overlay', new Overlay());
 }
