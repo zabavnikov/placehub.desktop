@@ -1,5 +1,6 @@
 import {fragment, params, rawString, types} from 'typed-graphqlify';
 import TagsFragment from '~/modules/tags/graphql/tags.fragment';
+import PlaceCardGraphQL from '~/modules/places/graphql/place-card.graphql'
 
 export default fragment('PostFormFragment', 'Post', {
   id:           types.number,
@@ -15,6 +16,6 @@ export default fragment('PostFormFragment', 'Post', {
       sizes: rawString('small_fill')
     }, types.custom()),
   },
-  //...PlaceCardFragment,
+  place: PlaceCardGraphQL,
   tags: TagsFragment,
 });

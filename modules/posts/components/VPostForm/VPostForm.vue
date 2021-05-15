@@ -68,7 +68,7 @@
           </v-upload>
 
           <button
-              @click="$overlay.toggle('choose-place')"
+              @click="$overlay.show(() => import('~/modules/places/components/VChoosePlaceOverlay'), mapOverlay)"
               type="button"
               class="post-form-tool"
               v-tooltip="`Карта`"
@@ -91,11 +91,6 @@
         </div>
       </div>
     </div>
-
-    <VChoosePlaceOverlay
-        v-if="$overlay.name === 'choose-place'"
-        v-model="form.place"
-    />
   </div>
 </template>
 
@@ -128,8 +123,6 @@
 <script>
 import cloneDeep from 'lodash/cloneDeep';
 import Cookie from 'js-cookie';
-import VChoosePlace from "~/modules/places/components/VChoosePlace";
-import VChoosePlaceOverlay from "~/modules/places/components/VChoosePlaceOverlay";
 import VTextarea from "~/components/common/VTextarea";
 import Errors from "~/utils/errors"
 import VPostFormImages from "./VPostFormImages";
@@ -163,11 +156,9 @@ export default {
 
   components: {
     VUrl,
-    VChoosePlaceOverlay,
     VTagsSelect,
     VUpload,
     VPostFormImages,
-    VChoosePlace,
     VTextarea,
     VPostFormAccess,
     VProgressBar,
@@ -192,6 +183,16 @@ export default {
     },
     storyModeTooltip() {
       return this.storyMode ? 'Отключить режим истории' : 'Включить режим истории';
+    },
+    mapOverlay() {
+      return {
+        props: {
+          value: this.form.place
+        },
+        on: {
+          input: selectedPlace => this.form.place = selectedPlace,
+        }
+      }
     }
   },
 

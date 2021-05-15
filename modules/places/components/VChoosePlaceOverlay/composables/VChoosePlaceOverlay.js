@@ -1,9 +1,8 @@
-import DOverlay from '~/components/ui-extends/DOverlay';
 import VMap from '~/modules/places/components/VMap';
 import VSearchPlace from '~/modules/places/components/VSearchPlace';
 
 export default {
-  components: {DOverlay, VMap, VSearchPlace},
+  components: {VMap, VSearchPlace},
 
   props: {
     value: Object
