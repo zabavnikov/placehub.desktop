@@ -6,7 +6,9 @@
         <v-icon name="pencil" width="20" height="20"></v-icon>
         <span>Редактировать</span>
       </n-link>
-      <li @click="$eventBus.$emit('modal', ['complaints', 'complaint', {modelType, modelId}])"
+      <li @click="$overlay.show(() => import('~/modules/complaints/components/ComplaintModal'), {
+        props: {modelType, modelId}
+      })"
           class="dropdown-menu-item flex items-center space-x-3">
         <v-icon name="ban" width="20" height="20"></v-icon>
         <span>Пожаловаться</span>

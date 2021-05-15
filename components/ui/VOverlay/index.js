@@ -1,3 +1,2 @@
-import VOverlay from './Main';
-
+import VOverlay from './Component';
 export default VOverlay;

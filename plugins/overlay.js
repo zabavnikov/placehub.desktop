@@ -6,10 +6,10 @@ export default (ctx, inject) => {
       this.component = ref(undefined);
     }
 
-    show(component, props = {}) {
+    show(component, payload = {}) {
       this.component.value = defineComponent({
         render(createElement) {
-          return createElement(component, props)
+          return createElement(component, payload)
         }
       });
     }

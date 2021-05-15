@@ -15,8 +15,8 @@
 </template>
 
 <script>
-import {ref} from '@vue/composition-api'
-import {onClickOutside} from '@vueuse/core';
+import { ref, onMounted, onBeforeUnmount, watch } from '@vue/composition-api'
+import { onClickOutside } from '@vueuse/core';
 
 export default {
   props: {
@@ -32,42 +32,39 @@ export default {
       default: 'auto'
     }
   },
-  setup() {
+  setup(props, { root }) {
     const transitionBackdrop = ref(false);
     const transition = ref(false);
+    const target = ref(null);
 
-    return { transitionBackdrop, transition }
-  },
-  mounted() {
-    onClickOutside(this.$refs.target, () => this.$overlay.hide());
-    document.addEventListener('keydown', this.handler);
-    document.body.style.overflowY = 'hidden';
-    this.transitionBackdrop = true;
-    this.$nextTick(() => {
-      this.transition = true;
+    // Скрываем оверлей по Escape.
+    const escHandler = event => {
+      if (event.key === 'Escape') root.$overlay.hide();
+    }
+
+    // Скрываем оверлей по клику в фон.
+    onClickOutside(target, () => root.$overlay.hide());
+
+    // Скрываем оверлей если маршрут изменился.
+    watch(() => root.$route.path, () => root.$overlay.hide());
+
+    onMounted(() => {
+      transitionBackdrop.value = true;
+      transition.value = true;
+      document.addEventListener('keydown', escHandler);
+      document.body.style.overflowY = 'hidden';
     });
-  },
-  beforeDestroy() {
-    document.removeEventListener('keydown', this.handler)
-    document.body.style.overflowY = 'auto';
+
+    onBeforeUnmount(() => {
+      document.removeEventListener('keydown', escHandler);
+      document.body.style.overflowY = 'auto';
+    });
+
+    return { transitionBackdrop, transition, target }
   },
   computed: {
     isPlacement() {
       return this.placement !== 'none';
-    },
-  },
-  watch: {
-    $route() {
-      this.$emit('close');
-      this.$overlay.hide();
-    }
-  },
-  methods: {
-    handler(event) {
-      if (event.key === 'Escape') {
-        this.$emit('close');
-        this.$overlay.hide();
-      }
     },
   },
 }
