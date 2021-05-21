@@ -6,23 +6,23 @@
   },
   "dependencies": {
     "@nuxtjs/auth-next": "^5.0.0-1620773067.c356fed",
-    "@nuxtjs/axios": "^5.13.1",
+    "@nuxtjs/axios": "^5.13.4",
     "@nuxtjs/toast": "^3.3.1",
-    "@vue/composition-api": "^1.0.0-rc.8",
+    "@vue/composition-api": "^1.0.0-rc.9",
     "@vueuse/core": "^4.11.0",
     "js-cookie": "^2.2.1",
     "leaflet": "^1.7.1",
     "nuxt": "2.15.6",
     "tippy.js": "^6.3.1",
-    "typed-graphqlify": "^3.1.1",
+    "typed-graphqlify": "^3.1.2",
     "vue2-leaflet": "^2.7.0",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^4.1.2",
     "lodash": "^4.17.21",
-    "postcss": "^8.2.15",
-    "sass": "^1.32.13",
+    "postcss": "^8.3.0",
+    "sass": "^1.33.0",
     "sass-loader": "10.1.1"
   }
 }
