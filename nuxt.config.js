@@ -45,13 +45,6 @@ module.exports = {
   },
 
   /*
-    Axios module configuration
-   */
-  axios: {
-    baseURL: process.env.API_URL
-  },
-
-  /*
     Auth module configuration
    */
   auth: {
@@ -59,15 +52,15 @@ module.exports = {
       local: {
         endpoints: {
           login: {
-            url: '/api/users/login',
+            url: process.env.API_URL + '/api/users/login',
             method: 'post',
           },
           logout: {
-            url: '/api/users/logout',
+            url: process.env.API_URL + '/api/users/logout',
             method: 'post'
           },
           user: {
-            url: '/api/users/me',
+            url: process.env.API_URL + '/api/users/me',
             method: 'post',
             propertyName: false
           }
