@@ -15,12 +15,14 @@ export default fragment('PostCardFragment', 'Post', {
     relative: true
   }, types.string),
 
-  images: {
+  images: params({
+    sizes: rawString("default@width:1024")
+  }, {
     id: types.number,
-    presets: params({
-      sizes: rawString('small_fill')
-    }, types.custom()),
-  },
+    text: types.string,
+    url: types.string,
+    sizes: types.custom()
+  }),
 
   like: {
     is_liked: types.boolean
@@ -28,5 +30,5 @@ export default fragment('PostCardFragment', 'Post', {
 
   user:   ProfileCardFragment,
   tags:   TagsFragment,
-  place:  PlaceCardFragment,
+  //place:  PlaceCardFragment,
 });

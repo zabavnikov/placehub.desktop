@@ -14,12 +14,14 @@ export default fragment('CommentCardChildFragment', 'Comment', {
   created_at:     params({
     relative: true
   }, types.string),
-  images: {
-    id:      types.number,
-    presets: params({
-      sizes: rawString('square')
-    }, types.custom()),
-  },
+  images: params({
+    sizes: rawString("default@width:1024")
+  }, {
+    id: types.number,
+    text: types.string,
+    url: types.string,
+    sizes: types.custom()
+  }),
   like: {
     is_liked: types.boolean,
   },

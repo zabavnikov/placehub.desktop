@@ -12,9 +12,6 @@ export default fragment('PostFormFragment', 'Post', {
   images: {
     id:   types.number,
     text: types.string,
-    presets: params({
-      sizes: rawString('small_fill')
-    }, types.custom()),
   },
   place: PlaceCardGraphQL,
   tags: TagsFragment,

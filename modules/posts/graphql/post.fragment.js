@@ -9,13 +9,15 @@ export default fragment('PostFragment', 'Post', {
   text:         types.string,
   image_order:  types.string,
   created_at:   types.string,
-  images: {
-    id:   types.number,
+
+  images: params({
+    sizes: rawString("default@width:1024")
+  }, {
+    id: types.number,
     text: types.string,
-    presets: params({
-      sizes: rawString('small')
-    }, types.custom()),
-  },
+    url: types.string,
+    sizes: types.custom()
+  }),
   like: {
     is_liked: types.boolean
   },

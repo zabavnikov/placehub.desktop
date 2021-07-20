@@ -34,7 +34,7 @@
             <a
                 v-for="image in comment.images"
                 :key="image.id"
-                :style="{backgroundImage: `url(${image.presets.square})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
+                :style="{backgroundImage: `url(${image.sizes['default']})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
                 :href="image.url"
                 target="_blank"
                 class="wh-ratio rounded-lg"
