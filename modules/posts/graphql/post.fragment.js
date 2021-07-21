@@ -8,7 +8,9 @@ export default fragment('PostFragment', 'Post', {
   place_id:     types.number,
   text:         types.string,
   image_order:  types.string,
-  created_at:   types.string,
+  created_at: params({
+    relative: true
+  }, types.string),
 
   images: params({
     sizes: rawString("default@width:1024")

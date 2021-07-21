@@ -6,7 +6,7 @@ module.exports = {
   },
 
   head: {
-    titleTemplate: title => (title ? `${title} — ` : '') + 'PlaceHub - для тех, кому не сидится дома',
+    titleTemplate: title => (title ? `${title} — ` : '') + 'PlaceHub - сервис микроблогов для путешественников',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},

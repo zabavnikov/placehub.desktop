@@ -5,6 +5,15 @@
 @import 'dropdown-menu';
 @import 'cards';
 
+html {
+  height: 100%;
+  min-height: 100%;
+}
+
+body, #__nuxt, #__layout {
+  height: inherit;
+}
+
 :root {
   --header-hegiht: 52px;
 }

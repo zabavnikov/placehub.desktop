@@ -10,7 +10,6 @@
     "@nuxtjs/toast": "^3.3.1",
     "@vue/composition-api": "^1.0.3",
     "@vueuse/core": "^5.1.4",
-    "create-hmac": "^1.1.7",
     "js-cookie": "^2.2.1",
     "leaflet": "^1.7.1",
     "nuxt": "2.15.7",

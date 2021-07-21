@@ -6,6 +6,7 @@
           :zoom="zoom"
           :center="latLng"
           :options="options"
+          :min-zoom="3"
           no-blocking-animations
           @click="onClick"
           @zoom="$emit('zoom', $event.target.getZoom())"
