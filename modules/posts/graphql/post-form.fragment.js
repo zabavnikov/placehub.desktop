@@ -9,10 +9,15 @@ export default fragment('PostFormFragment', 'Post', {
   text:         types.string,
   image_order:  types.string,
   is_draft:     types.boolean,
-  images: {
-    id:   types.number,
+
+  images: params({
+    sizes: rawString("small@width:100|large@widht:1024")
+  }, {
+    id: types.number,
     text: types.string,
-  },
+    url: types.string,
+    sizes: types.custom()
+  }),
   place: PlaceCardGraphQL,
   tags: TagsFragment,
 });
