@@ -10,7 +10,7 @@
 }
 
 body {
-  @apply text-sm;
+  @apply text-base font-semibold;
   background-color: #f6f7f7;
   font-family: 'Montserrat', sans-serif;
 }
@@ -28,10 +28,4 @@ body {
   content: '';
   display: block;
   clear: both;
-}
-
-.text-base {
-  font-size: 12px;
-  font-weight: 500;
-  line-height: 20px;
 }

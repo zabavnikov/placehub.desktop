@@ -12,7 +12,14 @@ module.exports = {
   },
   darkMode: false, // or 'media' or 'class'
   theme: {
-    extend: {}
+    extend: {
+      fontWeight: {
+        semibold: 500,
+      },
+      fontSize: {
+        base: '12px',
+      },
+    }
   },
   variants: {
     extend: {},

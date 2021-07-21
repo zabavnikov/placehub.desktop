@@ -18,7 +18,6 @@ export default fragment('CommentCardChildFragment', 'Comment', {
     sizes: rawString("default@width:1024")
   }, {
     id: types.number,
-    text: types.string,
     url: types.string,
     sizes: types.custom()
   }),
