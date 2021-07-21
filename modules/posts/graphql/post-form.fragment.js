@@ -11,7 +11,7 @@ export default fragment('PostFormFragment', 'Post', {
   is_draft:     types.boolean,
 
   images: params({
-    sizes: rawString("small@width:100|large@widht:1024")
+    sizes: rawString("small@width:200|large@width:1024")
   }, {
     id: types.number,
     text: types.string,
