@@ -1,5 +1,4 @@
 import VMap from "~/modules/places/components/VMap";
-import PlaceSearch from "../../../components/PlaceSearch/PlaceSearch";
 
 const localityRegionState = {
   parent_id: null,
@@ -17,7 +16,6 @@ export default {
 
   components: {
     VMap,
-    PlaceSearch,
   },
 
   data() {

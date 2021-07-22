@@ -16,7 +16,7 @@
     </ul>
 
     <div class="mt-4">
-      <label class="label">Категория <span class="asterisk"></span></label>
+      <label class="label">Тип населенного пункта <span class="asterisk"></span></label>
       <ul class="flex flex-wrap">
         <li v-for="category in categories"
             :key="category.id"

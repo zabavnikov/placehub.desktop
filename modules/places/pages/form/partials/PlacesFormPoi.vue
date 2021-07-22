@@ -1,26 +1,16 @@
 <template>
   <div class="space-y-4">
     <div>
-      <label class="label">Регион <span class="asterisk"></span></label>
-      <ul class="flex flex-wrap">
-        <li v-for="region in regions"
-            :key="region.id"
-            @click="form.parent_id = region.id"
-            :class="{[form.parent_id === region.id ? 'bg-gray-400' : 'bg-gray-200']: true}"
-            class="mr-1 mb-1 py-1 px-3 rounded-full cursor-pointer hover:bg-gray-400">{{ region.name }}</li>
-      </ul>
-    </div>
-
-    <div v-if="form.parent_id > 0">
-      <label class="label">Населенный пункт</label>
+      <label class="label asterisk">Населенный пункт или регион</label>
       <div class="mb-2">
-        <input type="search" class="input" placeholder="Поиск населенного пункта по названию">
+        <place-search
+            :only="['localities', 'regions']"
+            placeholder="Населенный пункт"
+            @select="form.parent_id = $event.parent_id; form.lat = $event.lat; form.lng = $event.lng"></place-search>
       </div>
       <div class="alert alert--warning">
-        Пропустите выбор населенного пункта, если добавляемое место находятся за пределами населенного пункта. Например озеро Байкал находится в центре Азии на границе Иркутской области и Республики Бурятия
-        и не привязано к конкретному населенному пункту.
-        <br /><br />В другом случае населенных пункт должен быть выбран, а если подходящего населенного пункта не найдено,
-        то придется сначала добавить его, а затем вернутся к добавлению места.
+        Если подходящего региона или населенного пункта не найдено,
+        то сначала придется добавить его, а затем вернутся к добавлению места.
       </div>
     </div>
 
@@ -38,7 +28,11 @@
 </template>
 
 <script>
+import PlaceSearch from '~/modules/places/components/PlaceSearch';
 export default {
+  components: {
+    PlaceSearch
+  },
   props: {
     value: {
       type: Object,
@@ -59,6 +53,7 @@ export default {
   data() {
     return {
       form: {...this.value},
+      selectedRegion: null,
     }
   },
   watch: {
@@ -68,6 +63,6 @@ export default {
       },
       deep: true
     }
-  }
+  },
 }
 </script>

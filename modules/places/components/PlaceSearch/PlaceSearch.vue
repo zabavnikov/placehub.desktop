@@ -26,6 +26,7 @@ export default {
     props: {
       id: String,
       value: String,
+      parentId: Number,
       only: {
         type: Array,
         default() {
@@ -38,26 +39,6 @@ export default {
       return {
         results: [],
         query: this.value,
-      }
-    },
-
-    computed: {
-      placeholder() {
-        let placeholder = 'Название страны, региона или населенного пункта';
-
-        if (this.parentsOf === 'regions') {
-          placeholder = 'Название страны';
-        }
-
-        if (this.parentsOf === 'localities') {
-          placeholder = 'Название региона, области, штата';
-        }
-
-        if (this.parentsOf === 'poi') {
-          placeholder = 'Название населенного пункта, региона, области, штата';
-        }
-
-        return placeholder;
       }
     },
 
@@ -83,6 +64,10 @@ export default {
 
         if (this.only.length > 0) {
           data.only = this.only;
+        }
+
+        if (this.parentId > 0) {
+          data.parent_id = this.parentId;
         }
 
         this.$axios
