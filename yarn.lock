@@ -1540,10 +1540,10 @@
   optionalDependencies:
     prettier "^1.18.2"
 
-"@vue/composition-api@^1.0.3":
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.0.3.tgz#d82afe5c19e85ea8c8db25d8f1d8ce881ac817ec"
-  integrity sha512-t9nBQSm1i1yB1UCCAuZlwbDfu+87X4FVj2keRYcj76YabwRmwcwkwX4A+nbg6TBLzJLoZ3Cf58lniPmIeQklkg==
+"@vue/composition-api@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.0.4.tgz#6162b3ba306a8995afdce969a66e168e6743718d"
+  integrity sha512-3OzvW8RS7/7kxE+SDXm8zSLZRy9GtCYwyLYdnGtIsqXRSt5nWkA7zu80Cw8Vg+67jglrpMdVBBy7AUXAB34ZSw==
   dependencies:
     tslib "^2.3.0"
 
@@ -6923,6 +6923,15 @@ postcss@^8.3.5:
   version "8.3.5"
   resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.5.tgz#982216b113412bc20a86289e91eb994952a5b709"
   integrity sha512-NxTuJocUhYGsMiMFHDUkmjSKT3EdH4/WbGF6GCi1NDGk+vbcUTun4fpbOqaPtD8IIsztA2ilZm2DhYCuyN58gA==
+  dependencies:
+    colorette "^1.2.2"
+    nanoid "^3.1.23"
+    source-map-js "^0.6.2"
+
+postcss@^8.3.6:
+  version "8.3.6"
+  resolved "https://registry.yarnpkg.com/postcss/-/postcss-8.3.6.tgz#2730dd76a97969f37f53b9a6096197be311cc4ea"
+  integrity sha512-wG1cc/JhRgdqB6WHEuyLTedf3KIRuD0hG6ldkFEZNCjRxiC+3i6kkWUUbiJQayP28iwG35cEmAbe98585BYV0A==
   dependencies:
     colorette "^1.2.2"
     nanoid "^3.1.23"

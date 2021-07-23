@@ -15,26 +15,17 @@
     >
     </v-map>
 
-    <!-- 1. Выбор страны. -->
-    <div v-if="countrySelected === null">
-      <h1 class="text-xl mb-2">Выбор страны</h1>
-      <input type="search" v-model="countrySearchQuery" class="input mb-2" placeholder="Введите название страны">
-      <ul v-if="countrySearchQuery.length > 0" class="flex flex-wrap">
-        <li v-for="country in result"
-            :key="country.item.id"
-            @click="onSelectCountry(country.item)"
-            :style="{opacity: `calc(1 - ${country.score})`}"
-            class="mr-1 mb-1 py-1 px-3 bg-gray-200 rounded-full cursor-pointer hover:bg-gray-400">{{ country.item.name }}</li>
-      </ul>
-    </div>
-    <div v-else>
-      <div class="mb-4 cursor-pointer" @click="countrySelected = null; form.type = null">&laquo; Назад</div>
-      <h1 class="text-2xl mb-4">{{ countrySelected.name }}</h1>
+    <div>
       <label for="name" class="label">Что хотите добавить? <span class="asterisk"></span></label>
-      <ul class="space-y-1 cursor-pointer">
-        <li @click="onSelectType('regions')" :class="{'font-bold': form.type === 'regions'}">Регион</li>
-        <li @click="onSelectType('localities')" :class="{'font-bold': form.type === 'localities'}">Населенный пункт</li>
-        <li @click="onSelectType('poi')" :class="{'font-bold': form.type === 'poi'}">Место</li>
+      <ul class="flex space-x-2">
+        <li
+            v-for="(tab, key) in tabs"
+            :class="{[key === form.type ? 'bg-gray-400' : 'bg-gray-200']: true}"
+            class="flex-auto mr-1 mb-1 py-1 px-3 rounded-full cursor-pointer hover:bg-gray-400 text-center cursor-pointer"
+            :key="key"
+            @click="onSelectType(key)">
+          {{ tab }}
+        </li>
       </ul>
 
       <div v-if="form.type !== null" class="mt-4">
@@ -43,19 +34,28 @@
           к добавлению {{ isLocality ? 'населенного пункта' : 'места' }}.
         </div>
         <form v-else @submit.prevent="onSubmit">
-          <component
-              class="mb-4"
-              v-if="isLocality || isPoi"
-              v-model="form"
-              :is="form.type"
-              :categories="categories[form.type]"
-              :regions="countrySelected.regions">
-          </component>
+
+          <label class="label asterisk">{{ text.searchLabel[form.type] }}</label>
+          <div class="mb-2">
+            <place-search
+                :only="['regions']"
+                :value="form.parent_names"
+                :placeholder="text.searchPlaceholder[form.type]"
+                @select="form.parent_id = $event.parent_id; form.lat = $event.lat; form.lng = $event.lng"></place-search>
+          </div>
 
           <div class="mb-4">
             <label for="name" class="label">{{ inputName }} <span class="asterisk"></span></label>
             <input type="text" class="input" id="name" v-model="form.name">
           </div>
+
+          <component
+              class="mb-4"
+              v-if="isLocality || isPoi"
+              v-model="form"
+              :is="form.type"
+              :categories="categories[form.type]">
+          </component>
 
           <p v-if="submitStep > 0" class="alert alert--warning my-6">Еще раз проверьте введенные вами данные и если все указанно верно, нажмите "Подтверждаю"</p>
           <button class="button button-primary">
@@ -73,10 +73,12 @@ import Page from '~/modules/places/pages/form/composables/page';
 import TheMapLayout from '../../components/TheMapLayout.vue';
 import PlacesFormPoi from './partials/PlacesFormPoi';
 import PlacesFormLocality from './partials/PlacesFormLocality';
+import PlaceSearch from '~/modules/places/components/PlaceSearch';
 let fuse = null;
 export default {
   mixins: [Page],
   components: {
+    PlaceSearch,
     TheMapLayout,
     poi: PlacesFormPoi,
     localities: PlacesFormLocality,
@@ -106,26 +108,39 @@ export default {
     }
   },
   computed: {
+    tabs() {
+      return {
+        regions: 'Регион',
+        localities: 'Населенный пункт',
+        poi: 'Место'
+      }
+    },
     isLocality() {
       return this.form.type === 'localities';
     },
     isPoi() {
       return this.form.type === 'poi';
     },
-    isWarning() {
-      return (this.isLocality || this.isPoi) && this.countrySelected.regions.length === 0;
+
+    text() {
+      return {
+        searchLabel: {
+          poi: 'Название населенного пункта или региона',
+          regions: 'Название страны',
+          localities: 'Название региона',
+        },
+        searchPlaceholder: {
+          poi: 'Например, Красноярск или Красноярский край',
+          regions: 'Например, Россия',
+          localities: 'Например, Красноярский край',
+        },
+      }
     },
+
   },
   methods: {
-    onSelectCountry(country) {
-      this.countrySelected = country;
-    },
     onSelectType(type) {
       this.form.type = type;
-
-      if (type === 'regions') {
-        this.form.parent_id = this.countrySelected.id;
-      }
     },
     onSubmit() {
       if (this.submitStep <= 0) {
@@ -141,7 +156,7 @@ export default {
 
       this.$axios(options)
           .then(({data}) => {
-            this.$router.push({name: 'places.show', params: {placeType: data.type, placeId: data.id}});
+            this.$router.push({name: 'places.show', params: {placeId: data.id}});
           })
           .finally(() => {
             this.submitStep = 0;

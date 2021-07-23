@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import PlacesPageShow from '~/modules/places/pages/show';
+import PlacesPageShow from '~/modules/places/pages/show/show';
 import VReview from "~/modules/reviews/_desktop/components/VReview";
 import VMap from "~/modules/places/components/VMap";
 import ImagesGallery from "~/modules/images/components/ImagesGallery";

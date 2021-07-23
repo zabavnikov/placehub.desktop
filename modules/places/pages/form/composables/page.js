@@ -30,11 +30,7 @@ export default {
     const isEdit = params.placeId > 0;
 
     try {
-      const {form, categories, countries} = await $axios.$post(`/api/places/form/${params.placeType}/${params.placeId ? params.placeId : ''}`);
-
-      if (! isEdit) {
-        localityRegionState.type = params.placeType;
-      }
+      const {form, categories, countries} = await $axios.$get(`/api/places/form/${params.placeId ? params.placeId : ''}`);
 
       return {
         isEdit,

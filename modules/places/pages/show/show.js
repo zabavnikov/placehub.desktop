@@ -10,7 +10,7 @@ export default {
   },
 
   asyncData({ $axios, params }) {
-    return $axios.$get('/api/places/' + params.placeType + '/' + params.placeId).then(({ place, reviews, images }) => {
+    return $axios.$get('/api/places/' + params.placeId).then(({ place, reviews, images }) => {
       return {
         place,
         reviews,

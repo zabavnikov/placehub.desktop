@@ -1,5 +1,5 @@
 <template>
-  <div class="geo-search">
+  <div class="relative">
     <input
       v-model="query"
       :id="id"
@@ -8,7 +8,7 @@
       type="search"
       class="input"
     >
-    <ul v-show="results.length" class="bg-yellow-200 p-2">
+    <ul v-show="results.length" class="bg-white p-2 absolute w-full">
       <li
         v-for="item in results"
         :key="item.id"
@@ -24,6 +24,7 @@ import debounce from 'lodash/debounce';
 
 export default {
     props: {
+      placeholder: String,
       id: String,
       value: String,
       parentId: Number,
