@@ -2,32 +2,23 @@
   <the-layout>
     <template #sidebar>.</template>
     <template #content>
-      <VPostForm :post="post"/>
+      <VPostForm :post="form"/>
     </template>
   </the-layout>
 </template>
 
 <script>
 import VPostForm from '~/modules/posts/components/VPostForm';
-import {params as GQLParams, query as GQLQuery} from 'typed-graphqlify';
-import PostFormFragment from '~/modules/posts/graphql/post-form.fragment';
 
 export default {
   components: {VPostForm},
 
   async asyncData({ $axios, params }) {
-    const getPost = GQLQuery('getPost($id: Int!)', {
-      post: GQLParams({id: '$id'}, PostFormFragment),
-    });
+    const { form } = await $axios.$get(`/api/posts/form/${params.postId}`);
 
-    const { data } = await $axios.$post('/gql', {
-      query: getPost.toString(),
-      variables: {
-        id: parseInt(params.postId),
-      }
-    });
-
-    return data;
+    return {
+      form
+    };
   },
 }
 </script>

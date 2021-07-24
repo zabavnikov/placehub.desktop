@@ -29,19 +29,15 @@
       </ul>
 
       <div v-if="form.type !== null" class="mt-4">
-        <div v-if="isWarning" class="alert alert--warning">
-          К сожалению, в выбранной вами стране, нет ни одного региона. Вы может добавить регион самостоятельно, а затем вернуться
-          к добавлению {{ isLocality ? 'населенного пункта' : 'места' }}.
-        </div>
-        <form v-else @submit.prevent="onSubmit">
+        <form @submit.prevent="onSubmit">
 
           <label class="label asterisk">{{ text.searchLabel[form.type] }}</label>
           <div class="mb-2">
             <place-search
-                :only="['regions']"
+                :search-by="searchByParents[form.type]"
                 :value="form.parent_names"
                 :placeholder="text.searchPlaceholder[form.type]"
-                @select="form.parent_id = $event.parent_id; form.lat = $event.lat; form.lng = $event.lng"></place-search>
+                @select="form.parent_id = $event.id; form.lat = $event.lat; form.lng = $event.lng"></place-search>
           </div>
 
           <div class="mb-4">
@@ -68,13 +64,12 @@
 </template>
 
 <script>
-import Fuse from 'fuse.js';
 import Page from '~/modules/places/pages/form/composables/page';
 import TheMapLayout from '../../components/TheMapLayout.vue';
 import PlacesFormPoi from './partials/PlacesFormPoi';
 import PlacesFormLocality from './partials/PlacesFormLocality';
 import PlaceSearch from '~/modules/places/components/PlaceSearch';
-let fuse = null;
+
 export default {
   mixins: [Page],
   components: {
@@ -84,27 +79,10 @@ export default {
     localities: PlacesFormLocality,
   },
   layout: 'only-header',
-  created() {
-    fuse = new Fuse(this.countries, {
-      includeScore: true,
-      keys: ['name']
-    })
-  },
   data() {
     return {
-      countrySelected: null,
-      countrySearchQuery: '',
       result: [],
       submitStep: 0,
-    }
-  },
-  watch: {
-    countrySearchQuery(newValue) {
-      this.result = [];
-
-      if (newValue.length > 0) {
-        this.result = fuse.search(newValue);
-      }
     }
   },
   computed: {
@@ -120,6 +98,14 @@ export default {
     },
     isPoi() {
       return this.form.type === 'poi';
+    },
+
+    searchByParents() {
+      return {
+        regions: ['countries'],
+        localities: ['regions'],
+        pot: ['regions', 'localities'],
+      };
     },
 
     text() {

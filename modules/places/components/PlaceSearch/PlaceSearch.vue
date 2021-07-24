@@ -28,7 +28,7 @@ export default {
       id: String,
       value: String,
       parentId: Number,
-      only: {
+      searchBy: {
         type: Array,
         default() {
           return [];
@@ -63,8 +63,8 @@ export default {
           query: this.query,
         };
 
-        if (this.only.length > 0) {
-          data.only = this.only;
+        if (this.searchBy.length > 0) {
+          data.searchBy = this.searchBy;
         }
 
         if (this.parentId > 0) {

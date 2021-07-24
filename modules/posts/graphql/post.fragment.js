@@ -12,7 +12,7 @@ export default fragment('PostFragment', 'Post', {
     relative: true
   }, types.string),
 
-  images: params({
+  sets: params({
     sizes: rawString("default@width:1024")
   }, {
     id: types.number,

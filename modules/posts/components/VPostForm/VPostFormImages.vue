@@ -1,21 +1,22 @@
 <template>
   <client-only>
     <draggable
-        v-model="images"
-        handle=".form-images__image"
+        v-model="sets"
+        :group="{ name: 'g1' }"
+        handle=".handle"
         :class="{
           'form-images': true,
           [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-1']: true,
         }">
-      <div v-for="(image, index) in images" :key="image.id" :id="`post-image-${image.id}`" class="post-images-wrap">
-        <div :style="{backgroundImage: `url(${image.sizes[storyMode === true ? 'large' : 'small']})`}" class="form-images__image wh-ratio rounded">
-          <div class="form-images__delete"
-               @dblclick="onDelete(index)">
-            <v-icon name="trash" stroke="white" width="16px"></v-icon>
-          </div>
-        </div>
 
-        <VTextarea v-if="storyMode" v-model="image.text" @input="onInput($event, image)" maxlength="2000" placeholder="Добавьте текст" class="mt-2"/>
+      <div v-for="(set, setIndex) in sets" :key="setIndex" class="handle">
+        <v-post-form-image
+            v-for="image in set"
+            @click="$emit('upload', setIndex)"
+            :key="image.id"
+            :image="image"
+            :story-mode="storyMode">
+        </v-post-form-image>
       </div>
     </draggable>
   </client-only>
@@ -23,15 +24,16 @@
 
 <script>
 import throttle from 'lodash/throttle';
-import VTextarea from '~/components/common/VTextarea/VTextarea';
+import VPostFormImage from './VPostFormImage';
 
 let draggable = null;
 
-if (process.browser) {
+if (process.client) {
   draggable = require('vuedraggable');
 }
 
 export default {
+  name: 'VPostFormImages',
   props: {
     value: {
       required: true,
@@ -49,19 +51,19 @@ export default {
   },
 
   components: {
-    VTextarea,
+    VPostFormImage,
     draggable
   },
 
   data() {
     return {
-      images: this.value,
+      sets: this.value,
     }
   },
 
   watch: {
-    images() {
-      this.$emit('input', this.images);
+    sets() {
+      this.$emit('input', this.sets);
     }
   },
 
@@ -80,8 +82,8 @@ export default {
     }, 1500),
 
     onDelete(imageIndex) {
-      this.$emit('input', this.images.splice(imageIndex, 1));
-    }
+      this.$emit('input', this.sets.splice(imageIndex, 1));
+    },
   }
 }
 </script>

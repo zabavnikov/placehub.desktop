@@ -8,11 +8,12 @@
         @url="form.url_id = $event.id; form.url = $event"
     />
 
-    <div v-if="form.images.length > 0" class="mt-2">
+    <div v-if="form.sets && form.sets.length > 0" class="mt-2">
       <VPostFormImages
-          v-model="form.images"
+          v-model="form.sets"
           model-type="posts"
           :story-mode="storyMode"
+          @upload="uploadIndex = $event; $refs.upload.$refs.file.click()"
           @loading="loading = $event"/>
     </div>
 
@@ -57,13 +58,13 @@
           </v-tags-select>
 
           <v-upload
+              ref="upload"
               class="post-form-tool"
-              v-model="form.images"
               v-tooltip="`Фотографии`"
               to="posts"
               :is-error="errors.first('images')"
               @progress="uploadProgress = $event"
-              @input="scrollToLastUploadedImage"
+              @input="onUpload"
           >
           </v-upload>
 
@@ -139,7 +140,7 @@ const formInitialState = {
   text: '',
   place: {},
   tags: [],
-  images: [],
+  sets: [],
   url: null,
   is_draft: false
 };
@@ -162,7 +163,7 @@ export default {
     VTextarea,
     VPostFormAccess,
     VProgressBar,
-    VTag
+    VTag,
   },
 
   data() {
@@ -173,6 +174,7 @@ export default {
       storyMode: Cookie.get('storyMode') === 'on',
       form: this.post,
       uploadProgress: 0,
+      uploadIndex: null,
       parseProgress: false,
     }
   },
@@ -250,6 +252,18 @@ export default {
           })
           .catch(error => this.errors.record(error))
           .finally(() => this.loading = false);
+    },
+
+    onUpload(images) {
+      images.forEach(image => {
+        if (this.uploadIndex !== null && this.uploadIndex >= 0) {
+          this.form.sets[this.uploadIndex].push(image);
+        } else {
+          this.form.sets.push([image]);
+        }
+      });
+
+      this.uploadIndex = null;
     },
 
     scrollToLastUploadedImage() {

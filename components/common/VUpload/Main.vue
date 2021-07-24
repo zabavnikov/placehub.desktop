@@ -83,9 +83,7 @@
           })
           .then((images) => {
             if (images.length) {
-              const currentImages = this.value;
-              images.forEach(image => currentImages.push(image));
-              this.$emit('input', currentImages);
+              this.$emit('input', images);
             }
           })
           .finally(() => {
