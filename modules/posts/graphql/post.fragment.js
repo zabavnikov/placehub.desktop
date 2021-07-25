@@ -13,7 +13,7 @@ export default fragment('PostFragment', 'Post', {
   }, types.string),
 
   sets: params({
-    sizes: rawString("default@width:1024")
+    sizes: rawString("default@width:640")
   }, {
     id: types.number,
     text: types.string,

@@ -3,18 +3,21 @@
         <div class="m-6 text-base whitespace-pre-line">{{ post.text }}</div>
 
         <div v-if="post.sets.length > 0">
-          <div v-for="(set, index) in post.sets" :key="`set-${index}`" class="flex overflow-x-auto">
-            <div v-for="image in set" class="flex-shrink-0 w-full relative" :key="image.id">
-              <a :href="image.url" target="_blank" class="block">
-                <img :src="image.sizes.default" :alt="image.id" width="100%" class="block">
-              </a>
-<!--              <div v-if="$auth.loggedIn" class="post-image-tools space-x-4">
-                <v-like :to="`posts_images/${image.id}`" :count="image.likes_count" :is-liked="image.liked_by_me" color="white"></v-like>
-                <div @click="toggleCommentableImage(image.id)" class="underline cursor-pointer">
-                  {{ image.id === commentableImageId ? 'Отмена' : 'Комментировать' }}
-                  <v-icon name="message-circle" stroke="white"></v-icon>
-                </div>
-              </div>-->
+          <div v-for="(set, index) in post.sets" :key="`set-${index}`">
+            <post-body-full-image-gallery v-if="set.length > 1" :images="set"></post-body-full-image-gallery>
+            <div v-else>
+              <div v-for="image in set" class="relative" :key="image.id">
+                <a :href="image.url" target="_blank" class="block">
+                  <img :src="image.sizes.default" :alt="image.id" width="100%" class="block">
+                </a>
+                <!--              <div v-if="$auth.loggedIn" class="post-image-tools space-x-4">
+                                <v-like :to="`posts_images/${image.id}`" :count="image.likes_count" :is-liked="image.liked_by_me" color="white"></v-like>
+                                <div @click="toggleCommentableImage(image.id)" class="underline cursor-pointer">
+                                  {{ image.id === commentableImageId ? 'Отмена' : 'Комментировать' }}
+                                  <v-icon name="message-circle" stroke="white"></v-icon>
+                                </div>
+                              </div>-->
+              </div>
             </div>
 
 <!--            <VCommentForm
@@ -42,8 +45,13 @@
 </template>
 
 <script>
+import PostBodyFullImageGallery from './PostBodyFullImageGallery';
+
 export default {
   name: 'VPostBodyFull',
+  components: {
+    PostBodyFullImageGallery
+  },
   props: {
     post: {
       type: Object,
