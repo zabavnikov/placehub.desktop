@@ -3,8 +3,8 @@
         <div class="m-6 text-base whitespace-pre-line">{{ post.text }}</div>
 
         <div v-if="post.sets.length > 0">
-          <div v-for="(set, index) in post.sets" :key="`set-${index}`">
-            <div v-for="image in set" class="relative" :key="image.id">
+          <div v-for="(set, index) in post.sets" :key="`set-${index}`" class="flex overflow-x-auto">
+            <div v-for="image in set" class="flex-shrink-0 w-full relative" :key="image.id">
               <a :href="image.url" target="_blank" class="block">
                 <img :src="image.sizes.default" :alt="image.id" width="100%" class="block">
               </a>
