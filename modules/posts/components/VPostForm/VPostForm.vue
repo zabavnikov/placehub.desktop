@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class="post-form" id="post-form-tools">
+    <div class="post-form z-10" id="post-form-tools">
       <VProgressBar class="mt-2" v-if="uploadProgress > 0" :progress="uploadProgress"/>
 
       <div class="flex items-center ">

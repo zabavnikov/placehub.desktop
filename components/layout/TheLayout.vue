@@ -86,6 +86,7 @@ $column-gap: 40px;
 }
 
 .layout-content {
+  width: $content-width;
   flex: 1;
 }
 

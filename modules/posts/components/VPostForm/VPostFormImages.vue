@@ -9,22 +9,23 @@
           [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-1']: true,
         }">
 
-      <div v-for="(set, setIndex) in sets" :key="setIndex" class="handle">
-        <v-post-form-image
-            v-for="image in set"
-            @click="$emit('upload', setIndex)"
-            :key="image.id"
-            :image="image"
-            :story-mode="storyMode">
-        </v-post-form-image>
+      <div v-for="(set, index) in sets" :key="index">
+        <post-form-images-gallery
+            :images="set"
+            :story-mode="storyMode"
+            @text="onChangeText"
+            @delete="onDelete(index, $event)"
+            @upload="$emit('upload', index)">
+        </post-form-images-gallery>
       </div>
     </draggable>
   </client-only>
 </template>
 
 <script>
+
 import throttle from 'lodash/throttle';
-import VPostFormImage from './VPostFormImage';
+import PostFormImagesGallery from './PostFormImages/PostFormImagesGallery';
 
 let draggable = null;
 
@@ -34,6 +35,12 @@ if (process.client) {
 
 export default {
   name: 'VPostFormImages',
+
+  components: {
+    PostFormImagesGallery,
+    draggable
+  },
+
   props: {
     value: {
       required: true,
@@ -50,11 +57,6 @@ export default {
     }
   },
 
-  components: {
-    VPostFormImage,
-    draggable
-  },
-
   data() {
     return {
       sets: this.value,
@@ -64,16 +66,16 @@ export default {
   watch: {
     sets() {
       this.$emit('input', this.sets);
-    }
+    },
   },
 
   methods: {
-    onInput: throttle(function (text, image) {
+    onChangeText: throttle(function (image) {
       this.$emit('loading', true);
 
       this.$axios
           .$put(`/api/images/${image.id}`, {
-            text,
+            text: image.text,
             model_type: this.modelType,
           }, {
             progress: false
@@ -81,8 +83,18 @@ export default {
           .finally(() => this.$emit('loading', false));
     }, 1500),
 
-    onDelete(imageIndex) {
-      this.$emit('input', this.sets.splice(imageIndex, 1));
+    /**
+     * Если в наборе всего одно изображение, то удаляем сам набор,
+     * а если больше одного, то удаляем само изображение из набора.
+     * @param setIndex
+     * @param imageIndex
+     */
+    onDelete(setIndex, imageIndex) {
+      if (this.sets[setIndex].length === 1) {
+        this.$emit('input', this.sets.splice(setIndex, 1));
+      } else {
+        this.$emit('input', this.sets[setIndex].splice(imageIndex, 1));
+      }
     },
   }
 }
@@ -97,7 +109,6 @@ export default {
 
 .form-images {
   &__image {
-    cursor: move;
     background-size: cover;
     background-position: 50%;
   }
