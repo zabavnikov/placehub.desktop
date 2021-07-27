@@ -2,8 +2,8 @@
         <div>
         <div class="m-6 text-base whitespace-pre-line">{{ post.text }}</div>
 
-        <div v-if="post.sets.length > 0">
-          <div v-for="(set, index) in post.sets" :key="`set-${index}`">
+        <div v-if="post.sets.length > 0" class="post-image-sets">
+          <div v-for="set in post.sets" :key="`set-${set[0]['id']}`" class="post-image-set">
             <post-body-full-image-gallery v-if="set.length > 1" :images="set"></post-body-full-image-gallery>
             <div v-else>
               <div v-for="image in set" class="relative" :key="image.id">
@@ -43,6 +43,14 @@
         <VTags v-if="post.tags.length > 0" :tags="post.tags" route-name="posts" class="m-6" />-->
       </div>
 </template>
+
+<style lang="scss">
+.post-image-sets {
+  .post-image-set + .post-image-set {
+    border-top: 1px solid #f1f1f1;
+  }
+}
+</style>
 
 <script>
 import PostBodyFullImageGallery from './PostBodyFullImageGallery';

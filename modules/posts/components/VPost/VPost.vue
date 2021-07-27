@@ -24,7 +24,7 @@
           <v-icon name="chat" stroke="#aaa"></v-icon>
           <span class="text-base">{{ content.comments_count }}</span>
         </n-link>
-        <v-like :to="`posts/${content.id}`" :count="content.likes_count" :is-liked="content.like.is_liked"></v-like>
+        <v-like v-if="content.like" :to="`posts/${content.id}`" :count="content.likes_count" :is-liked="content.like.is_liked"></v-like>
       </div>
     </footer>
   </article>

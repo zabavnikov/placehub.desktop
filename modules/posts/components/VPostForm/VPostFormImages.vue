@@ -1,31 +1,29 @@
 <template>
   <client-only>
     <draggable
-        v-model="sets"
-        :group="{ name: 'g1' }"
-        handle=".handle"
-        :class="{
-          'form-images': true,
-          [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-1']: true,
-        }">
+      v-model="sets"
+      handle=".handle"
+      :class="{
+        'form-images': true,
+        [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-1']: true,
+      }">
 
-      <div v-for="(set, index) in sets" :key="index">
-        <post-form-images-gallery
+      <div v-for="(set, index) in sets" :key="set.map(image => image['id']).join('-')">
+        <post-form-image-set
             :images="set"
             :story-mode="storyMode"
             @text="onChangeText"
             @delete="onDelete(index, $event)"
             @upload="$emit('upload', index)">
-        </post-form-images-gallery>
+        </post-form-image-set>
       </div>
     </draggable>
   </client-only>
 </template>
 
 <script>
-
 import throttle from 'lodash/throttle';
-import PostFormImagesGallery from './PostFormImages/PostFormImagesGallery';
+import PostFormImageSet from './PostFormImages/PostFormImageSet';
 
 let draggable = null;
 
@@ -37,7 +35,7 @@ export default {
   name: 'VPostFormImages',
 
   components: {
-    PostFormImagesGallery,
+    PostFormImageSet,
     draggable
   },
 
