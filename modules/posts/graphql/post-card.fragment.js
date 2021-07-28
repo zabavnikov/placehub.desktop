@@ -7,7 +7,6 @@ export default fragment('PostCardFragment', 'Post', {
   id:               types.number,
   user_id:          types.number,
   short_text:       types.string,
-  image_order:      types.string,
   comments_count:   types.number,
   is_draft:         types.boolean,
 

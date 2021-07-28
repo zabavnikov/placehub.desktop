@@ -7,7 +7,6 @@ export default fragment('PostFormFragment', 'Post', {
   user_id:      types.number,
   place_id:     types.number,
   text:         types.string,
-  image_order:  types.string,
   is_draft:     types.boolean,
 
   images: params({

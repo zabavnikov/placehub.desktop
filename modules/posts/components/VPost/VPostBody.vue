@@ -10,18 +10,21 @@
           v-text="post.short_text"></n-link>
     </div>
 
-    <div v-if="hasImages > 0" class="mb-6">
-      <n-link :to="{name: 'posts.show', params: {postId: post.id}}" class="block relative">
-        <img :src="preview.sizes.default" width="100%" :alt="post.short_text" class="block">
-        <div class="post-total-photos" v-if="post.images.length > 1">{{ post.images.length }} фото</div>
-      </n-link>
-    </div>
+    <n-link v-if="hasImages > 0" :to="{name: 'posts.show', params: {postId: post.id}}" class="block mb-6">
+      <post-image :image="preview"></post-image>
+    </n-link>
   </div>
 </template>
 
 <script>
+import PostImage from './PostImage';
+
 export default {
   name: 'VPostBody',
+
+  components: {
+    PostImage,
+  },
 
   props: {
     post: {

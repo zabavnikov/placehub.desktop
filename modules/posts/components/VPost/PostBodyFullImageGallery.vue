@@ -8,14 +8,14 @@
            @click="onClickNext"
            class="bg-contain relative wh-ratio"
            style="background-position: center; background-repeat: no-repeat;">
-        <div class="absolute right-0 top-0 p-4">
+        <div class="absolute right-0 bottom-0 p-4">
           <div class="bg-black bg-opacity-75 py-1 px-2 rounded-full text-white">
             {{ activeIndex + 1 }} из {{ count }}
           </div>
         </div>
       </div>
     </div>
-    <figcaption v-if="getText" class="p-6">{{ getText }}</figcaption>
+    <figcaption v-if="isActiveImageHasText" class="p-6">{{ activeImage.text }}</figcaption>
   </figure>
 </template>
 
@@ -61,23 +61,9 @@ export default {
       return this.images.length;
     },
 
-
     isActiveImageHasText() {
-      return this.activeImage.text !== null;
+      return this.activeImage.text !== null && this.activeImage.text.length > 0;
     },
-
-    /**
-     * Если у активного изображения есть текст, то возвращаем его.
-     * В другом случае, ищем первое изображение у которого есть текст и выводим его текст.
-     * @returns {*}
-     */
-    getText() {
-      if (this.isActiveImageHasText) {
-        return this.activeImage.text;
-      }
-
-      return this.images.find(image => image.text !== null).text;
-    }
   },
   methods: {
     onClickNext() {
