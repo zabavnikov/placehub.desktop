@@ -10,8 +10,8 @@
           v-text="post.short_text"></n-link>
     </div>
 
-    <n-link v-if="hasImages > 0" :to="{name: 'posts.show', params: {postId: post.id}}" class="block mb-6">
-      <post-image :image="preview"></post-image>
+    <n-link v-if="post.preview" :to="{name: 'posts.show', params: {postId: post.id}}" class="block mb-6">
+      <post-image :image="post.preview"></post-image>
     </n-link>
   </div>
 </template>
@@ -31,14 +31,6 @@ export default {
       type: Object,
       required: true,
     },
-  },
-  computed: {
-    preview() {
-      return this.post.images[0];
-    },
-    hasImages() {
-      return this.post.images && this.post.images.length > 0;
-    }
   },
 }
 </script>

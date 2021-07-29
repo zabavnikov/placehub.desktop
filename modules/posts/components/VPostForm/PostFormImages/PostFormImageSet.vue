@@ -1,18 +1,22 @@
 <template>
   <div>
     <div class="flex space-x-2 justify-end mb-2">
-      <div @click="$emit('upload')" class="flex items-center justify-center w-6 h-6 bg-gray-200 rounded-full cursor-pointer" title="Добавить фото в слайдер">
-        <v-icon name="folder-add" width="20" height="20"></v-icon>
-      </div>
-      <div class="flex items-center justify-center handle w-6 h-6 bg-gray-200 rounded-full cursor-pointer" title="Удалить изображение"
-           @click="$emit('delete', activeIndex)">
-        <v-icon name="trash" width="20" height="20"></v-icon>
-      </div>
+      <v-dropdown>
+        <div slot="trigger">
+          <v-icon name="dots-horizontal"></v-icon>
+        </div>
+        <ul>
+          <li @click="$emit('upload')">Добавить изображение в галлерею</li>
+          <li @click="$emit('delete', activeIndex)">Удалить активное изображение</li>
+        </ul>
+      </v-dropdown>
     </div>
 
     <div v-if="activeImage" class="post-images-wrap handle" @click="$emit('click')">
-      <div :style="{backgroundImage: `url(${activeImage.sizes[storyMode === true ? 'large' : 'small']})`}" class="form-images__image wh-ratio rounded">
+      <div :style="{backgroundImage: `url(${activeImage.sizes[storyMode === true ? 'large' : 'small']})`}"
+           class="form-images__image wh-ratio rounded">
       </div>
+
       <VTextarea v-if="storyMode" v-model="activeImage.text" @input="$emit('text', activeImage)" maxlength="2000" placeholder="Добавьте текст" class="mt-2"/>
     </div>
 
@@ -29,6 +33,7 @@
 
 <script>
 import VTextarea from '~/components/common/VTextarea';
+import VDropdown from "~/components/ui/VDropdown";
 export default {
   props: {
     images: {
@@ -44,6 +49,7 @@ export default {
 
   components: {
     VTextarea,
+    VDropdown,
   },
 
   data() {

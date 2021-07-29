@@ -5,7 +5,7 @@
         123
       </nav>-->
       <main class="layout-main">
-        <section v-if="hasHeroSlot">
+        <section v-if="hasHeroSlot" class="my-4">
           <slot name="hero"></slot>
         </section>
 

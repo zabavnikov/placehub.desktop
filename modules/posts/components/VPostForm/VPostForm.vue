@@ -8,6 +8,9 @@
         @url="form.url_id = $event.id; form.url = $event"
     />
 
+    В наборе изображений показываем только иконку редактирования,
+    кликая по редактированию, выводим компонент управления набором.
+
     <div v-if="form.sets && form.sets.length > 0" class="mt-2">
       <VPostFormImages
           v-model="form.sets"

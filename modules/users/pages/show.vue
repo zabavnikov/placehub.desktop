@@ -1,15 +1,17 @@
 <template>
   <the-layout>
-    <template #sidebar>
-      <img :src="user.avatar" :alt="user.one_of_names" class="rounded" width="100%" />
+    <template #hero>
+      <profile-header :user="user"></profile-header>
+    </template>
 
-      <div v-if="$auth.loggedIn && user.id === $auth.user.id" class="mt-4">
+    <template #sidebar>
+
+      <div v-if="$auth.loggedIn && user.id === $auth.user.id">
         <n-link
             :to="{name: 'users.edit', params: {userId: user.id}}"
-            class="button button-success block mb-4"
+            class="button button-success block"
         >Редактировать</n-link>
       </div>
-      <div v-if="user.description">{{ user.description }}</div>
     </template>
 
     <template #content>
@@ -24,9 +26,10 @@ import {params as GQLParams, query as GQLQuery, types as GQLTypes} from 'typed-g
 import PostCardFragment from '~/modules/posts/graphql/post-card.fragment';
 import VPost from '~/modules/posts/components/VPost';
 import VPostForm from '~/modules/posts/components/VPostForm';
+import ProfileHeader from '../components/ProfileHeader';
 
 export default {
-  components: {VPost, VPostForm},
+  components: {VPost, VPostForm, ProfileHeader},
 
   async asyncData({ $axios, params }) {
     const getUser = GQLQuery('query($username: String!)', {
