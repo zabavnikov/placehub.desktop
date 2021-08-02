@@ -34,6 +34,8 @@
 <script>
 import VTextarea from '~/components/common/VTextarea';
 import VDropdown from "~/components/ui/VDropdown";
+import PostFormImageSetEditor from '../PostFormImageSetEditor';
+
 export default {
   props: {
     images: {
@@ -50,11 +52,13 @@ export default {
   components: {
     VTextarea,
     VDropdown,
+    PostFormImageSetEditor,
   },
 
   data() {
     return {
       activeIndex: 0,
+      isEdit: false,
     }
   },
 

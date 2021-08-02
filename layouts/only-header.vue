@@ -2,7 +2,7 @@
   <div class="flex flex-col h-full">
     <the-header></the-header>
     <nuxt></nuxt>
-    <v-overlay v-if="$overlay.is()"></v-overlay>
+    <v-overlay v-if="$overlay.is"></v-overlay>
   </div>
 </template>
 

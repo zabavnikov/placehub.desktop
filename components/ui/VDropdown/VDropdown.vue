@@ -47,7 +47,7 @@ export default {
 
   methods: {
     onClickInside() {
-      if (this.hideOnClickInside === true) {
+      if (this.hideOnClickInside === true && this.$refs.trigger !== undefined) {
         this.$refs.trigger._tippy.hide();
       }
     }

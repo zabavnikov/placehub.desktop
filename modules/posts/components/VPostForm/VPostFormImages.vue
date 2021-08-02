@@ -1,24 +1,27 @@
 <template>
-  <client-only>
-    <draggable
-      v-model="sets"
-      handle=".handle"
-      :class="{
+  <div>
+    <client-only>
+      <draggable
+          v-model="sets"
+          handle=".handle"
+          :class="{
         'form-images': true,
         [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-1']: true,
       }">
 
-      <div v-for="(set, index) in sets" :key="set.map(image => image['id']).join('-')">
-        <post-form-image-set
-            :images="set"
-            :story-mode="storyMode"
-            @text="onChangeText"
-            @delete="onDelete(index, $event)"
-            @upload="$emit('upload', index)">
-        </post-form-image-set>
-      </div>
-    </draggable>
-  </client-only>
+        <div v-for="(set, index) in sets" :key="set.map(image => image['id']).join('-')">
+          <post-form-image-set
+              :images="set"
+              :story-mode="storyMode"
+              @text="onChangeText"
+              @delete="onDelete(index, $event)"
+              @upload="$emit('upload', index)">
+          </post-form-image-set>
+          <div @click="onEditSet(index)">edit</div>
+        </div>
+      </draggable>
+    </client-only>
+  </div>
 </template>
 
 <script>
@@ -58,6 +61,7 @@ export default {
   data() {
     return {
       sets: this.value,
+      editableSet: null,
     }
   },
 
@@ -94,6 +98,14 @@ export default {
         this.$emit('input', this.sets[setIndex].splice(imageIndex, 1));
       }
     },
+
+    onEditSet(setIndex) {
+      this.$overlay.show(() => import('~/modules/posts/components/VPostForm/PostFormImageSetEditor'), {
+        props: {
+          images: this.sets[setIndex]
+        }
+      })
+    }
   }
 }
 </script>

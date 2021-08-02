@@ -24,19 +24,20 @@ module.exports = {
   plugins: [
     './plugins/axios.js',
     './plugins/event-bus.js',
-    './plugins/overlay.js',
     './plugins/directives.js',
     './plugins/components.js',
   ],
 
   buildModules: [
     '@nuxtjs/tailwindcss',
+    '@nuxtjs/composition-api/module',
   ],
 
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/auth-next',
     '@nuxtjs/toast',
+    '~/placehub-ui/modules/overlay'
   ],
 
 
