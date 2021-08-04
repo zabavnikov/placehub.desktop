@@ -13,20 +13,21 @@
           <post-form-image-set
               :images="set"
               :story-mode="storyMode"
-              @text="onChangeText"
-              @delete="onDelete(index, $event)"
-              @upload="$emit('upload', index)">
+              @text="onChangeText">
           </post-form-image-set>
-          <div @click="onEditSet(index)">edit</div>
+          <div @click="onEdit(index)">edit</div>
         </div>
       </draggable>
     </client-only>
+
+    <v-upload ref="upload" to="posts" @input="onUpload"></v-upload>
   </div>
 </template>
 
 <script>
 import throttle from 'lodash/throttle';
 import PostFormImageSet from './PostFormImages/PostFormImageSet';
+import VUpload from '~/components/common/VUpload';
 
 let draggable = null;
 
@@ -39,11 +40,13 @@ export default {
 
   components: {
     PostFormImageSet,
+    VUpload,
     draggable
   },
 
   props: {
     value: {
+      type: Array,
       required: true,
     },
 
@@ -60,14 +63,14 @@ export default {
 
   data() {
     return {
-      sets: this.value,
+      sets: [...this.value],
       editableSet: null,
     }
   },
 
   watch: {
-    sets() {
-      this.$emit('input', this.sets);
+    sets(newValue) {
+      this.$nextTick().then(() => this.$emit('input', newValue))
     },
   },
 
@@ -85,27 +88,41 @@ export default {
           .finally(() => this.$emit('loading', false));
     }, 1500),
 
-    /**
-     * Если в наборе всего одно изображение, то удаляем сам набор,
-     * а если больше одного, то удаляем само изображение из набора.
-     * @param setIndex
-     * @param imageIndex
-     */
-    onDelete(setIndex, imageIndex) {
-      if (this.sets[setIndex].length === 1) {
-        this.$emit('input', this.sets.splice(setIndex, 1));
-      } else {
-        this.$emit('input', this.sets[setIndex].splice(imageIndex, 1));
-      }
-    },
+    onEdit(setIndex) {
+      const set = this.sets[setIndex];
+      this.editableSet = setIndex;
 
-    onEditSet(setIndex) {
       this.$overlay.show(() => import('~/modules/posts/components/VPostForm/PostFormImageSetEditor'), {
         props: {
-          images: this.sets[setIndex]
+          images: set
+        },
+        on: {
+          upload: () => this.$refs.upload.$el.click(),
+
+          /**
+           * Если в наборе всего одно изображение, то удаляем сам набор,
+           * а если больше одного, то удаляем само изображение из набора.
+           */
+          delete: imageIndex => {
+            set.splice(imageIndex, 1);
+
+            if (set.length === 0) {
+              this.sets.splice(setIndex, 1);
+            }
+          }
         }
       })
-    }
+    },
+
+    onUpload(images) {
+      images.forEach(image => {
+        if (this.editableSet !== null && this.editableSet >= 0) {
+          this.sets[this.editableSet].push(image);
+        } else {
+          this.sets.push([image]);
+        }
+      });
+    },
   }
 }
 </script>

@@ -1,21 +1,6 @@
 <template>
-  <div class="v-upload" title="Загрузить изображения">
-    <input ref="file" type="file" :accept="accept" :multiple="multiple" :disabled="progress > 0" @change="onUpload">
-    <div class="flex items-center">
-      <div :style="{backgroundColor: isError ? 'red' : undefined}" @click="$refs.file.click()">
-        <slot><v-icon name="photograph" stroke="#b0bec5"></v-icon></slot>
-      </div>
-    </div>
-  </div>
+  <input type="file" :accept="accept" :multiple="multiple" :disabled="progress > 0" @change="onUpload">
 </template>
-
-<style lang="scss">
-  .v-upload {
-    input[type="file"] {
-      display: none;
-    }
-  }
-</style>
 
 <script>
   export default {

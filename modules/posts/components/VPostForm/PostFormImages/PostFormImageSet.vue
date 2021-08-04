@@ -1,17 +1,5 @@
 <template>
   <div>
-    <div class="flex space-x-2 justify-end mb-2">
-      <v-dropdown>
-        <div slot="trigger">
-          <v-icon name="dots-horizontal"></v-icon>
-        </div>
-        <ul>
-          <li @click="$emit('upload')">Добавить изображение в галлерею</li>
-          <li @click="$emit('delete', activeIndex)">Удалить активное изображение</li>
-        </ul>
-      </v-dropdown>
-    </div>
-
     <div v-if="activeImage" class="post-images-wrap handle" @click="$emit('click')">
       <div :style="{backgroundImage: `url(${activeImage.sizes[storyMode === true ? 'large' : 'small']})`}"
            class="form-images__image wh-ratio rounded">
@@ -34,7 +22,6 @@
 <script>
 import VTextarea from '~/components/common/VTextarea';
 import VDropdown from "~/components/ui/VDropdown";
-import PostFormImageSetEditor from '../PostFormImageSetEditor';
 
 export default {
   props: {
@@ -52,7 +39,6 @@ export default {
   components: {
     VTextarea,
     VDropdown,
-    PostFormImageSetEditor,
   },
 
   data() {

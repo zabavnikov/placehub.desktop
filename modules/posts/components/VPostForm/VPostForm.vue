@@ -8,17 +8,14 @@
         @url="form.url_id = $event.id; form.url = $event"
     />
 
-    В наборе изображений показываем только иконку редактирования,
-    кликая по редактированию, выводим компонент управления набором.
-
-    <div v-if="form.sets && form.sets.length > 0" class="mt-2">
-      <VPostFormImages
-          v-model="form.sets"
-          model-type="posts"
-          :story-mode="storyMode"
-          @upload="uploadIndex = $event; $refs.upload.$refs.file.click()"
-          @loading="loading = $event"/>
-    </div>
+    <v-post-form-images
+        class="mt-2"
+        ref="images"
+        model-type="posts"
+        v-model="form.sets"
+        :story-mode="storyMode"
+        @loading="loading = $event">
+    </v-post-form-images>
 
     <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
       <v-tag
@@ -49,8 +46,6 @@
     </div>
 
     <div class="post-form z-10" id="post-form-tools">
-      <VProgressBar class="mt-2" v-if="uploadProgress > 0" :progress="uploadProgress"/>
-
       <div class="flex items-center ">
         <div class="flex items-center space-x-2">
           <v-tags-select v-model="form.tags"
@@ -60,16 +55,13 @@
             </button>
           </v-tags-select>
 
-          <v-upload
-              ref="upload"
-              class="post-form-tool"
-              v-tooltip="`Фотографии`"
-              to="posts"
-              :is-error="errors.first('images')"
-              @progress="uploadProgress = $event"
-              @input="onUpload"
-          >
-          </v-upload>
+          <button
+              @click="openFileBrowser"
+              v-tooltip="`Фото`"
+              type="button"
+              class="post-form-tool">
+            <v-icon name="image" stroke="#b0bec5"></v-icon>
+          </button>
 
           <button
               @click="$overlay.show(() => import('~/modules/places/components/VChoosePlaceOverlay'), mapOverlay)"
@@ -98,32 +90,6 @@
   </div>
 </template>
 
-<style lang="scss">
-.post-form {
-  position: sticky;
-  bottom: 0;
-  background-color: #fff;
-  padding: 1rem;
-  margin: 0 -1rem -1rem;
-}
-
-.post-form-tool {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  cursor: pointer;
-  border-radius: 99px;
-
-  &:hover {
-    svg {
-      stroke: #1a202c;
-    }
-  }
-}
-</style>
-
 <script>
 import cloneDeep from 'lodash/cloneDeep';
 import Cookie from 'js-cookie';
@@ -131,7 +97,6 @@ import VTextarea from "~/components/common/VTextarea";
 import Errors from "~/utils/errors"
 import VPostFormImages from "./VPostFormImages";
 import VPostFormAccess from "./VPostFormAccess";
-import VUpload from '~/components/common/VUpload';
 import VTagsSelect from '~/modules/tags/components/VTagsSelect';
 import VUrl from "~/modules/urls/components/VUrl";
 import VProgressBar from "~/components/ui/VProgressBar";
@@ -161,7 +126,6 @@ export default {
   components: {
     VUrl,
     VTagsSelect,
-    VUpload,
     VPostFormImages,
     VTextarea,
     VPostFormAccess,
@@ -176,8 +140,6 @@ export default {
       showTags: false,
       storyMode: Cookie.get('storyMode') === 'on',
       form: this.post,
-      uploadProgress: 0,
-      uploadIndex: null,
       parseProgress: false,
     }
   },
@@ -219,6 +181,9 @@ export default {
   },
 
   methods: {
+    openFileBrowser() {
+      this.$refs.images.$refs.upload.$el.click()
+    },
     onToggleStoryMode() {
       this.storyMode = !this.storyMode;
       Cookie.set('storyMode', this.storyMode ? 'on' : 'off');
@@ -257,18 +222,6 @@ export default {
           .finally(() => this.loading = false);
     },
 
-    onUpload(images) {
-      images.forEach(image => {
-        if (this.uploadIndex !== null && this.uploadIndex >= 0) {
-          this.form.sets[this.uploadIndex].push(image);
-        } else {
-          this.form.sets.push([image]);
-        }
-      });
-
-      this.uploadIndex = null;
-    },
-
     scrollToLastUploadedImage() {
       const images = this.$el.querySelector('.form-images');
 
@@ -285,3 +238,29 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.post-form {
+  position: sticky;
+  bottom: 0;
+  background-color: #fff;
+  padding: 1rem;
+  margin: 0 -1rem -1rem;
+}
+
+.post-form-tool {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  cursor: pointer;
+  border-radius: 99px;
+
+  &:hover {
+    svg {
+      stroke: #1a202c;
+    }
+  }
+}
+</style>
