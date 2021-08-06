@@ -60,7 +60,7 @@
               v-tooltip="`Фото`"
               type="button"
               class="post-form-tool">
-            <v-icon name="image" stroke="#b0bec5"></v-icon>
+            <v-icon name="camera" stroke="#b0bec5"></v-icon>
           </button>
 
           <button

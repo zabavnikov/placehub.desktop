@@ -6,21 +6,25 @@
           handle=".handle"
           :class="{
         'form-images': true,
-        [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-1']: true,
+        [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-4']: true,
       }">
 
         <div v-for="(set, index) in sets" :key="set.map(image => image['id']).join('-')">
+          <div class="flex items-center justify-between mb-1">
+            <div>{{ set.length }} фото</div>
+            <v-icon name="dots-horizontal" @click="onEdit(index)" class="cursor-pointer"></v-icon>
+          </div>
           <post-form-image-set
+              class="cursor-move"
               :images="set"
               :story-mode="storyMode"
               @text="onChangeText">
           </post-form-image-set>
-          <div @click="onEdit(index)">edit</div>
         </div>
       </draggable>
     </client-only>
 
-    <v-upload ref="upload" to="posts" @input="onUpload"></v-upload>
+    <v-upload ref="upload" to="posts" @input="onUpload" class="hidden"></v-upload>
   </div>
 </template>
 
@@ -88,8 +92,12 @@ export default {
           .finally(() => this.$emit('loading', false));
     }, 1500),
 
+    /**
+     * Редактирование набора изображений.
+     * @param setIndex
+     */
     onEdit(setIndex) {
-      const set = this.sets[setIndex];
+      let set = this.sets[setIndex];
       this.editableSet = setIndex;
 
       this.$overlay.show(() => import('~/modules/posts/components/VPostForm/PostFormImageSetEditor'), {
@@ -97,17 +105,21 @@ export default {
           images: set
         },
         on: {
+          close: images => {
+            this.$set(this.sets, setIndex, images);
+          },
           upload: () => this.$refs.upload.$el.click(),
 
-          /**
-           * Если в наборе всего одно изображение, то удаляем сам набор,
-           * а если больше одного, то удаляем само изображение из набора.
+          /*
+           * Удаляем изображение из набора, если удалено последние изображение,
+           * то удаляем и сама набор.
            */
           delete: imageIndex => {
             set.splice(imageIndex, 1);
 
             if (set.length === 0) {
-              this.sets.splice(setIndex, 1);
+              this.$overlay.hide();
+              this.$nextTick(() => this.sets.splice(setIndex, 1));
             }
           }
         }

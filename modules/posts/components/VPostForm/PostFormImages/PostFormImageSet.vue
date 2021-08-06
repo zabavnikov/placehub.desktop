@@ -7,15 +7,6 @@
 
       <VTextarea v-if="storyMode" v-model="activeImage.text" @input="$emit('text', activeImage)" maxlength="2000" placeholder="Добавьте текст" class="mt-2"/>
     </div>
-
-    <div v-if="isGallery" class="mt-4 flex justify-center space-x-2">
-      <div v-for="(image, index) in images"
-           :key="index"
-           :class="{[index === activeIndex ? 'bg-blue-200' : 'bg-gray-200']: true}"
-           @click="activeIndex = index"
-           class="w-2 h-2 rounded-full cursor-pointer">
-      </div>
-    </div>
   </div>
 </template>
 
@@ -49,9 +40,6 @@ export default {
   },
 
   computed: {
-    isGallery() {
-      return this.images.length > 1;
-    },
     activeImage() {
       return this.images[this.activeIndex];
     }
