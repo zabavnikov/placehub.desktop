@@ -1,22 +1,26 @@
 <template>
-  <div>
-    <div class="layout-content bg-white p-4 rounded-lg">
+  <div class="layout-main">
+    <div class="layout-content">
 
-      <client-only>
-        <draggable v-model="editableImages" @end="onDragEnd" handle=".handle" class="grid grid-cols-4 gap-4">
-        <div
-            class="handle wh-ratio rounded bg-cover bg-center"
-            v-for="(image, index) in editableImages"
-            :key="image.id"
-            :style="{backgroundImage: `url(${image.sizes.small})`}">
-          <div class="ml-auto p-1" @click="$emit('delete', index)">
-            <v-icon name="trash"></v-icon>
-          </div>
-        </div>
-        </draggable>
-      </client-only>
+      <div class="p-4 bg-white rounded-t-lg">
+        <client-only>
+          <draggable v-model="editableImages" handle=".handle" class="grid grid-cols-4 gap-4">
+            <div
+                class="handle wh-ratio rounded bg-cover bg-center"
+                v-for="(image, index) in editableImages"
+                :key="image.id"
+                :style="{backgroundImage: `url(${image.sizes.small})`}">
+              <div class="ml-auto p-1" @click="$emit('delete', index)">
+                <v-icon name="trash"></v-icon>
+              </div>
+            </div>
+          </draggable>
+        </client-only>
+      </div>
 
-      <button type="button" class="button button-primary" @click="$emit('upload')">Добавить фото</button>
+      <footer class="p-4 bg-gray-100 rounded-b-lg border-t border-solid border-gray-200">
+        <button type="button" class="button button-primary" @click="$emit('upload')">Добавить фото</button>
+      </footer>
     </div>
   </div>
 </template>
@@ -40,18 +44,20 @@ export default {
   },
   data() {
     return {
-      editableImages: this.images
+      editableImages: [...this.images]
     }
   },
-  beforeDestroy() {
-    this.$emit('close', this.editableImages)
-  },
-  methods: {
-    onDragEnd() {
-      this.$axios.$put('/api/posts/images/order', {
-        sets: this.editableImages
-      })
+  watch: {
+    images(newValue) {
+      this.editableImages = newValue;
+    },
+    editableImages(newValue) {
+      this.$axios
+        .$put('/api/posts/images/order', {
+          set: newValue
+        })
+        .then(() => this.$emit('change', newValue));
     }
-  }
+  },
 }
 </script>

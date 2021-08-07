@@ -105,7 +105,7 @@ export default {
           images: set
         },
         on: {
-          close: images => {
+          change: images => {
             this.$set(this.sets, setIndex, images);
           },
           upload: () => this.$refs.upload.$el.click(),
@@ -120,6 +120,7 @@ export default {
             if (set.length === 0) {
               this.$overlay.hide();
               this.$nextTick(() => this.sets.splice(setIndex, 1));
+              this.editableSet = null;
             }
           }
         }
