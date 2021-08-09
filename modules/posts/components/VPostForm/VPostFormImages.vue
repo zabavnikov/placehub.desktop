@@ -102,27 +102,20 @@ export default {
 
       this.$overlay.show(() => import('~/modules/posts/components/VPostForm/PostFormImageSetEditor'), {
         props: {
-          images: set
+          set
         },
         on: {
           change: images => {
-            this.$set(this.sets, setIndex, images);
-          },
-          upload: () => this.$refs.upload.$el.click(),
-
-          /*
-           * Удаляем изображение из набора, если удалено последние изображение,
-           * то удаляем и сама набор.
-           */
-          delete: imageIndex => {
-            set.splice(imageIndex, 1);
-
-            if (set.length === 0) {
+            // Если удалено последние изображение, то удаляем и сама набор.
+            if (images.length === 0) {
               this.$overlay.hide();
               this.$nextTick(() => this.sets.splice(setIndex, 1));
               this.editableSet = null;
+            } else {
+              this.$set(this.sets, setIndex, images);
             }
-          }
+          },
+          upload: () => this.$refs.upload.$el.click(),
         }
       })
     },

@@ -15,7 +15,7 @@
         </div>
       </div>
     </div>
-    <figcaption v-if="isActiveImageHasText" class="p-6">{{ activeImage.text }}</figcaption>
+    <figcaption v-if="isActiveImageHasText" class="p-6" style="white-space: pre-line">{{ activeImage.text }}</figcaption>
   </figure>
 </template>
 
