@@ -7,12 +7,13 @@ export default fragment('PostFragment', 'Post', {
   user_id:      types.number,
   place_id:     types.number,
   text:         types.string,
+  image_order:  types.string,
   created_at: params({
     relative: true
   }, types.string),
 
-  sets: params({
-    sizes: rawString("default@width:1024")
+  images: params({
+    sizes: rawString("default@resize:fill:480:480")
   }, {
     id: types.number,
     text: types.string,

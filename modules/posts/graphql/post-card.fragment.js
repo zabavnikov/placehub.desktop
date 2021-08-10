@@ -9,12 +9,12 @@ export default fragment('PostCardFragment', 'Post', {
   short_text:       types.string,
   comments_count:   types.number,
   is_draft:         types.boolean,
-
+  image_order:  types.string,
   created_at: params({
     relative: true
   }, types.string),
 
-  preview: params({
+  images: params({
     sizes: rawString("default@width:1024")
   }, {
     id: types.number,

@@ -10,8 +10,8 @@
           v-text="post.short_text"></n-link>
     </div>
 
-    <n-link v-if="post.preview" :to="{name: 'posts.show', params: {postId: post.id}}" class="block mb-6">
-      <post-image :image="post.preview"></post-image>
+    <n-link v-if="post.images.length > 0" :to="{name: 'posts.show', params: {postId: post.id}}" class="block mb-6">
+      <post-image :image="post.images[0]"></post-image>
     </n-link>
   </div>
 </template>

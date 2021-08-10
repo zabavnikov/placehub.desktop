@@ -1,25 +1,9 @@
 <template>
   <div>
     <client-only>
-      <draggable
-          v-model="sets"
-          handle=".handle"
-          :class="{
-        'form-images': true,
-        [storyMode ? 'story-mode' : 'grid grid-cols-4 gap-4']: true,
-      }">
-
-        <div v-for="(set, index) in sets" :key="set.map(image => image['id']).join('-')">
-          <div class="flex items-center justify-between mb-1">
-            <div>{{ set.length }} фото</div>
-            <v-icon name="dots-horizontal" @click="onEdit(index)" class="cursor-pointer"></v-icon>
-          </div>
-          <post-form-image-set
-              class="cursor-move"
-              :images="set"
-              :story-mode="storyMode"
-              @text="onChangeText">
-          </post-form-image-set>
+      <draggable v-model="images" @end="onDragEnd" handle=".handle" class="grid grid-cols-4 gap-4">
+        <div v-for="(image, index) in images" :key="image.id" class="handle">
+          <img :src="image.sizes.default" alt="">
         </div>
       </draggable>
     </client-only>
@@ -29,8 +13,6 @@
 </template>
 
 <script>
-import throttle from 'lodash/throttle';
-import PostFormImageSet from './PostFormImages/PostFormImageSet';
 import VUpload from '~/components/common/VUpload';
 
 let draggable = null;
@@ -40,10 +22,7 @@ if (process.client) {
 }
 
 export default {
-  name: 'VPostFormImages',
-
   components: {
-    PostFormImageSet,
     VUpload,
     draggable
   },
@@ -58,77 +37,23 @@ export default {
       type: String,
       required: true,
     },
-
-    storyMode: {
-      type: Boolean,
-      default: false,
-    }
   },
 
   data() {
     return {
-      sets: [...this.value],
-      editableSet: null,
+      images: [...this.value],
     }
   },
 
-  watch: {
-    sets(newValue) {
-      this.$nextTick().then(() => this.$emit('input', newValue))
-    },
-  },
-
   methods: {
-    onChangeText: throttle(function (image) {
-      this.$emit('loading', true);
-
-      this.$axios
-          .$put(`/api/images/${image.id}`, {
-            text: image.text,
-            model_type: this.modelType,
-          }, {
-            progress: false
-          })
-          .finally(() => this.$emit('loading', false));
-    }, 1500),
-
-    /**
-     * Редактирование набора изображений.
-     * @param setIndex
-     */
-    onEdit(setIndex) {
-      let set = this.sets[setIndex];
-      this.editableSet = setIndex;
-
-      this.$overlay.show(() => import('~/modules/posts/components/VPostForm/PostFormImageSetEditor'), {
-        props: {
-          set
-        },
-        on: {
-          change: images => {
-            // Если удалено последние изображение, то удаляем и сама набор.
-            if (images.length === 0) {
-              this.$overlay.hide();
-              this.$nextTick(() => this.sets.splice(setIndex, 1));
-              this.editableSet = null;
-            } else {
-              this.$set(this.sets, setIndex, images);
-            }
-          },
-          upload: () => this.$refs.upload.$el.click(),
-        }
-      })
-    },
-
     onUpload(images) {
-      images.forEach(image => {
-        if (this.editableSet !== null && this.editableSet >= 0) {
-          this.sets[this.editableSet].push(image);
-        } else {
-          this.sets.push([image]);
-        }
-      });
+      images.forEach(image => this.images.push(image));
+      this.$emit('input', this.images);
     },
+
+    onDragEnd() {
+      this.$emit('input', this.images);
+    }
   }
 }
 </script>

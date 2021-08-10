@@ -8,14 +8,7 @@
         @url="form.url_id = $event.id; form.url = $event"
     />
 
-    <v-post-form-images
-        class="mt-2"
-        ref="images"
-        model-type="posts"
-        v-model="form.sets"
-        :story-mode="storyMode"
-        @loading="loading = $event">
-    </v-post-form-images>
+    <v-post-form-images class="mt-2" ref="images" model-type="posts" v-model="form.images"></v-post-form-images>
 
     <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
       <v-tag
@@ -71,14 +64,6 @@
               :style="{backgroundColor: errors.first('place_id') ? 'red' : undefined}">
             <v-icon name="location-marker" stroke="#b0bec5"></v-icon>
           </button>
-
-          <button
-              @click="onToggleStoryMode"
-              type="button"
-              v-tooltip="storyModeTooltip"
-              class="post-form-tool">
-            <v-icon name="collection" :stroke="storyMode ? 'black' : '#b0bec5'"></v-icon>
-          </button>
         </div>
 
         <div class="ml-auto space-x-2 flex items-center">
@@ -108,7 +93,7 @@ const formInitialState = {
   text: '',
   place: {},
   tags: [],
-  sets: [],
+  images: [],
   url: null,
   is_draft: false
 };
@@ -138,7 +123,6 @@ export default {
       loading: false,
       errors: new Errors(),
       showTags: false,
-      storyMode: Cookie.get('storyMode') === 'on',
       form: this.post,
       parseProgress: false,
     }
@@ -147,9 +131,6 @@ export default {
   computed: {
     isEdit() {
       return this.post.id > 0;
-    },
-    storyModeTooltip() {
-      return this.storyMode ? 'Отключить режим истории' : 'Включить режим истории';
     },
     mapOverlay() {
       return {
@@ -184,11 +165,6 @@ export default {
     openFileBrowser() {
       this.$refs.images.$refs.upload.$el.click()
     },
-    onToggleStoryMode() {
-      this.storyMode = !this.storyMode;
-      Cookie.set('storyMode', this.storyMode ? 'on' : 'off');
-    },
-
     onSubmit() {
       if (this.loading) return;
 
@@ -215,7 +191,6 @@ export default {
 
               this.form = cloneDeep(formInitialState);
               this.errors.clear();
-              Cookie.set('storyMode', 'off');
             }
           })
           .catch(error => this.errors.record(error))
