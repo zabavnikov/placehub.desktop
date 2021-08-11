@@ -5,7 +5,7 @@
         v-for="(image, index) in value"
         :key="image.id"
         :style="{backgroundImage: `url(${image.url})`}"
-        class="v-attachment wh-ratio"
+        class="v-attachment ratio"
       >
         <div class="v-attachment-tools">
           <div @click="onDelete(index)" class="v-attachment-tools__delete">

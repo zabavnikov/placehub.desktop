@@ -8,7 +8,7 @@
             <div v-if="images.length" class="grid grid-cols-2 grid-rows-2 gap-4">
               <div
                   v-for="image in images" :key="image.id"
-                  class="wh-ratio rounded cursor-pointer"
+                  class="ratio rounded cursor-pointer"
                   :title="image.text"
                   :style="{backgroundImage: `url(${image.url})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
                   :class="{'v-images-gallery--selected': selected && selected.id === image.id}" @click="selected = image">

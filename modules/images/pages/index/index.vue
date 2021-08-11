@@ -3,7 +3,7 @@
     <div slot="content" class="grid grid-cols-4 grid-rows-4 gap-4">
       <n-link :to="`/images/${image.id}`"
           v-for="image in images" :key="image.id"
-          class="wh-ratio rounded"
+          class="ratio rounded"
           :style="{backgroundImage: `url(${image.url_small})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
       ></n-link>
     </div>

@@ -3,7 +3,7 @@
     <component :is="linkable ? 'n-link' : 'div'" :to="linkable ? `/images/${image.id}` : undefined"
         v-for="image in images" :key="image.id"
         @click="$emit('click', image)"
-        class="wh-ratio rounded"
+        class="ratio rounded"
         :style="{backgroundImage: `url(${image[size]})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
     >
       <div>{{ image.id }}</div>

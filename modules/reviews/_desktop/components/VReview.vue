@@ -58,7 +58,7 @@
             v-for="image in item.images"
             :key="image.id"
             :style="{backgroundImage: `url(${image.url})`}"
-            class="review-attachment wh-ratio rounded"
+            class="review-attachment ratio rounded"
         >
         </div>
       </div>

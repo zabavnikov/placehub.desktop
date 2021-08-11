@@ -37,7 +37,7 @@
                 :style="{backgroundImage: `url(${image.sizes['default']})`, backgroundSize: 'cover', backgroundPosition: 'center'}"
                 :href="image.url"
                 target="_blank"
-                class="wh-ratio rounded-lg"
+                class="ratio rounded-lg"
             >
             </a>
           </div>

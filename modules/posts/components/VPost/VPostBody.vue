@@ -1,17 +1,12 @@
 <template>
   <div>
-    <div class="m-6">
-      <div v-if="post.tags && post.tags.length > 0" class="mb-4 flex flex-wrap text-base text-gray-500">
-        <n-link to="/" v-for="tag in post.tags" :key="tag.id" class="mr-2 hover:text-gray-800">#{{ tag.name }}</n-link>
+    <n-link :to="{name: 'posts.show', params: {postId: post.id}}" class="block m-6">
+      <div v-if="post.short_text" class="whitespace-pre-line" v-text="post.short_text"></div>
+      <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 mt-6">
+        <div v-for="image in post.images" class="ratio bg-center bg-cover rounded-lg"
+             :style="{backgroundImage: `url(${image.sizes.default})`}" :key="image.id">
+        </div>
       </div>
-      <n-link
-          v-if="post.short_text" :to="{name: 'posts.show', params: {postId: post.id}}"
-          class="text-base whitespace-pre-line block"
-          v-text="post.short_text"></n-link>
-    </div>
-
-    <n-link v-if="post.images.length > 0" :to="{name: 'posts.show', params: {postId: post.id}}" class="block mb-6">
-      <post-image :image="post.images[0]"></post-image>
     </n-link>
   </div>
 </template>

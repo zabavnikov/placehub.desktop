@@ -10,6 +10,10 @@
       </d-content-card-menu>
     </header>
 
+    <div v-if="content.tags && content.tags.length > 0" class="m-6 flex flex-wrap text-gray-500">
+      <n-link to="/" v-for="tag in content.tags" :key="tag.id" class="mr-2 hover:text-gray-800">#{{ tag.name }}</n-link>
+    </div>
+
     <component :is="full ? 'VPostBodyFull' : 'VPostBody'" :post="content"></component>
 
     <VUrl v-if="content.url" :url="content.url" :compact="true" class="m-6" />

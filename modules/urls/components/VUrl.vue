@@ -2,7 +2,7 @@
   <div :class="{'flex items-start space-between': editable}">
     <a :href="url.url" target="_blank" title="Перейти на сайт" rel="nofollow"
        :class="{'flex items-start space-x-3': compact}">
-      <div class="flex-shrink-0 mb-3 rounded wh-ratio w-24 bg-center bg-cover"
+      <div class="flex-shrink-0 mb-3 rounded ratio w-24 bg-center bg-cover"
            :style="{backgroundImage: `url(${url.image})`}"></div>
 
       <div class="flex space-x-3">

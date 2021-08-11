@@ -3,7 +3,7 @@
         <div class="m-6 text-base whitespace-pre-line">{{ post.text }}</div>
 
         <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">
-          <div v-for="image in post.images" class="wh-ratio bg-center bg-cover rounded-lg"
+          <div v-for="image in post.images" class="ratio bg-center bg-cover rounded-lg"
                :style="{backgroundImage: `url(${image.sizes.default})`}" :key="image.id">
             <!--              <div v-if="$auth.loggedIn" class="post-image-tools space-x-4">
                             <v-like :to="`posts_images/${image.id}`" :count="image.likes_count" :is-liked="image.liked_by_me" color="white"></v-like>
