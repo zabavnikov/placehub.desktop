@@ -1,5 +1,11 @@
 <template>
-  <input type="file" :accept="accept" :multiple="multiple" :disabled="progress > 0" @change="onUpload">
+  <input
+    type="file"
+    :accept="accept"
+    :multiple="multiple"
+    :disabled="progress > 0"
+    @change="onChange"
+  />
 </template>
 
 <script>
@@ -14,28 +20,23 @@
 
       to: {
         type: String,
-        required: true,
+        required: true
       },
 
       multiple: {
         type: Boolean,
-        default: true
+        default: false,
       },
 
       max: {
         type: Number,
-        default: 10
+        default: 0,
       },
 
       accept: {
         type: String,
-        default: "image/*"
+        default: 'image/*'
       },
-
-      isError: {
-        type: Boolean,
-        default: false,
-      }
     },
 
     data() {
@@ -45,38 +46,38 @@
     },
 
     methods: {
-      onUpload(event) {
+      onChange(event) {
         const files = event.target.files, formData = new FormData();
 
-        if (files.length < 1 || this.value.length >= this.max || !this.to || this.progress > 0) {
+        if (
+            files.length === 0 ||
+            this.to.length === 0 ||
+            this.progress > 0 ||
+            this.max > 0 && this.value.length >= this.max
+        ) {
           event.target.value = '';
           return;
         }
 
-        this.$emit('start');
-
         for (let file of files) {
-          formData.append('images[]', file)
+          formData.append('images[]', file);
         }
 
         this.$axios
           .$post(`/api/images/${this.to}`, formData, {
             onUploadProgress: progressEvent => {
               this.progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
-              this.$emit('progress', this.progress)
+              this.$emit('progress', this.progress);
             }
           })
-          .then((images) => {
-            if (images.length) {
-              this.$emit('input', images);
+          .then(images => {
+            if (images.length > 0) {
+              this.$emit('input', [...this.value, ...images]);
             }
           })
           .finally(() => {
             event.target.value = '';
-            this.progress = 0;
-            this.$emit('progress', this.progress)
-
-            this.$emit('finish');
+            this.$emit('progress', this.progress = 0);
           });
       }
     }

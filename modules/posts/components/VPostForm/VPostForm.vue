@@ -8,7 +8,7 @@
         @url="form.url_id = $event.id; form.url = $event"
     />
 
-    <v-post-form-images class="mt-2" ref="images" model-type="posts" v-model="form.images"></v-post-form-images>
+    <v-post-form-images class="mt-2" v-model="form.images"></v-post-form-images>
 
     <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
       <v-tag
@@ -41,21 +41,26 @@
     <div class="post-form z-10" id="post-form-tools">
       <div class="flex items-center ">
         <div class="flex items-center space-x-2">
-          <v-tags-select v-model="form.tags"
-                         v-tooltip="`Теги`">
+          <!-- Добавление тегов. -->
+          <v-tags-select v-model="form.tags" v-tooltip="`Теги`">
             <button slot="trigger" type="button" class="post-form-tool" ref="triggerTags">
               <v-icon name="tag" stroke="#b0bec5"></v-icon>
             </button>
           </v-tags-select>
+          <!-- / Добавление тегов. -->
 
+          <!-- Загрузка изображений. -->
           <button
-              @click="openFileBrowser"
+              @click="$refs.upload.$el.click()"
               v-tooltip="`Фото`"
               type="button"
               class="post-form-tool">
             <v-icon name="camera" stroke="#b0bec5"></v-icon>
           </button>
+          <v-upload ref="upload" to="posts" multiple v-model="form.images" class="hidden"></v-upload>
+          <!-- / Загрузка изображений. -->
 
+          <!-- Выбор места. -->
           <button
               @click="$overlay.show(() => import('~/modules/places/components/VChoosePlaceOverlay'), mapOverlay)"
               type="button"
@@ -64,6 +69,7 @@
               :style="{backgroundColor: errors.first('place_id') ? 'red' : undefined}">
             <v-icon name="location-marker" stroke="#b0bec5"></v-icon>
           </button>
+          <!-- / Выбор места. -->
         </div>
 
         <div class="ml-auto space-x-2 flex items-center">
@@ -76,16 +82,16 @@
 </template>
 
 <script>
-import cloneDeep from 'lodash/cloneDeep';
-import Cookie from 'js-cookie';
-import VTextarea from "~/components/common/VTextarea";
 import Errors from "~/utils/errors"
-import VPostFormImages from "./VPostFormImages";
 import VPostFormAccess from "./VPostFormAccess";
-import VTagsSelect from '~/modules/tags/components/VTagsSelect';
-import VUrl from "~/modules/urls/components/VUrl";
+import VPostFormImages from "./VPostFormImages";
 import VProgressBar from "~/components/ui/VProgressBar";
 import VTag from '~/components/ui/VTag';
+import VTagsSelect from '~/modules/tags/components/VTagsSelect';
+import VTextarea from "~/components/common/VTextarea";
+import VUpload from '~/components/common/VUpload';
+import VUrl from "~/modules/urls/components/VUrl";
+import cloneDeep from 'lodash/cloneDeep';
 
 const formInitialState = {
   id: null,
@@ -109,22 +115,23 @@ export default {
   },
 
   components: {
-    VUrl,
-    VTagsSelect,
-    VPostFormImages,
-    VTextarea,
     VPostFormAccess,
+    VPostFormImages,
     VProgressBar,
     VTag,
+    VTagsSelect,
+    VTextarea,
+    VUpload,
+    VUrl,
   },
 
   data() {
     return {
-      loading: false,
       errors: new Errors(),
-      showTags: false,
       form: this.post,
+      loading: false,
       parseProgress: false,
+      showTags: false,
     }
   },
 
@@ -162,9 +169,6 @@ export default {
   },
 
   methods: {
-    openFileBrowser() {
-      this.$refs.images.$refs.upload.$el.click()
-    },
     onSubmit() {
       if (this.loading) return;
 
@@ -188,28 +192,14 @@ export default {
               } else {
                 this.$toast.info('Добавлено в черновики')
               }
-
-              this.form = cloneDeep(formInitialState);
               this.errors.clear();
             }
+
+            this.form = cloneDeep(formInitialState);
           })
           .catch(error => this.errors.record(error))
           .finally(() => this.loading = false);
     },
-
-    scrollToLastUploadedImage() {
-      const images = this.$el.querySelector('.form-images');
-
-      if (images) {
-        this.$nextTick(() => {
-          const lastImage = images.lastChild;
-
-          window.scrollTo({
-            top: lastImage.offsetTop - lastImage.getBoundingClientRect().height
-          })
-        })
-      }
-    }
   }
 }
 </script>

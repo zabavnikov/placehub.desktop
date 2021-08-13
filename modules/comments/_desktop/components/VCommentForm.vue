@@ -182,6 +182,10 @@ const initialState = {
             this.$store.commit('comments/MODE_RESET');
           });
       },
+    },
+
+    beforeDestroy() {
+      this.$store.commit('comments/MODE_RESET')
     }
   }
 </script>

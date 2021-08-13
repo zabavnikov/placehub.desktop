@@ -27,14 +27,7 @@
 
         </div>
 
-<!--        <VUrl v-if="post.url" :url="post.url" class="m-6" />
-
-        <div v-if="post.place" class="m-6">
-          <div style="font-size: 12px; font-weight: 500">{{ post.place.name }}</div>
-          <div class="help">{{ post.place.parent_names }}</div>
-        </div>
-
-        <VTags v-if="post.tags.length > 0" :tags="post.tags" route-name="posts" class="m-6" />-->
+          <v-url v-if="post.url" :url="post.url" class="m-6"></v-url>
       </div>
 </template>
 
@@ -48,11 +41,13 @@
 
 <script>
 import PostBodyFullImageGallery from './PostBodyFullImageGallery';
+import VUrl from '~/modules/urls/components/VUrl';
 
 export default {
   name: 'VPostBodyFull',
   components: {
-    PostBodyFullImageGallery
+    PostBodyFullImageGallery,
+    VUrl,
   },
   props: {
     post: {

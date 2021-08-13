@@ -2,19 +2,15 @@
   <div>
     <client-only>
       <draggable v-model="images" @end="onDragEnd" handle=".handle" class="grid grid-cols-4 gap-4">
-        <div v-for="(image, index) in images" :key="image.id" class="handle">
+        <div v-for="image in images" :key="image.id" class="handle">
           <img :src="image.sizes.default" alt="">
         </div>
       </draggable>
     </client-only>
-
-    <v-upload ref="upload" to="posts" @input="onUpload" class="hidden"></v-upload>
   </div>
 </template>
 
 <script>
-import VUpload from '~/components/common/VUpload';
-
 let draggable = null;
 
 if (process.client) {
@@ -23,7 +19,6 @@ if (process.client) {
 
 export default {
   components: {
-    VUpload,
     draggable
   },
 
@@ -32,26 +27,28 @@ export default {
       type: Array,
       required: true,
     },
+  },
 
-    modelType: {
-      type: String,
-      required: true,
-    },
+  watch: {
+    value(newValue) {
+      if (this.skipWatchIfDragged === false) {
+        this.images = newValue;
+      } else {
+        this.skipWatchIfDragged = false;
+      }
+    }
   },
 
   data() {
     return {
       images: [...this.value],
+      skipWatchIfDragged: false,
     }
   },
 
   methods: {
-    onUpload(images) {
-      images.forEach(image => this.images.push(image));
-      this.$emit('input', this.images);
-    },
-
     onDragEnd() {
+      this.skipWatchIfDragged = true;
       this.$emit('input', this.images);
     }
   }
@@ -59,12 +56,6 @@ export default {
 </script>
 
 <style lang="scss">
-.story-mode {
-  .post-images-wrap + .post-images-wrap {
-    margin-top: 24px;
-  }
-}
-
 .form-images {
   &__image {
     background-size: cover;

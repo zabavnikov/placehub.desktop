@@ -1,6 +1,7 @@
 import {fragment, params, rawString, types} from 'typed-graphqlify';
 import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
 import TagsFragment from '~/modules/tags/graphql/tags.fragment';
+import PlaceCardFragment from '~/modules/places/graphql/place-card.graphql';
 
 export default fragment('PostFragment', 'Post', {
   id:           types.number,
@@ -23,7 +24,7 @@ export default fragment('PostFragment', 'Post', {
   like: {
     is_liked: types.boolean
   },
-  //...PlaceCardFragment,
+  place: PlaceCardFragment,
   user: ProfileCardFragment,
   tags: TagsFragment,
 });
