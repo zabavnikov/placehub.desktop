@@ -1,7 +1,7 @@
 <template>
   <header class="header px-6">
     <div class="flex items-center h-full">
-      <n-link to="/" class="mr-6 font-bold"><span class="uppercase">PlaceHub</span><sup>alpha</sup></n-link>
+      <n-link to="/" class="mr-6 font-bold uppercase">PlaceHub</n-link>
       <div class="py-2">
         <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {username: $auth.user.username}}" class="button button-success">Написать</n-link>
       </div>
