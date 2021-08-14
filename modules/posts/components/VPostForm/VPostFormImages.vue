@@ -1,9 +1,12 @@
 <template>
   <div>
     <client-only>
-      <draggable v-model="images" @end="onDragEnd" handle=".handle" class="grid grid-cols-4 gap-4">
-        <div v-for="image in images" :key="image.id" class="handle">
-          <img :src="image.sizes.default" alt="">
+      <draggable v-model="images" @end="onDragEnd" handle=".handle" class="grid grid-cols-4 gap-2">
+        <div v-for="(image, index) in images" :key="image.id" class="handle relative">
+          <img :src="image.sizes.default" alt="" class="rounded-lg">
+          <div @click="onDelete(index)" class="absolute top-0 right-0 m-1 p cursor-pointer rounded-full bg-black bg-opacity-75">
+            <v-icon name="x-circle" class="text-white" width="20" height="20"></v-icon>
+          </div>
         </div>
       </draggable>
     </client-only>
@@ -50,29 +53,12 @@ export default {
     onDragEnd() {
       this.skipWatchIfDragged = true;
       this.$emit('input', this.images);
-    }
+    },
+    onDelete(index) {
+      this.images.splice(index, 1);
+      this.skipWatchIfDragged = true;
+      this.$emit('input', this.images);
+    },
   }
 }
 </script>
-
-<style lang="scss">
-.form-images {
-  &__image {
-    background-size: cover;
-    background-position: 50%;
-  }
-
-  &__delete {
-    margin-left: auto;
-    width: 24px;
-    height: 24px;
-    background-color: rgba(255, 17, 0, .8);
-    color: #fff;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-  }
-}
-</style>

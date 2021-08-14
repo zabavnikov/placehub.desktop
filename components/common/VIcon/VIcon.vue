@@ -3,8 +3,8 @@
       :width="width"
       :height="height"
       :fill="fill"
-      :stroke="stroke"
       :viewBox="`0 0 ${parseInt(width)} ${parseInt(height)}`"
+      stroke="currentColor"
       stroke-width="2"
       stroke-linecap="round"
       stroke-linejoin="round"
@@ -32,10 +32,6 @@ export default {
     fill: {
       type: String,
       default: 'none'
-    },
-    stroke: {
-      type: String,
-      default: 'black'
     },
     solid: {
       type: Boolean,
