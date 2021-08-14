@@ -65,7 +65,9 @@
         <v-dropdown>
           <ul class="dropdown-menu">
             <div
-                @click="$eventBus.$emit('modal', ['complaints', 'complaint', {subjectType: `${subjectType}_comments`, modelId: comment.id}])"
+                @click="$overlay.show(() => import('~/modules/complaints/components/ComplaintModal'), {
+        props: {modelType: `${subjectType}_comments`, modelId: comment.id}
+      })"
                 class="dropdown-menu-item">Пожаловаться
             </div>
             <a @click="$store.commit('comments/MODE_EDIT', comment)" class="dropdown-menu-item">Редактировать</a>

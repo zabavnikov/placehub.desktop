@@ -1,44 +1,46 @@
 <template>
-  <div class="p-4 bg-white shadow-sm" :class="{loading: parseProgress}">
-    <VTextarea
-        v-model="form.text"
-        placeholder="Привет, что нового?"
-        parse-url
-        @parse-url-progress="parseProgress = $event"
-        @url="form.url_id = $event.id; form.url = $event"
-    />
+  <div :class="{loading: parseProgress}">
+    <div class="bg-white p-4 rounded-t-lg">
+      <VTextarea
+          v-model="form.text"
+          placeholder="Привет, что нового?"
+          parse-url
+          @parse-url-progress="parseProgress = $event"
+          @url="form.url_id = $event.id; form.url = $event"
+      />
 
-    <v-post-form-images class="mt-2" v-model="form.images"></v-post-form-images>
+      <v-post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></v-post-form-images>
 
-    <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
-      <v-tag
-          v-for="(tag, index) in form.tags"
-          :key="tag.id"
-          :name="tag.name"
-          editable
-          @delete="form.tags.splice(index, 1)"
-      >
-      </v-tag>
-    </div>
-
-    <div v-if="form.place && Object.keys(form.place).length > 0"
-         class="mt-2 flex justify-between shadow-sm p-2 border rounded">
-      <div>
-        <div class="font-bold">{{ form.place.name }}</div>
-        <div class="help">{{ form.place.parent_names }}</div>
+      <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
+        <v-tag
+            v-for="(tag, index) in form.tags"
+            :key="tag.id"
+            :name="tag.name"
+            editable
+            @delete="form.tags.splice(index, 1)"
+        >
+        </v-tag>
       </div>
-      <span @click="form.place = {}" class="cursor-pointer"><v-icon name="x" stroke="red"></v-icon></span>
-    </div>
 
-    <VUrl v-if="form.url" :url="form.url" @delete="form.url = null; form.url_id = null" editable class="mt-2"/>
+      <div v-if="form.place && Object.keys(form.place).length > 0"
+           class="mt-2 flex justify-between shadow-sm p-2 border rounded">
+        <div>
+          <div class="font-bold">{{ form.place.name }}</div>
+          <div class="help">{{ form.place.parent_names }}</div>
+        </div>
+        <span @click="form.place = {}" class="cursor-pointer"><v-icon name="x" stroke="red"></v-icon></span>
+      </div>
 
-    <div v-if="errors.any()" class="is-invalid mt-4">
-      <div v-for="error in errors.all()" class="help">
-        {{ error[0] }}
+      <VUrl v-if="form.url" :url="form.url" @delete="form.url = null; form.url_id = null" editable class="mt-2"/>
+
+      <div v-if="errors.any()" class="is-invalid mt-4">
+        <div v-for="error in errors.all()" class="help">
+          {{ error[0] }}
+        </div>
       </div>
     </div>
 
-    <div class="post-form z-10" id="post-form-tools">
+    <div class="bg-gray-50 border-t border-solid border-t-gray-100 rounded-b-lg p-4 sticky bottom-0 z-10">
       <div class="flex items-center ">
         <div class="flex items-center space-x-2">
           <!-- Добавление тегов. -->
@@ -205,14 +207,6 @@ export default {
 </script>
 
 <style lang="scss">
-.post-form {
-  position: sticky;
-  bottom: 0;
-  background-color: #fff;
-  padding: 1rem;
-  margin: 0 -1rem -1rem;
-}
-
 .post-form-tool {
   display: flex;
   align-items: center;

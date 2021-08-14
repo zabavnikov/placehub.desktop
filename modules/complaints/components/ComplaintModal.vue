@@ -66,10 +66,8 @@ export default {
             text: this.text,
           })
           .then(response => {
-            if (response.status === true) {
-              this.$toast.success('Жалоба отправлена')
-            }
-            this.onClose();
+            this.success = response.status;
+            this.$overlay.hide();
           })
           .catch(error => {
             this.$toast.error('Что-то пошло не так')
