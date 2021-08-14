@@ -9,7 +9,7 @@
         </label>
       </div>
       <div class="mr-2">
-        <v-textarea v-model="comment" placeholder="Комментарий к жалобе"></v-textarea>
+        <v-textarea v-model="text" placeholder="Комментарий к жалобе"></v-textarea>
       </div>
       <label v-if="$auth.user.role === 'administrator'" for="ban" class="mt-1 flex items-center space-x-1">
         <input id="ban" v-model="isBan" type="checkbox">
@@ -40,7 +40,7 @@ export default {
       loading: false,
       success: false,
       isBan: false,
-      comment: '',
+      text: '',
     }
   },
 
@@ -63,7 +63,7 @@ export default {
             category_id: this.category_id,
             model_type: this.modelType || null,
             model_id: this.modelId || null,
-            comment: this.comment,
+            text: this.text,
           })
           .then(response => {
             if (response.status === true) {
