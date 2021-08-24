@@ -15,7 +15,7 @@ export default fragment('PostCardFragment', 'Post', {
   }, types.string),
 
   images: params({
-    sizes: rawString("default@width:1024")
+    sizes: rawString("default@resize:auto:640:480")
   }, {
     id: types.number,
     text: types.string,
