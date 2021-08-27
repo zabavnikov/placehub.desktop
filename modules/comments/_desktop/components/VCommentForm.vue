@@ -16,8 +16,7 @@
     <div class="flex mt-2">
       <button @click="onSubmit" :class="{'button button--success mr-2': true, loading: loading || upload}" :disabled="loading || upload">Отправить</button>
       <v-upload
-        :value="form.images"
-        @input="$event.forEach(image => form.images.push(image))"
+        v-model="form.images"
         show-progress
         :to="`${subjectType}_comments`"
         @start="upload = true"
