@@ -4,7 +4,7 @@
       <div
         v-for="(image, index) in value"
         :key="image.id"
-        :style="{backgroundImage: `url(${image.url})`}"
+        :style="{backgroundImage: `url(${image.sizes.default})`}"
         class="v-attachment ratio"
       >
         <div class="v-attachment-tools">
