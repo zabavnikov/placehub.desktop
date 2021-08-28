@@ -41,7 +41,7 @@
         this.loading = true;
 
         this.$axios
-          .$post('/api/users/password/email', {email: this.email})
+          .$post('/api/users/password/send-reset-email', {email: this.email})
           .then(response => {
             this.success = true;
           })

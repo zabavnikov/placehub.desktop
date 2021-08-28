@@ -39,7 +39,6 @@ import DContentCardMenu from '~/components/common/DContentCardMenu';
 import VLike from '~/components/common/VLike';
 import VUrl from '~/modules/urls/components/VUrl';
 import VProfile from '~/modules/users/components/VProfile';
-import VTag from '~/components/ui/VTag';
 
 export default {
   name: 'VPost',
@@ -49,7 +48,6 @@ export default {
     VUrl,
     VLike,
     VProfile,
-    VTag,
     VPostBody: () => import('./VPostBody'),
     VPostBodyFull: () => import('./VPostBodyFull')
   },

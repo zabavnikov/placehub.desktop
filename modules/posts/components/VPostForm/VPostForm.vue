@@ -11,16 +11,11 @@
 
       <v-post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></v-post-form-images>
 
+      <!-- Теги. -->
       <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
-        <v-tag
-            v-for="(tag, index) in form.tags"
-            :key="tag.id"
-            :name="tag.name"
-            editable
-            @delete="form.tags.splice(index, 1)"
-        >
-        </v-tag>
+        <v-chip v-for="(tag, index) in form.tags" :key="tag.id" :text="tag.name" deletable @delete="form.tags.splice(index, 1)"></v-chip>
       </div>
+      <!-- Теги. / -->
 
       <div v-if="form.place && Object.keys(form.place).length > 0"
            class="mt-2 flex justify-between shadow-sm p-2 border rounded">
@@ -40,7 +35,7 @@
       </div>
     </div>
 
-    <div class="bg-gray-50 border-t border-solid border-t-gray-100 rounded-b-lg p-4 sticky bottom-0 z-10">
+    <div class="bg-gray-50 border-t border-solid border-t-gray-100 rounded-b-lg px-4 py-3 sticky bottom-0 z-10">
       <div class="flex items-center ">
         <div class="flex items-center space-x-2">
           <!-- Добавление тегов. -->
@@ -85,10 +80,10 @@
 
 <script>
 import Errors from "~/utils/errors"
+import VChip from '~/placehub-ui/components/VChip';
 import VPostFormAccess from "./VPostFormAccess";
 import VPostFormImages from "./VPostFormImages";
 import VProgressBar from "~/components/ui/VProgressBar";
-import VTag from '~/components/ui/VTag';
 import VTagsSelect from '~/modules/tags/components/VTagsSelect';
 import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
@@ -117,10 +112,10 @@ export default {
   },
 
   components: {
+    VChip,
     VPostFormAccess,
     VPostFormImages,
     VProgressBar,
-    VTag,
     VTagsSelect,
     VTextarea,
     VUpload,

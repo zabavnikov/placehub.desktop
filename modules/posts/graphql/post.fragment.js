@@ -14,7 +14,7 @@ export default fragment('PostFragment', 'Post', {
   }, types.string),
 
   images: params({
-    sizes: rawString("default@resize:fill:480:480")
+    sizes: rawString("default@resize:auto:640:480")
   }, {
     id: types.number,
     text: types.string,
