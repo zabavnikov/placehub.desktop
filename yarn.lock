@@ -1547,10 +1547,10 @@
   dependencies:
     tslib "^2.3.0"
 
-"@vue/composition-api@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.1.3.tgz#8fa528c5f68fec47363340fdae7c7fe047ba5e10"
-  integrity sha512-gFcLkHD7SkaoE+i4OhMtv6c/gQeSYxEDDGk4yzF4tZ8h8+7oFNBX8lPUWf9McHGBTcztZNzsIZuwkDVmc0WZlQ==
+"@vue/composition-api@^1.1.4":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@vue/composition-api/-/composition-api-1.1.4.tgz#b4cd566e575350b86c22fa02632e4a356ac2e26e"
+  integrity sha512-f618a79X0VepQUoZofaAYzaherBuzfIIYah4gQPcwmXgN3oeuGdhO7DY2s3Rjcw7r9yTEh5sQIowbNWy6INGjg==
   dependencies:
     tslib "^2.3.0"
 
@@ -4885,10 +4885,10 @@ jiti@^1.9.2:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.11.0.tgz#64120a30d97b9bf37b8b032cf4564dfadc28984c"
   integrity sha512-/2c7e61hxxTIN34UeHBB0LCJ5Tq64kgJDV7GR+++e8XRxCKRIKmB8tH6ww1W+Z6Kgd6By+C3RSCu1lXjbPT68A==
 
-js-cookie@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.0.tgz#db1661d5459920ec95aaf186ccf74ceb4a495164"
-  integrity sha512-oUbbplKuH07/XX2YD2+Q+GMiPpnVXaRz8npE7suhBH9QEkJe2W7mQ6rwuMXHue3fpfcftQwzgyvGzIHyfCSngQ==
+js-cookie@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-3.0.1.tgz#9e39b4c6c2f56563708d7d31f6f5f21873a92414"
+  integrity sha512-+0rgsUXZu4ncpPxRL+lNEptWMOWl9etvPHc/koSRp6MPwpRYAhmk0dUG00J4bxVV3r9uUzfo24wW0knS07SKSw==
 
 js-tokens@^4.0.0:
   version "4.0.0"
@@ -8081,10 +8081,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swiper@^7.0.1:
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-7.0.1.tgz#86d5caaf74dc350ff7766f7a9bd9c4749f3312fe"
-  integrity sha512-mvn5Pap63wi3gY+z4+OnDvFGtep8Z57rnyEKysq+KVcdc6wZP0b7g8YO04HqKb5+mgqzvKEoup9R759DkVAjTw==
+swiper@^7.0.2:
+  version "7.0.2"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-7.0.2.tgz#2678f1dc8503cf5875865c5026940a08eb8e298a"
+  integrity sha512-cPqpW3s5tPxeH5CXPh+ZiS4hILhF3nZ9ukb34Sdfm94oFso5cIT2i6Y3yAe1g1/7bGKneNSqKkLNokj1WnO4Xg==
   dependencies:
     dom7 "^4.0.0"
     ssr-window "^4.0.0"
