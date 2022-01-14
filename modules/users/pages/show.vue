@@ -14,45 +14,38 @@
       </div>
     </template>
 
-    <template #content>
+<!--    <template #content>
       <v-post-form v-if="$auth.loggedIn" @create="posts.data.unshift($event)" class="mb-4"></v-post-form>
       <v-post v-for="(post, index) in posts.data" @delete="posts.data.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
-    </template>
+    </template>-->
   </the-layout>
 </template>
 
 <script>
-import {params as GQLParams, query as GQLQuery, types as GQLTypes} from 'typed-graphqlify';
 import PostCardFragment from '~/modules/posts/graphql/post-card.fragment';
 import VPost from '~/modules/posts/components/VPost';
 import VPostForm from '~/modules/posts/components/VPostForm';
 import ProfileHeader from '../components/ProfileHeader';
+import { gql } from 'nuxt-graphql-request';
+import { GET_USER } from '~/modules/users/graphql';
 
 export default {
   components: {VPost, VPostForm, ProfileHeader},
 
-  async asyncData({ $axios, params }) {
-    const getUser = GQLQuery('query($username: String!)', {
-      user: GQLParams({ username: '$username' }, {
-        id:           GQLTypes.number,
-        username:     GQLTypes.string,
-        one_of_names: GQLTypes.string,
-        description:  GQLTypes.string,
-        avatar:       GQLTypes.string,
-      }),
-      posts: GQLParams({ username: '$username' }, {
-        data: PostCardFragment
-      })
-    });
-
-    const { data } = await $axios.$post('/gql', {
-      query: getUser.toString(),
-      variables: {
-        username: params.username,
+  async asyncData({ $graphql, params }) {
+    const query = gql`
+      query ($id: ID!) {
+        ${GET_USER}
       }
+    `;
+
+    const { getUser } = await $graphql.default.request(query, {
+      id: params.userId
     });
 
-    return {...data};
+    return {
+      user: getUser
+    };
   },
 };
 </script>

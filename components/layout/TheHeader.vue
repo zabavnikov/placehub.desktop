@@ -22,7 +22,7 @@
               <img :src="$auth.user.avatar" width="32" class="block rounded-full" :alt="$auth.user.one_of_names">
             </div>
             <ul class="dropdown-menu">
-              <n-link :to="{name: 'users.show', params: {username: $auth.user.username}}" class="dropdown-menu-item">Мой профиль</n-link>
+              <n-link :to="{name: 'users.show', params: {userId: $auth.user.id}}" class="dropdown-menu-item">Мой профиль</n-link>
               <n-link :to="{name: 'posts.drafts'}" class="dropdown-menu-item">Мои черновики</n-link>
               <n-link :to="{name: 'users.edit', params: {userId: $auth.user.id}}" class="dropdown-menu-item">Редактировать</n-link>
               <a @click="$auth.logout()" class="dropdown-menu-item">Выход</a>

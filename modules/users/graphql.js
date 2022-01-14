@@ -6,3 +6,12 @@ export const REGISTER_USER = `
     passwordConfirmation: $passwordConfirmation
   )
 `;
+
+export const GET_USER = `
+  getUser(id: $id) {
+    id
+    oneOfNames
+    description
+    avatar
+  }
+`;
