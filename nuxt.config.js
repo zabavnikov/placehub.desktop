@@ -29,6 +29,7 @@ module.exports = {
   ],
 
   buildModules: [
+    'nuxt-graphql-request',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api/module',
   ],
@@ -49,6 +50,9 @@ module.exports = {
     Auth module configuration
    */
   auth: {
+    plugins: [
+      '~/plugins/graphql-auth'
+    ],
     strategies: {
       local: {
         endpoints: {
@@ -89,5 +93,13 @@ module.exports = {
 
   tailwindcss: {
     viewer: false,
+  },
+
+  graphql: {
+    clients: {
+      default: {
+        endpoint: process.env.GRAPHQL_URL,
+      },
+    },
   },
 };

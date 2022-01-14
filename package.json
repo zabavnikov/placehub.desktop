@@ -5,27 +5,29 @@
     "start": "nuxt start"
   },
   "dependencies": {
-    "@nuxtjs/auth-next": "^5.0.0-1624817847.21691f1",
-    "@nuxtjs/axios": "^5.13.6",
-    "@nuxtjs/composition-api": "^0.28.0",
-    "@nuxtjs/toast": "^3.3.1",
-    "@tailwindcss/aspect-ratio": "^0.2.1",
-    "@vue/composition-api": "^1.1.4",
-    "@vueuse/core": "^6.1.0",
-    "js-cookie": "^3.0.1",
-    "leaflet": "^1.7.1",
-    "nuxt": "2.15.8",
-    "swiper": "^7.0.3",
-    "tippy.js": "^6.3.1",
-    "typed-graphqlify": "^3.1.4",
-    "vue2-leaflet": "^2.7.1",
-    "vuedraggable": "^2.24.3"
+    "@nuxtjs/auth-next": "latest",
+    "@nuxtjs/axios": "latest",
+    "@nuxtjs/composition-api": "latest",
+    "@nuxtjs/toast": "latest",
+    "@tailwindcss/aspect-ratio": "latest",
+    "@vue/composition-api": "latest",
+    "@vueuse/core": "latest",
+    "js-cookie": "latest",
+    "leaflet": "^latest",
+    "nuxt": "latest",
+    "swiper": "latest",
+    "tippy.js": "latest",
+    "typed-graphqlify": "latest",
+    "vue2-leaflet": "latest",
+    "vuedraggable": "latest"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^4.2.1",
-    "lodash": "^4.17.21",
-    "postcss": "^8.3.6",
-    "sass": "^1.39.0",
+    "@nuxtjs/tailwindcss": "latest",
+    "graphql": "^16.2.0",
+    "lodash": "latest",
+    "nuxt-graphql-request": "^4.3.0",
+    "postcss": "latest",
+    "sass": "latest",
     "sass-loader": "10.2.0"
   }
 }

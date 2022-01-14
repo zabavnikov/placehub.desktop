@@ -1,6 +1,7 @@
 export default [
   { path: '/users', name: 'users', component: 'index'},
-  { path: '/@:username([a-z0-9]+)',  name: 'users.show', component: 'show' },
+  { path: '/@:username([a-z0-9]+)',  name: 'users.showUsername', component: 'show' },
+  { path: '/:userId(\\d+)',  name: 'users.show', component: 'show' },
 
   /*
     Редактирование.

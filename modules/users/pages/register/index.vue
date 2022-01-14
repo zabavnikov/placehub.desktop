@@ -22,7 +22,7 @@
 
       <div>
         <label for="password-confirmation" class="label">Повторие пароль: <span class="asterisk"></span></label>
-        <input v-model="form.password_confirmation" class="input" type="password" id="password-confirmation">
+        <input v-model="form.passwordConfirmation" class="input" type="password" id="password-confirmation">
       </div>
 
       <div>
@@ -38,12 +38,14 @@
 
 <script>
 import Errors from '~/utils/errors';
+import { gql } from 'nuxt-graphql-request';
+import { REGISTER_USER } from '~/modules/users/graphql';
 
 const formInitialState = {
   username: '',
   email: '',
   password: '',
-  password_confirmation: '',
+  passwordConfirmation: '',
 };
 
 
@@ -60,24 +62,37 @@ export default {
   },
 
   methods: {
-    onSubmit() {
+    async onSubmit() {
       if (this.loading) {
         return;
       }
 
       this.loading = true;
 
-      this.$axios
-          .$post('/api/users/register', this.form)
-          .then(({ token }) => {
-            this.$auth.setUserToken(token)
-                .then(() => {
-                  this.form = {...formInitialState};
-                  this.$router.push({name: 'users.show', params: {username: this.$auth.user.username }})
-                })
-          })
-          .catch(error => this.errors.record(error))
-          .finally(() => this.loading = false);
+      const mutation = gql`
+        mutation(
+          $username:             String!,
+          $email:                String!,
+          $password:             String!,
+          $passwordConfirmation: String!
+        ) {
+          ${REGISTER_USER}
+        }
+      `;
+
+      const { registerUser } = await this.$graphql.default.request(mutation, this.form);
+
+      this.$auth.setUserToken(registerUser)
+        .then(() => {
+          this.form = {...formInitialState};
+
+          this.$router.push({
+            name: 'users.show',
+            params: {
+              userId: this.$auth.user.id
+            }
+          });
+        });
     }
   }
 }

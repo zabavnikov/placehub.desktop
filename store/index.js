@@ -3,9 +3,9 @@ import set from 'lodash/set';
 export default {
   actions: {
     async nuxtServerInit({state, commit}, {app}) {
-      const {visitTypes, complaintCategories} = await app.$axios.$get('/api/initial-state');
-      commit('places/setVisitTypes', visitTypes);
-      commit('complaints/setCategories', complaintCategories);
+      //const {visitTypes, complaintCategories} = await app.$axios.$get('/api/initial-state');
+      //commit('places/setVisitTypes', visitTypes);
+      //commit('complaints/setCategories', complaintCategories);
     }
   },
   mutations: {
