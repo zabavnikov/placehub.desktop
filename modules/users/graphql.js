@@ -1,3 +1,10 @@
+export const USER_FIELDS = `
+  id
+  name
+  description
+  avatar
+`;
+
 export const REGISTER_USER = `
   registerUser(
     name:                 $name,
@@ -9,9 +16,6 @@ export const REGISTER_USER = `
 
 export const GET_USER = `
   getUser(id: $id) {
-    id
-    name
-    description
-    avatar
+    ${USER_FIELDS}
   }
 `;

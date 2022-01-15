@@ -14,10 +14,10 @@
       </div>
     </template>
 
-<!--    <template #content>
-      <v-post-form v-if="$auth.loggedIn" @create="posts.data.unshift($event)" class="mb-4"></v-post-form>
-      <v-post v-for="(post, index) in posts.data" @delete="posts.data.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
-    </template>-->
+    <template #content>
+      <v-post-form v-if="$auth.loggedIn" @create="getPosts.unshift($event)" class="mb-4"></v-post-form>
+      <v-post v-for="(post, index) in getPosts" @delete="getPosts.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
+    </template>
   </the-layout>
 </template>
 
@@ -28,23 +28,26 @@ import VPostForm from '~/modules/posts/components/VPostForm';
 import ProfileHeader from '../components/ProfileHeader';
 import { gql } from 'nuxt-graphql-request';
 import { GET_USER } from '~/modules/users/graphql';
+import { GET_POSTS } from '~/modules/posts/graphql';
 
 export default {
   components: {VPost, VPostForm, ProfileHeader},
 
   async asyncData({ $graphql, params }) {
     const query = gql`
-      query ($id: ID!) {
+      query($id: ID!) {
         ${GET_USER}
+        ${GET_POSTS}
       }
     `;
 
-    const { getUser } = await $graphql.default.request(query, {
+    const { getUser, getPosts } = await $graphql.default.request(query, {
       id: params.userId
     });
 
     return {
-      user: getUser
+      user: getUser,
+      getPosts
     };
   },
 };

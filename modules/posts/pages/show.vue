@@ -38,7 +38,7 @@ export default {
       }, CommentCardFragment)
     });
 
-    const { data } = await $axios.$post('/gql', {
+    const { data } = await $axios.$post('/graphql', {
       query: getPost.toString(),
       variables: {
         id: parseInt(params.postId),
