@@ -1,6 +1,6 @@
 export const REGISTER_USER = `
   registerUser(
-    username:             $username,
+    name:                 $name,
     email:                $email,
     password:             $password,
     passwordConfirmation: $passwordConfirmation
@@ -10,7 +10,7 @@ export const REGISTER_USER = `
 export const GET_USER = `
   getUser(id: $id) {
     id
-    oneOfNames
+    name
     description
     avatar
   }

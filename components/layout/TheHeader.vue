@@ -3,7 +3,7 @@
     <div class="flex items-center h-full">
       <n-link to="/" class="mr-6 font-bold uppercase">PlaceHub</n-link>
       <div class="py-2">
-        <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {username: $auth.user.username}}" class="button button-success">Написать</n-link>
+        <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {id: $auth.user.id}}" class="button button-success">Написать</n-link>
       </div>
 
       <n-link v-if="$auth.loggedIn" to="/places/create" class="ml-3 text-base uppercase">Добавить место</n-link>
@@ -19,7 +19,7 @@
 
           <v-dropdown>
             <div slot="trigger" class="header-iconable">
-              <img :src="$auth.user.avatar" width="32" class="block rounded-full" :alt="$auth.user.one_of_names">
+              <img :src="$auth.user.avatar" width="32" class="block rounded-full" :alt="$auth.user.name">
             </div>
             <ul class="dropdown-menu">
               <n-link :to="{name: 'users.show', params: {userId: $auth.user.id}}" class="dropdown-menu-item">Мой профиль</n-link>

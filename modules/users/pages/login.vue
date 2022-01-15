@@ -74,7 +74,7 @@ export default {
             this.$emit('login');
             this.isBanned = response.data.hasOwnProperty('ban');
             if (!this.isBanned) {
-              this.$router.push({name: 'users.show', params: {username: this.$auth.user.username }})
+              this.$router.push({name: 'users.show', params: {id: this.$auth.user.id }})
             }
           })
           .catch(error => this.errors.record(error))

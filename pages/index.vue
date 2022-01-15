@@ -32,7 +32,7 @@ export default {
       }),
     });
 
-    const { data } = await $axios.$post('/gql', {
+    const { data } = await $axios.$post('/graphql', {
       query: getPosts.toString(),
       variables: {
         tags: `${query.tags}` || undefined

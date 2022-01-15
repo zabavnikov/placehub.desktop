@@ -8,10 +8,10 @@
         <div v-show="errors.has('email')" class="help mt-1">{{ errors.first('email') }}</div>
       </div>
 
-      <div :class="{'is-invalid': errors.has('username')}">
-        <label for="username" class="label">Имя пользователя: <span class="asterisk"></span></label>
-        <input v-model="form.username" @input="errors.clear('username')" class="input" type="text" id="username" maxlength="25" placeholder="Разрешены цифры и символы латинского алфавита">
-        <div v-if="errors.has('username')" class="help mt-1">{{ errors.first('username') }}</div>
+      <div :class="{'is-invalid': errors.has('name')}">
+        <label for="name" class="label">Имя пользователя: <span class="asterisk"></span></label>
+        <input v-model="form.name" @input="errors.clear('name')" class="input" type="text" id="name" maxlength="25" placeholder="Разрешены цифры и символы латинского алфавита">
+        <div v-if="errors.has('name')" class="help mt-1">{{ errors.first('name') }}</div>
       </div>
 
       <div :class="{'is-invalid': errors.has('password')}">
@@ -42,7 +42,7 @@ import { gql } from 'nuxt-graphql-request';
 import { REGISTER_USER } from '~/modules/users/graphql';
 
 const formInitialState = {
-  username: '',
+  name: '',
   email: '',
   password: '',
   passwordConfirmation: '',
@@ -71,7 +71,7 @@ export default {
 
       const mutation = gql`
         mutation(
-          $username:             String!,
+          $name:             String!,
           $email:                String!,
           $password:             String!,
           $passwordConfirmation: String!

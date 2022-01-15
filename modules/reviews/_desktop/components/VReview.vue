@@ -1,6 +1,6 @@
 <template>
   <div class="flex p-4 bg-white rounded shadow-sm">
-    <n-link :to="{name: 'users.show', params: {username: content.user.username}}" class="w-12 mr-4">
+    <n-link :to="{name: 'users.show', params: {id: content.user.useridname}}" class="w-12 mr-4">
       <img :src="content.user.avatar" :alt="content.user.name" class="w-full rounded-full block">
     </n-link>
 
@@ -8,9 +8,9 @@
       <div class="flex mb-6">
         <div class="flex-1">
           <div class="mb-1">
-            <n-link :to="{name: 'users.show', params: {username: content.user.username}}"
+            <n-link :to="{name: 'users.show', params: {id: content.user.id}}"
                     class="font-semibold leading-relaxed">
-              {{ content.user.one_of_names }}
+              {{ content.user.name }}
             </n-link>
           </div>
           <v-rating-stars :value="content.rating"></v-rating-stars>

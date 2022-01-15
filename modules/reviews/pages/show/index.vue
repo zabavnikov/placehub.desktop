@@ -1,5 +1,5 @@
 <template>
-  <the-layout :heading="`Отзыв от ${review.user.one_of_names}`" :subheading="review.place.full_name">
+  <the-layout :heading="`Отзыв от ${review.user.name}`" :subheading="review.place.full_name">
     <template #sidebar>
       {{ review.place_id }}
     </template>

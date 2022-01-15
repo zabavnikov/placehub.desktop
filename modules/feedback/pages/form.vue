@@ -61,7 +61,7 @@ export default {
 
   created() {
     if (this.$auth.loggedIn) {
-      this.form.name = this.$auth.user.one_of_names;
+      this.form.name = this.$auth.user.name;
       this.form.email = this.$auth.user.email;
     }
   },

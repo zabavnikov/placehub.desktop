@@ -7,17 +7,10 @@
 
     <template #content>
       <div>
-        <label for="username">
+        <label for="name">
           Имя пользователя
           <span class="asterisk"></span>
         </label>
-        <input v-model="user.username" type="text" class="input" id="username" />
-        <div v-if="errors.has('username')" class="help mt-1" style="color: red;">{{ errors.first('username') }}</div>
-        <div v-else class="help mt-1">Разрешены цифры и буквы латинского алфавита</div>
-      </div>
-
-      <div class="mt-4">
-        <label for="name">Имя</label>
         <input v-model="user.name" type="text" class="input" id="name" />
         <div v-if="errors.has('name')" class="help mt-1" style="color: red;">{{ errors.first('name') }}</div>
         <div
@@ -55,18 +48,19 @@ export default {
 
   async asyncData({ $axios, $auth }) {
     const GQL = `{
-      user(username: "${$auth.user.username}") {
-        username
+      getUser(id: "${$auth.user.id}") {
         name
         description
       }
     }`;
 
-    const { data } = await $axios.$post(`/gql`, {
+    const { data } = await $axios.$post(`/graphql`, {
       query: GQL
     });
 
-    return {...data};
+    return {
+      user: data.getUser
+    };
   },
 
   methods: {
@@ -81,13 +75,13 @@ export default {
           .$put(`/api/users/${this.$auth.user.id}`, this.user)
           .then((response) => {
             if (response.status === true) {
-              if (this.user.username !== this.$auth.user.username) {
-                this.$store.commit('UPDATE_USER', {username: this.user.username})
+              if (this.user.name !== this.$auth.user.name) {
+                this.$store.commit('UPDATE_USER', {name: this.user.name})
               }
 
               this.$router.push({
-                name: "users.show",
-                params: { username: this.user.username },
+                name: 'users.show',
+                params: { userId: this.user.id },
               });
             }
           })
