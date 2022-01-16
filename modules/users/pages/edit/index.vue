@@ -81,7 +81,7 @@ export default {
 
               this.$router.push({
                 name: 'users.show',
-                params: { userId: this.user.id },
+                params: { userId: this.$auth.user.id },
               });
             }
           })

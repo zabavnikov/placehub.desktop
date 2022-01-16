@@ -2,12 +2,12 @@
   <the-layout heading="Мои черновики">
     <template #sidebar>1</template>
     <template #content>
-      <div v-if="posts.data.length > 0" class="space-y-6">
+      <div v-if="getPosts.length > 0" class="space-y-6">
         <v-post
-            v-for="(post, index) in posts.data"
+            v-for="(post, index) in getPosts"
             :key="post.id"
             :content="post"
-            @delete="posts.data.splice(index, 1)">
+            @delete="getPosts.splice(index, 1)">
         </v-post>
       </div>
       <div v-else class="text-base alert alert--warning">У вас нет черновиков</div>
@@ -26,15 +26,13 @@ export default {
 
   async asyncData({ $axios }) {
     const getPosts = GQLQuery('getPosts($drafts: Boolean!)', {
-      posts: GQLParams({
+      getPosts: GQLParams({
         drafts: '$drafts'
-      }, {
-        data: PostCardFragment
-      }),
+      }, PostCardFragment),
     });
 
     const { data } = await $axios
-        .$post('/gql', {
+        .$post('/graphql', {
           query: getPosts.toString(),
           variables: {
             drafts: true,

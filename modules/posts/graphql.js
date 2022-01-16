@@ -23,7 +23,7 @@ export const POST_FRAGMENT = `
 `;
 
 export const GET_POSTS = `
-  getPosts {
+  getPosts(userId: $userId) {
     ${POST_FRAGMENT}
   }
 `;
