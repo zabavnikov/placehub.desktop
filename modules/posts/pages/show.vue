@@ -3,7 +3,8 @@
     <template #sidebar>1</template>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
-      <v-comments id="comments"></v-comments>
+      <chat></chat>
+<!--      <v-comments id="comments"></v-comments>-->
     </template>
   </the-layout>
 </template>
@@ -14,9 +15,10 @@ import VComments from "~/modules/comments/_desktop/components/VComments";
 import PostFragment from '~/modules/posts/graphql/post.fragment';
 import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 import VPost from '~/modules/posts/components/VPost';
+import Chat from '~/modules/chats/components/Chat';
 
 export default {
-  components: { VPost, VComments },
+  components: { Chat, VPost, VComments },
 
   head() {
     return {

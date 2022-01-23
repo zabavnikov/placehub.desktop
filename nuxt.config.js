@@ -32,6 +32,16 @@ module.exports = {
     'nuxt-graphql-request',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api/module',
+    ['@nuxtjs/laravel-echo', {
+      broadcaster: 'pusher',
+      authEndpoint: `${process.env.API_URL}/api/broadcasting/auth`,
+      wsHost: process.env.LARAVEL_WEBSOCKETS_HOST,
+      wsPort: process.env.LARAVEL_WEBSOCKETS_PORT,
+      key: process.env.LARAVEL_WEBSOCKETS_APP_KEY,
+      authModule: true,
+      forceTLS: false,
+      disableStats: true,
+    }],
   ],
 
   modules: [
