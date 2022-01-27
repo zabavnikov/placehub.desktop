@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{ chat }}
     <chat-form></chat-form>
   </div>
 </template>
@@ -8,6 +9,12 @@
 import ChatForm from './partials/ChatForm';
 
 export default {
+  props: {
+    chat: {
+      type: Object,
+      required: true,
+    }
+  },
   components: {
     ChatForm
   },

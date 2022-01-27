@@ -4,7 +4,7 @@ export const POST_FRAGMENT = `
   id
   user_id
   place_id
-  text
+  shortText
   image_order
   is_draft
   created_at(relative: true)

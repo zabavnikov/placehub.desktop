@@ -1,8 +1,6 @@
 <template>
   <the-layout>
-    <template #sidebar>
-      <chat></chat>
-    </template>
+    <template #sidebar>1</template>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
 <!--      <v-comments id="comments"></v-comments>-->
@@ -16,10 +14,9 @@ import VComments from "~/modules/comments/_desktop/components/VComments";
 import PostFragment from '~/modules/posts/graphql/post.fragment';
 import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 import VPost from '~/modules/posts/components/VPost';
-import Chat from '~/modules/chats/components/Chat';
 
 export default {
-  components: { Chat, VPost, VComments },
+  components: { VPost, VComments },
 
   head() {
     return {

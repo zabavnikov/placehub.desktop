@@ -1,6 +1,14 @@
-export const GET_MESSAGES = `
+export const GET_CHAT = `
   getChat(id: $id) {
-    
+    id
+    stacks {
+      name
+      messages {
+        id
+        chat_id
+        text
+      }
+    }
   }
 `;
 
