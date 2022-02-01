@@ -35,9 +35,9 @@ module.exports = {
     ['@nuxtjs/laravel-echo', {
       broadcaster: 'pusher',
       authEndpoint: `${process.env.API_URL}/api/broadcasting/auth`,
-      wsHost: process.env.LARAVEL_WEBSOCKETS_HOST,
-      wsPort: process.env.LARAVEL_WEBSOCKETS_PORT,
-      key: process.env.LARAVEL_WEBSOCKETS_APP_KEY,
+      key: process.env.PUSHER_APP_KEY,
+      wsHost: process.env.PUSHER_HOST,
+      wsPort: process.env.PUSHER_PORT,
       authModule: true,
       forceTLS: false,
       disableStats: true,
