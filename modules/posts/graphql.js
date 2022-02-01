@@ -6,6 +6,8 @@ export const POST_FRAGMENT = `
   place_id
   shortText
   image_order
+  commentsCount
+  likesCount
   is_draft
   created_at(relative: true)
   images(sizes: "default@resize:auto:640:480") {

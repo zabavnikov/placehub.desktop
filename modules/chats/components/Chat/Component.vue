@@ -20,8 +20,9 @@ export default {
   },
   mounted() {
     this.$echo.channel('chats.posts-1')
-        .listen('.chats.newMessage', (event) => {
-          console.log(event);
+        .listen('.chats.newMessage', ({ chatMessage }) => {
+          console.log(chatMessage)
+          this.chat.stacks.messages.push(chatMessage)
         });
   }
 }

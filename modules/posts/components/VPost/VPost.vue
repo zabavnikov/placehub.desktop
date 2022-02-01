@@ -19,16 +19,16 @@
     <VUrl v-if="content.url" :url="content.url" :compact="true" class="m-6" />
 
     <footer class="flex items-center m-6">
-      <div v-if="content.place" class="text-base">
-        <div class="text-gray-600">{{ content.place.name }}</div>
-        <div class="text-gray-400">{{ content.place.parent_names }}</div>
-      </div>
-      <div class="flex items-center space-x-6 ml-auto">
+      <div class="flex items-center space-x-6">
+        <v-like v-if="content.like" :to="`posts/${content.id}`" :count="content.likesCount" :is-liked="content.like.is_liked"></v-like>
         <n-link :to="`/posts/${content.id}#comments`" class="flex items-center space-x-2">
           <v-icon name="chat" stroke="#aaa"></v-icon>
-          <span class="text-base">{{ content.comments_count }}</span>
+          <span class="text-base">{{ content.commentsCount }}</span>
         </n-link>
-        <v-like v-if="content.like" :to="`posts/${content.id}`" :count="content.likes_count" :is-liked="content.like.is_liked"></v-like>
+      </div>
+      <div v-if="content.place" class="text-base ml-auto">
+        <div class="text-gray-600">{{ content.place.name }}</div>
+        <div class="text-gray-400">{{ content.place.parent_names }}</div>
       </div>
     </footer>
   </article>

@@ -1,6 +1,6 @@
 <template>
         <div>
-        <div class="m-6 text-base whitespace-pre-line">{{ post.text }}</div>
+        <div class="m-6 text-base leading-5 whitespace-pre-line">{{ post.text }}</div>
           <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
 
 <!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">

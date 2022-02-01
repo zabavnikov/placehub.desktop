@@ -41,6 +41,7 @@ module.exports = {
       authModule: true,
       forceTLS: false,
       disableStats: true,
+      enabledTransports: ['ws', 'wss'],
     }],
   ],
 

@@ -3,7 +3,7 @@
     <template #sidebar>1</template>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
-<!--      <v-comments id="comments"></v-comments>-->
+      <v-comments id="comments"></v-comments>
     </template>
   </the-layout>
 </template>

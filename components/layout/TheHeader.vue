@@ -50,9 +50,10 @@ export default {components: {VDropdown}}
   position: sticky;
   top: 0;
   height: var(--header-hegiht);
-  background-color: #fff;
+  background-color: rgba(255,255,255,.80);
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
-  z-index: 10;
+  z-index: 20;
+  backdrop-filter: blur(4px);
 
   a {
     display: flex;
