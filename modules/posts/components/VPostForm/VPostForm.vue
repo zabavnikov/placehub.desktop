@@ -1,14 +1,14 @@
 <template>
   <div :class="{loading: parseProgress}">
     <div class="bg-white p-4 rounded-t-lg">
-      <wysiwyg></wysiwyg>
-      <VTextarea
+      <wysiwyg v-model="form.text"></wysiwyg>
+<!--      <VTextarea
           v-model="form.text"
           placeholder="Привет, что нового?"
           parse-url
           @parse-url-progress="parseProgress = $event"
           @url="form.url_id = $event.id; form.url = $event"
-      />
+      />-->
 
       <v-post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></v-post-form-images>
 
