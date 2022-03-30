@@ -1,6 +1,6 @@
 <template>
         <div>
-        <div class="m-6 text-base leading-5 whitespace-pre-line" v-html="post.html"></div>
+        <div class="m-6 text-base leading-5 whitespace-pre-line post-text" v-html="post.html"></div>
           <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
 
 <!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">
@@ -37,6 +37,9 @@
   .post-image-set + .post-image-set {
     border-top: 1px solid #f1f1f1;
   }
+}
+.post-text * + * {
+  margin-top: 20px;
 }
 </style>
 
