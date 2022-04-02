@@ -98,7 +98,6 @@ export default {
   font-size: 12px;
   font-weight: 500;
   line-height: 24px;
-  white-space: pre-line;
 }
 
 .post-total-photos {

@@ -65,11 +65,11 @@ export default {
   padding: 8px;
   border: 1px solid #cfd8dc;
   border-radius: 4px;
-  line-height: 20px;
+  line-height: 24px;
   box-shadow: inset 0 2px rgb(0 0 0 / 4%);
 
   > * + * {
-    margin-top: 0.75em;
+    margin-top: 20px;
   }
 
   p.is-editor-empty:first-child::before {

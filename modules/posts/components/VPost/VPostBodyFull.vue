@@ -38,6 +38,11 @@
     border-top: 1px solid #f1f1f1;
   }
 }
+.post-text {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+}
 .post-text * + * {
   margin-top: 20px;
 }
