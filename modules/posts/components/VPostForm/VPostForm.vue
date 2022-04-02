@@ -48,14 +48,14 @@
           <!-- / Добавление тегов. -->
 
           <!-- Загрузка изображений. -->
-          <button
+<!--          <button
               @click="$refs.upload.$el.click()"
               v-tooltip="`Фото`"
               type="button"
               class="post-form-tool">
             <v-icon name="camera" stroke="#b0bec5"></v-icon>
           </button>
-          <v-upload ref="upload" to="posts" multiple v-model="form.images" class="hidden"></v-upload>
+          <v-upload ref="upload" to="posts" multiple v-model="form.images" class="hidden"></v-upload>-->
           <!-- / Загрузка изображений. -->
 
           <!-- Выбор места. -->
@@ -90,7 +90,7 @@ import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
 import cloneDeep from 'lodash/cloneDeep';
-import Wysiwyg from '~/components/wysiwyg';
+import { Wysiwyg } from '~/components/wysiwyg';
 
 const formInitialState = {
   id: null,

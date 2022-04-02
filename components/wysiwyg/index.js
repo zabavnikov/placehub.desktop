@@ -1,2 +1,3 @@
-import Wysiwyg from './Component.vue';
-export default Wysiwyg;
+import Wysiwyg from './Wysiwyg.vue';
+import Output from './Output.vue';
+export { Wysiwyg, Output };

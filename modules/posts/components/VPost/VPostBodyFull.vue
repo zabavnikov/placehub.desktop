@@ -1,35 +1,36 @@
 <template>
-        <div>
-        <div class="m-6 text-base leading-5 whitespace-pre-line post-text" v-html="post.html"></div>
-          <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
+  <div>
+    <output :content="post.html"></output>
+<!--  <div class="m-6 text-base leading-5 whitespace-pre-line post-text" v-html="post.html"></div>-->
+    <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
 
-<!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">
-          <div v-for="image in post.images" class="ratio bg-center bg-cover rounded-lg"
-               :style="{backgroundImage: `url(${image.sizes.default})`}" :key="image.id">
-                          <div v-if="$auth.loggedIn" class="post-image-tools space-x-4">
-                            <v-like :to="`posts_images/${image.id}`" :count="image.likes_count" :is-liked="image.liked_by_me" color="white"></v-like>
-                            <div @click="toggleCommentableImage(image.id)" class="underline cursor-pointer">
-                              {{ image.id === commentableImageId ? 'Отмена' : 'Комментировать' }}
-                              <v-icon name="message-circle" stroke="white"></v-icon>
-                            </div>
-                          </div>
-          </div>
+  <!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">
+    <div v-for="image in post.images" class="ratio bg-center bg-cover rounded-lg"
+         :style="{backgroundImage: `url(${image.sizes.default})`}" :key="image.id">
+                    <div v-if="$auth.loggedIn" class="post-image-tools space-x-4">
+                      <v-like :to="`posts_images/${image.id}`" :count="image.likes_count" :is-liked="image.liked_by_me" color="white"></v-like>
+                      <div @click="toggleCommentableImage(image.id)" class="underline cursor-pointer">
+                        {{ image.id === commentableImageId ? 'Отмена' : 'Комментировать' }}
+                        <v-icon name="message-circle" stroke="white"></v-icon>
+                      </div>
+                    </div>
+    </div>
 
 
-            <VCommentForm
-                class="py-6 mx-6"
-                v-if="$auth.loggedIn && image.id === commentableImageId"
-                :model-type="modelType"
-                :model-id="modelId"
-                :image-id="commentableImageId"
-                placeholder="Комментарий к изображению"
-                text-create="Комментарий добавлен в общий список"
-                @create="comments.list.data.unshift($event); commentableImageId = null; comments.count++" />
+      <VCommentForm
+          class="py-6 mx-6"
+          v-if="$auth.loggedIn && image.id === commentableImageId"
+          :model-type="modelType"
+          :model-id="modelId"
+          :image-id="commentableImageId"
+          placeholder="Комментарий к изображению"
+          text-create="Комментарий добавлен в общий список"
+          @create="comments.list.data.unshift($event); commentableImageId = null; comments.count++" />
 
-        </div>-->
+  </div>-->
 
-          <v-url v-if="post.url" :url="post.url" class="m-6"></v-url>
-      </div>
+    <v-url v-if="post.url" :url="post.url" class="m-6"></v-url>
+  </div>
 </template>
 
 <style lang="scss">
@@ -51,12 +52,14 @@
 <script>
 import VUrl from '~/modules/urls/components/VUrl';
 import PostGallery from './PostGallery';
+import { Output } from '~/components/wysiwyg';
 
 export default {
   name: 'VPostBodyFull',
   components: {
     PostGallery,
     VUrl,
+    Output
   },
   props: {
     post: {

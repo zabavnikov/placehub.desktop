@@ -2,7 +2,7 @@
   <div class="items">
     <template v-if="items.length">
       <button
-          :class="{ 'bg-blue-50': index === selectedIndex }"
+          :class="{ 'bg-black': index === selectedIndex }"
           v-for="(item, index) in items"
           :key="index"
           @click="selectItem(index)"
