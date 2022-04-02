@@ -1,9 +1,9 @@
 <template>
   <header class="header px-6">
-    <div class="flex items-center h-full">
+    <div class="header-container mx-auto flex items-center h-full">
       <n-link to="/" class="mr-6 font-bold uppercase">PlaceHub</n-link>
       <div class="py-2">
-        <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {id: $auth.user.id}}" class="button button-success">Написать</n-link>
+        <n-link v-if="$auth.loggedIn" :to="{name: 'users.show', params: {userId: $auth.user.id}}" class="button button-success">Написать</n-link>
       </div>
 
       <n-link v-if="$auth.loggedIn" to="/places/create" class="ml-3 text-base uppercase">Добавить место</n-link>
@@ -54,6 +54,10 @@ export default {components: {VDropdown}}
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
   z-index: 20;
   backdrop-filter: blur(4px);
+
+  &-container {
+    width: 860px;
+  }
 
   a {
     display: flex;

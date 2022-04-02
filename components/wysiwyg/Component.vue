@@ -1,9 +1,7 @@
 <template>
   <div>
-    <button type="button" @click="addImage">
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
-    </button>
     <editor-content :editor="editor"></editor-content>
+    <input type="file" id="wysiwyg-file" style="display: none;" @change="addImage" multiple>
   </div>
 </template>
 
@@ -15,12 +13,14 @@ import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import Typography from '@tiptap/extension-typography';
 import Image from './extensions/Image';
+import Commands from './commands/commands'
+import suggestion from './commands/suggestion'
 
 import { ref, onMounted, onBeforeUnmount } from '@nuxtjs/composition-api';
 
 export default {
   components: {
-    EditorContent,
+    EditorContent
   },
 
   props: {
@@ -44,7 +44,10 @@ export default {
           }),
           Text,
           Typography,
-          Image
+          Image,
+          Commands.configure({
+            suggestion,
+          }),
         ],
         onUpdate: () => {
           emit('input', editor.value.getHTML())
@@ -100,5 +103,12 @@ export default {
     pointer-events: none;
     height: 0;
   }
+}
+
+.mention {
+  border: 1px solid #000;
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.3rem;
+  box-decoration-break: clone;
 }
 </style>
