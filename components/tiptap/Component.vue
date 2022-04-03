@@ -13,7 +13,8 @@ import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import Typography from '@tiptap/extension-typography';
 import Dropcursor from '@tiptap/extension-dropcursor';
-import Gapcursor from '@tiptap/extension-gapcursor';
+import Gapcursor from '@tiptap/extension-gapcursor'
+import History from '@tiptap/extension-history';
 import Image from './extensions/Image';
 import Commands from './commands/commands'
 import suggestion from './commands/suggestion'
@@ -40,9 +41,10 @@ export default {
         content: props.value,
         extensions: [
           Document,
+          History,
           Paragraph,
           Placeholder.configure({
-            placeholder: 'Привет, что нового?',
+            placeholder: 'Привет, что нового? 🤠',
           }),
           Text,
           Typography,
@@ -65,7 +67,7 @@ export default {
     onBeforeUnmount(() => editor.value.destroy());
 
     return {
-      editor
+      editor,
     }
   },
 
@@ -93,22 +95,48 @@ export default {
   width: 100%;
   min-height: 38px;
   background-color: #fff;
-  padding: 8px;
+  padding: 24px;
   border: 1px solid #cfd8dc;
   border-radius: 4px;
   line-height: 24px;
   box-shadow: inset 0 2px rgb(0 0 0 / 4%);
 
   > * + * {
-    margin-top: 20px;
+    margin-top: 16px;
   }
 
+  p.is-editor-empty {
+    font-size: 20px;
+  }
   p.is-editor-empty:first-child::before {
     content: attr(data-placeholder);
     float: left;
     color: #adb5bd;
     pointer-events: none;
     height: 0;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    &.ProseMirror-selectednode {
+      outline: 3px solid #68CEF8;
+    }
+  }
+
+  .ProseMirror-gapcursor {
+    position: static;
+    padding: 8px;
+    margin: -8px;
+
+    &:after {
+      position: relative;
+      width: 1px;
+      height: 20px;
+      border-left: none;
+      margin-top: 20px;
+      background-color: #000;
+    }
   }
 }
 

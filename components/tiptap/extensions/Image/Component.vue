@@ -12,7 +12,7 @@
       </template>
     </node-toolbar>
 
-    <div class="p-5 bg-blue-50 rounded-lg">
+    <div class="p-6 bg-blue-50 rounded-lg" :class="{'ring-offset-2 ring-2': selected}">
       <img :src="node.attrs.src" :data-id="node.attrs['data-id']" alt="" style="display: block">
     </div>
   </node-view-wrapper>

@@ -23,8 +23,8 @@ export default {
 .node-toolbar {
   display: flex;
   position: absolute;
-  top: 8px;
-  right: 8px;
+  top: 10px;
+  right: 10px;
 }
 .node-toolbar-tools {
   display: flex;

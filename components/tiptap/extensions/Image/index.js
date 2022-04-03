@@ -11,6 +11,8 @@ export default Node.create({
 
   draggable: true,
 
+  atom: true,
+
   addAttributes() {
     return {
       'data-id': {

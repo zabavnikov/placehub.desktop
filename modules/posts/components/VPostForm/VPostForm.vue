@@ -1,7 +1,7 @@
 <template>
   <div :class="{loading: parseProgress}">
     <div class="bg-white p-4 rounded-t-lg">
-      <wysiwyg v-model="form.text"></wysiwyg>
+      <tip-tap v-model="form.text"></tip-tap>
 <!--      <VTextarea
           v-model="form.text"
           placeholder="Привет, что нового?"
@@ -90,7 +90,7 @@ import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
 import cloneDeep from 'lodash/cloneDeep';
-import Wysiwyg from '~/components/wysiwyg';
+import TipTap from '~/components/tiptap';
 
 const formInitialState = {
   id: null,
@@ -122,7 +122,7 @@ export default {
     VTextarea,
     VUpload,
     VUrl,
-    Wysiwyg
+    TipTap
   },
 
   data() {
