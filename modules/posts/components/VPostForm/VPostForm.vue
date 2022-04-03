@@ -90,7 +90,7 @@ import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
 import cloneDeep from 'lodash/cloneDeep';
-import { Wysiwyg } from '~/components/wysiwyg';
+import Wysiwyg from '~/components/wysiwyg';
 
 const formInitialState = {
   id: null,

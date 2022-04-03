@@ -12,6 +12,8 @@ import Placeholder from '@tiptap/extension-placeholder';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import Typography from '@tiptap/extension-typography';
+import Dropcursor from '@tiptap/extension-dropcursor';
+import Gapcursor from '@tiptap/extension-gapcursor';
 import Image from './extensions/Image';
 import Commands from './commands/commands'
 import suggestion from './commands/suggestion'
@@ -44,6 +46,11 @@ export default {
           }),
           Text,
           Typography,
+          Dropcursor.configure({
+            width: 2,
+            color: '#90A4AE'
+          }),
+          Gapcursor,
           Image,
           Commands.configure({
             suggestion,

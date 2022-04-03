@@ -1,7 +1,6 @@
 <template>
   <div>
-    <output :content="post.html"></output>
-<!--  <div class="m-6 text-base leading-5 whitespace-pre-line post-text" v-html="post.html"></div>-->
+  <div class="m-6 text-base leading-5 whitespace-pre-line post-text" v-html="post.text"></div>
     <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
 
   <!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">
@@ -52,14 +51,12 @@
 <script>
 import VUrl from '~/modules/urls/components/VUrl';
 import PostGallery from './PostGallery';
-import { Output } from '~/components/wysiwyg';
 
 export default {
   name: 'VPostBodyFull',
   components: {
     PostGallery,
     VUrl,
-    Output
   },
   props: {
     post: {
