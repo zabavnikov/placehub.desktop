@@ -40,7 +40,7 @@
       <div class="flex items-center ">
         <div class="flex items-center space-x-2">
           <!-- Добавление тегов. -->
-          <v-tags-select v-model="form.tags" v-tooltip="`Теги`">
+          <v-tags-select v-model="form.tags" v-tooltip="`Добавить теги`">
             <button slot="trigger" type="button" class="post-form-tool" ref="triggerTags">
               <v-icon name="tag" stroke="#b0bec5"></v-icon>
             </button>
@@ -63,7 +63,7 @@
               @click="$overlay.show(() => import('~/modules/places/components/VChoosePlaceOverlay'), mapOverlay)"
               type="button"
               class="post-form-tool"
-              v-tooltip="`Карта`"
+              v-tooltip="`Добавить место`"
               :style="{backgroundColor: errors.first('place_id') ? 'red' : undefined}">
             <v-icon name="location-marker" stroke="#b0bec5"></v-icon>
           </button>

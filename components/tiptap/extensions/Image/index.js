@@ -9,23 +9,35 @@ export default Node.create({
 
   group: 'block',
 
-  draggable: true,
+  selectable: true,
 
-  atom: true,
+  addOptions() {
+    return {
+      HTMLAttributes: {},
+    }
+  },
 
   addAttributes() {
     return {
-      'data-id': {
-        default: null,
-      },
-      id: {
-        default: null,
-      },
-      model_id: {
-        default: null,
-      },
-      src: {
-        default: '/images/no-photo.svg',
+      images: {
+        parseHTML: node => {
+          if (node.children.length > 0) {
+            const attribute = [];
+
+            for (let index = 0; index < node.children.length; index++) {
+              const item = node.children[index];
+              attribute.push({
+                src: item.getAttribute('src'),
+                'data-id': item.getAttribute('dataid'),
+              })
+            }
+
+            return attribute;
+          }
+
+          return [];
+        },
+        rendered: false
       },
     }
   },
@@ -38,11 +50,17 @@ export default Node.create({
     ]
   },
 
-  renderHTML({ HTMLAttributes }) {
-    return [nodeName, mergeAttributes(HTMLAttributes)]
+  renderHTML({ node, HTMLAttributes }) {
+    const html = [nodeName];
+
+    node.attrs.images.forEach(image => {
+      html.push(['w-image-item', mergeAttributes(image)]);
+    })
+
+    return html;
   },
 
   addNodeView() {
     return VueNodeViewRenderer(Component)
   },
-})
+});

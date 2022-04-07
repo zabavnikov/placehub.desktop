@@ -40,7 +40,15 @@ export default {
       editor.value = new Editor({
         content: props.value,
         extensions: [
+          Commands.configure({
+            suggestion,
+          }),
           Document,
+          Dropcursor.configure({
+            width: 2,
+            color: '#90A4AE'
+          }),
+          Gapcursor,
           History,
           Paragraph,
           Placeholder.configure({
@@ -48,18 +56,11 @@ export default {
           }),
           Text,
           Typography,
-          Dropcursor.configure({
-            width: 2,
-            color: '#90A4AE'
-          }),
-          Gapcursor,
           Image,
-          Commands.configure({
-            suggestion,
-          }),
         ],
         onUpdate: () => {
-          emit('input', editor.value.getHTML())
+          const html = editor.value.getHTML();
+          emit('input', html);
         },
       });
     });
@@ -72,15 +73,26 @@ export default {
   },
 
   methods: {
-    addImage() {
+    addImage(event) {
+      const files = event.target.files;
+      if (files.length === 0) return;
+
+      const images = [];
+
+      for (let image of files) {
+        images.push({
+          src: 'asd',
+          'dataId': 1,
+        })
+      }
+
       const nodes = [{
         type: 'w-image',
         attrs: {
-          model_id: 1,
-          src: 'asd',
-          'data-id': 1,
+          images
         }
       }];
+
       this.editor.commands.insertContent(nodes);
     }
   }
