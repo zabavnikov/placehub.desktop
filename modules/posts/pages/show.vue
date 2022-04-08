@@ -14,8 +14,6 @@ import VComments from "~/modules/comments/_desktop/components/VComments";
 import PostFragment from '~/modules/posts/graphql/post.fragment';
 import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 import VPost from '~/modules/posts/components/VPost';
-import Splide from '@splidejs/splide';
-import '@splidejs/splide/dist/css/splide.min.css';
 
 export default {
   components: { VPost, VComments },
@@ -27,16 +25,6 @@ export default {
         { hid: 'description', name: 'description', content: this.post.seo_description },
         { hid: 'keywords', name: 'keywords', content: this.post.seo_keywords },
       ],
-    }
-  },
-
-  mounted() {
-    const elms = document.getElementsByClassName( 'splide' );
-
-    for ( let i = 0; i < elms.length; i++ ) {
-      new Splide( elms[ i ], {
-        perPage: 1,
-      }  ).mount();
     }
   },
 

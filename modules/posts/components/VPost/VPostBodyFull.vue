@@ -1,7 +1,7 @@
 <template>
   <div>
-  <div class="m-6 text-base leading-5 whitespace-pre-line post-text" v-html="post.text"></div>
-    <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
+    <div class="m-6 text-base post-text" v-html="post.text"></div>
+<!--    <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>-->
 
   <!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">
     <div v-for="image in post.images" class="ratio bg-center bg-cover rounded-lg"
@@ -42,8 +42,15 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 24px;
+
+  figcaption {
+    font-style: italic;
+    text-align: center;
+    line-height: 20px;
+    padding: 8px 12px 0;
+  }
 }
-.post-text * + * {
+.post-text > * + * {
   margin-top: 20px;
 }
 </style>
@@ -51,6 +58,14 @@
 <script>
 import VUrl from '~/modules/urls/components/VUrl';
 import PostGallery from './PostGallery';
+import 'swiper/swiper-bundle.min.css';
+
+let Swiper = null;
+
+if (process.client) {
+  Swiper = require('swiper/swiper-bundle.min.js')
+}
+
 
 export default {
   name: 'VPostBodyFull',
@@ -63,6 +78,14 @@ export default {
       type: Object,
       required: true,
     },
+  },
+  mounted() {
+    if (Swiper) {
+      new Swiper('.swiper', {
+        autoHeight: true,
+        spaceBetween: 20,
+      })
+    }
   },
   computed: {
     preview() {

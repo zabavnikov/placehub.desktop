@@ -9,12 +9,15 @@
         ></node-toolbar-item>
       </template>
     </node-toolbar>
+{{ total }}
 
-    <div class="p-6 bg-blue-50 rounded-lg" :class="{'ring-offset-2 ring-2': selected}">
-      <figure v-for="(image, index) in node.attrs.images" ><!-- @click="onDeleteImage(index)" -->
+    <div :class="{'ring-offset-2 ring-2': selected}">
+      <div class="relative">
         <img :src="image.src" :data-id="image['data-id']" alt="" style="display: block">
-        <figcaption contenteditable="plaintext-only" @input="updateCaption(image, $event)">{{ image.caption }}</figcaption>
-      </figure>
+        <div v-if="total > 1" class="tiptap-slider-arrow tiptap-slider-arrow--previous" @click="onClickPrevious"></div>
+        <div v-if="total > 1" class="tiptap-slider-arrow tiptap-slider-arrow--next" @click="onClickNext"></div>
+      </div>
+      <v-textarea @input="updateAttributes" v-model="image.caption" placeholder="Добавить описание"></v-textarea>
     </div>
 
     <input type="file" style="display: none;" @change="addImage" multiple>
@@ -25,14 +28,33 @@
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-2';
 import NodeToolbar from '../../toolbar/NodeToolbar';
 import NodeToolbarItem from '../../toolbar/NodeToolbarItem';
+import 'swiper/swiper-bundle.min.css';
+import VTextarea from '../../../common/VTextarea';
 
 export default {
   components: {
     NodeViewWrapper,
     NodeToolbar,
-    NodeToolbarItem
+    NodeToolbarItem,
+    VTextarea
   },
   props: nodeViewProps,
+
+  data() {
+    return {
+      activeImageIndex: 0,
+    }
+  },
+
+  computed: {
+    image() {
+      return this.node.attrs.images[this.activeImageIndex];
+    },
+    total() {
+      return this.node.attrs.images.length;
+    }
+  },
+
   methods: {
     onUpload() {
       this.$el.querySelector('input[type=file]').click();
@@ -52,10 +74,19 @@ export default {
 
       this.updateAttributes();
     },
-    updateCaption(image, { target }) {
-      image.caption = target.innerText;
-      this.updateAttributes();
+
+    onClickPrevious() {
+      if (this.activeImageIndex > 0) {
+        this.activeImageIndex--;
+      }
     },
+
+    onClickNext() {
+      if (this.activeImageIndex < this.total - 1) {
+        this.activeImageIndex++;
+      }
+    },
+
     onDeleteImage(index) {
       this.node.attrs.images.splice(index, 1);
 
@@ -66,3 +97,24 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.tiptap-slider-arrow {
+  z-index: 10;
+  position: absolute;
+  top: 50%;
+  margin-top: -12px;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(0,0,0,.4);
+  border-radius: 12px;
+
+  &--previous {
+    left: 12px;
+  }
+
+  &--next {
+    right: 12px;
+  }
+}
+</style>

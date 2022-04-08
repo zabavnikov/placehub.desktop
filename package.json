@@ -29,7 +29,7 @@
     "leaflet": "latest",
     "nuxt": "latest",
     "pusher-js": "^7.0.3",
-    "swiper": "latest",
+    "swiper": "^8.1.0",
     "tippy.js": "latest",
     "typed-graphqlify": "latest",
     "vue2-leaflet": "latest",
