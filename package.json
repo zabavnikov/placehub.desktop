@@ -10,6 +10,7 @@
     "@nuxtjs/composition-api": "latest",
     "@nuxtjs/laravel-echo": "zabavnikov/laravel-echo",
     "@nuxtjs/toast": "latest",
+    "@splidejs/splide": "^4.0.1",
     "@tailwindcss/aspect-ratio": "latest",
     "@tiptap/core": "^2.0.0-beta.174",
     "@tiptap/extension-document": "^2.0.0-beta.15",

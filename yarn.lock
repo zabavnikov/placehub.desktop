@@ -1424,6 +1424,11 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
+"@splidejs/splide@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.0.1.tgz#386244b028d3be413a30a8b4a90c7676948ba48b"
+  integrity sha512-fgiYX5xLwOFluKKiq9hde9V1tU6wFoTzznX4fOvok95GjEKq9WvkkKBS3/WCuMDn7LXvg/Qpo3Eq0m9QQEr8tA==
+
 "@tailwindcss/aspect-ratio@latest":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@tailwindcss/aspect-ratio/-/aspect-ratio-0.4.0.tgz#c635dd7331cbcc1b111cebdc2647dd3493ebdd3e"

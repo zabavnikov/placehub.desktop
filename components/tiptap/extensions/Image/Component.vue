@@ -11,8 +11,10 @@
     </node-toolbar>
 
     <div class="p-6 bg-blue-50 rounded-lg" :class="{'ring-offset-2 ring-2': selected}">
-      {{ node.attrs.images }}
-<!--      <img :src="node.attrs.src" :data-id="node.attrs['data-id']" alt="" style="display: block">-->
+      <figure v-for="(image, index) in node.attrs.images" ><!-- @click="onDeleteImage(index)" -->
+        <img :src="image.src" :data-id="image['data-id']" alt="" style="display: block">
+        <figcaption contenteditable="plaintext-only" @input="updateCaption(image, $event)">{{ image.caption }}</figcaption>
+      </figure>
     </div>
 
     <input type="file" style="display: none;" @change="addImage" multiple>
@@ -44,11 +46,23 @@ export default {
         this.node.attrs.images.push({
           src: 'https://sun9-14.userapi.com/impg/v6sLzwLolWiBcEjXq2KIaakdw0XNmiAA4FbdbQ/3SR4hf70N9I.jpg?size=1080x1080&quality=96&sign=1ed5ce4db19d82feb77a5552e66c932d&type=album',
           dataId: 1,
+          caption: '',
         });
       }
 
       this.updateAttributes();
     },
+    updateCaption(image, { target }) {
+      image.caption = target.innerText;
+      this.updateAttributes();
+    },
+    onDeleteImage(index) {
+      this.node.attrs.images.splice(index, 1);
+
+      if (this.node.attrs.images.length === 0) {
+        this.deleteNode();
+      }
+    }
   }
 }
 </script>

@@ -29,6 +29,7 @@ export default Node.create({
               attribute.push({
                 src: item.getAttribute('src'),
                 'data-id': item.getAttribute('dataid'),
+                caption: item.getAttribute('caption'),
               })
             }
 
