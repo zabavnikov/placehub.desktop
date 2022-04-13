@@ -1,7 +1,8 @@
 <template>
   <div :class="{loading: parseProgress}">
     <div class="bg-white p-4 rounded-t-lg">
-      <tip-tap v-model="form.text"></tip-tap>
+      <tip-tap v-model="form.text" :images.sync="form.images"></tip-tap>
+      {{ form.images }}
 <!--      <VTextarea
           v-model="form.text"
           placeholder="Привет, что нового?"
@@ -10,7 +11,7 @@
           @url="form.url_id = $event.id; form.url = $event"
       />-->
 
-      <v-post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></v-post-form-images>
+<!--      <v-post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></v-post-form-images>-->
 
       <!-- Теги. -->
       <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
@@ -83,7 +84,7 @@
 import Errors from "~/utils/errors"
 import VChip from '~/placehub-ui/components/VChip';
 import VPostFormAccess from "./VPostFormAccess";
-import VPostFormImages from "./VPostFormImages";
+/*import VPostFormImages from "./VPostFormImages";*/
 import VProgressBar from "~/components/ui/VProgressBar";
 import VTagsSelect from '~/modules/tags/components/VTagsSelect';
 import VTextarea from "~/components/common/VTextarea";
@@ -116,7 +117,7 @@ export default {
   components: {
     VChip,
     VPostFormAccess,
-    VPostFormImages,
+    /*VPostFormImages,*/
     VProgressBar,
     VTagsSelect,
     VTextarea,

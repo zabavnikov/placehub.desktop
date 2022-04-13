@@ -58,10 +58,7 @@ export default {
           Typography,
           Image,
         ],
-        onUpdate: () => {
-          const html = editor.value.getHTML();
-          emit('input', html);
-        },
+        onUpdate: () => emit('input', editor.value.getHTML()),
       });
     });
 
@@ -74,27 +71,38 @@ export default {
 
   methods: {
     addImage(event) {
-      const files = event.target.files;
-      if (files.length === 0) return;
+      const formData = new FormData();
+      const images = event.target.files;
 
-      const images = [];
+      if (images.length === 0) return;
 
-      for (let image of files) {
-        images.push({
-          src: 'https://sun9-14.userapi.com/impg/v6sLzwLolWiBcEjXq2KIaakdw0XNmiAA4FbdbQ/3SR4hf70N9I.jpg?size=1080x1080&quality=96&sign=1ed5ce4db19d82feb77a5552e66c932d&type=album',
-          'dataId': 1,
-          caption: '',
-        })
+      for (let image of images) {
+        formData.append('images[]', image);
       }
 
-      const nodes = [{
-        type: 'w-image',
-        attrs: {
-          images
-        }
-      }];
+      this.$axios
+        .$post(`/api/images/posts`, formData)
+        .then(images => {
+          const content = images.map(image => {
+            return {
+              type: 'w-image-item',
+              attrs: {
+                src:            image.url,
+                'data-id':      image.id,
+                'data-caption': '',
+              }
+            }
+          });
 
-      this.editor.commands.insertContent(nodes);
+          console.log(content)
+
+          const node = {
+            type: 'w-image',
+            content,
+          };
+
+          this.editor.commands.insertContent(node);
+        });
     }
   }
 }

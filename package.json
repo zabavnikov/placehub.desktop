@@ -5,9 +5,9 @@
     "start": "nuxt start"
   },
   "dependencies": {
-    "@nuxtjs/auth-next": "latest",
+    "@nuxtjs/auth-next": "^5.0.0-1648802546.c9880dc",
     "@nuxtjs/axios": "latest",
-    "@nuxtjs/composition-api": "latest",
+    "@nuxtjs/composition-api": "^0.32.0",
     "@nuxtjs/laravel-echo": "zabavnikov/laravel-echo",
     "@nuxtjs/toast": "latest",
     "@splidejs/splide": "^4.0.1",
@@ -23,12 +23,12 @@
     "@tiptap/extension-typography": "^2.0.0-beta.20",
     "@tiptap/suggestion": "^2.0.0-beta.90",
     "@tiptap/vue-2": "^2.0.0-beta.77",
-    "@vue/composition-api": "latest",
-    "@vueuse/core": "latest",
+    "@vue/composition-api": "^1.4.9",
+    "@vueuse/core": "^8.2.5",
     "js-cookie": "latest",
     "leaflet": "latest",
     "nuxt": "latest",
-    "pusher-js": "^7.0.3",
+    "pusher-js": "^7.0.6",
     "swiper": "^8.1.0",
     "tippy.js": "latest",
     "typed-graphqlify": "latest",
@@ -36,12 +36,12 @@
     "vuedraggable": "latest"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "latest",
-    "graphql": "latest",
+    "@nuxtjs/tailwindcss": "^5.0.2",
+    "graphql": "^16.3.0",
     "lodash": "latest",
-    "nuxt-graphql-request": "latest",
-    "postcss": "latest",
-    "sass": "latest",
+    "nuxt-graphql-request": "^5.1.0",
+    "postcss": "^8.4.12",
+    "sass": "^1.50.0",
     "sass-loader": "10.2.0"
   }
 }

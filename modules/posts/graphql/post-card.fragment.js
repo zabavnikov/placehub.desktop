@@ -6,7 +6,7 @@ import PlaceCardFragment from '~/modules/places/graphql/place-card.graphql';
 export default fragment('PostCardFragment', 'Post', {
   id:               types.number,
   user_id:          types.number,
-  short_text:       types.string,
+  shortText:       types.string,
   comments_count:   types.number,
   is_draft:         types.boolean,
   image_order:  types.string,

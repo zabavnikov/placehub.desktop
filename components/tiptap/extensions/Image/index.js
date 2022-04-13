@@ -17,7 +17,7 @@ export default Node.create({
     }
   },
 
-  addAttributes() {
+  /*addAttributes() {
     return {
       images: {
         parseHTML: node => {
@@ -27,9 +27,9 @@ export default Node.create({
             for (let index = 0; index < node.children.length; index++) {
               const item = node.children[index];
               attribute.push({
-                src: item.getAttribute('src'),
-                'data-id': item.getAttribute('dataid'),
-                caption: item.getAttribute('caption'),
+                src:            item.getAttribute('src'),
+                'data-id':      item.getAttribute('data-id'),
+                'data-caption': item.getAttribute('data-caption'),
               })
             }
 
@@ -41,7 +41,7 @@ export default Node.create({
         rendered: false
       },
     }
-  },
+  },*/
 
   parseHTML() {
     return [
@@ -54,9 +54,9 @@ export default Node.create({
   renderHTML({ node, HTMLAttributes }) {
     const html = [nodeName];
 
-    node.attrs.images.forEach(image => {
+    /*node.attrs.images.forEach(image => {
       html.push(['w-image-item', mergeAttributes(image)]);
-    })
+    })*/
 
     return html;
   },

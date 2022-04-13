@@ -9,7 +9,7 @@
         ></node-toolbar-item>
       </template>
     </node-toolbar>
-{{ total }}
+    {{ total }}
 
     <div :class="{'ring-offset-2 ring-2': selected}">
       <div class="relative">
@@ -17,7 +17,7 @@
         <div v-if="total > 1" class="tiptap-slider-arrow tiptap-slider-arrow--previous" @click="onClickPrevious"></div>
         <div v-if="total > 1" class="tiptap-slider-arrow tiptap-slider-arrow--next" @click="onClickNext"></div>
       </div>
-      <v-textarea @input="updateAttributes" v-model="image.caption" placeholder="Добавить описание"></v-textarea>
+      <v-textarea @input="updateAttributes" v-model="image['data-caption']" placeholder="Добавить описание"></v-textarea>
     </div>
 
     <input type="file" style="display: none;" @change="addImage" multiple>
@@ -61,18 +61,28 @@ export default {
     },
 
     addImage(event) {
-      const files = event.target.files;
-      if (files.length === 0) return;
+      const formData = new FormData();
+      const images = event.target.files;
 
-      for (let image of files) {
-        this.node.attrs.images.push({
-          src: 'https://sun9-14.userapi.com/impg/v6sLzwLolWiBcEjXq2KIaakdw0XNmiAA4FbdbQ/3SR4hf70N9I.jpg?size=1080x1080&quality=96&sign=1ed5ce4db19d82feb77a5552e66c932d&type=album',
-          dataId: 1,
-          caption: '',
-        });
+      if (images.length === 0) return;
+
+      for (let image of images) {
+        formData.append('images[]', image);
       }
 
-      this.updateAttributes();
+      this.$axios
+        .$post(`/api/images/posts`, formData)
+        .then(images => {
+          images.forEach(image => {
+            this.node.attrs.images.push({
+              src:            image.url,
+              'data-id':      image.id,
+              'data-caption': '',
+            });
+          });
+
+          this.updateAttributes();
+        });
     },
 
     onClickPrevious() {
