@@ -15,7 +15,7 @@ import Typography from '@tiptap/extension-typography';
 import Dropcursor from '@tiptap/extension-dropcursor';
 import Gapcursor from '@tiptap/extension-gapcursor'
 import History from '@tiptap/extension-history';
-import Image from './extensions/Image';
+import { ImageGroup, ImageGroupControl, ImageGroupItem } from './extensions/Image';
 import Commands from './commands/commands'
 import suggestion from './commands/suggestion'
 
@@ -56,9 +56,14 @@ export default {
           }),
           Text,
           Typography,
-          Image,
+          ImageGroup,
+          ImageGroupControl,
+          ImageGroupItem,
         ],
-        onUpdate: () => emit('input', editor.value.getHTML()),
+        onUpdate: () => {
+          emit('input', editor.value.getHTML())
+          console.log(editor.value.getHTML())
+        },
       });
     });
 
@@ -83,25 +88,23 @@ export default {
       this.$axios
         .$post(`/api/images/posts`, formData)
         .then(images => {
-          const content = images.map(image => {
-            return {
-              type: 'w-image-item',
-              attrs: {
-                src:            image.url,
-                'data-id':      image.id,
-                'data-caption': '',
-              }
-            }
+          this.editor.commands.insertContent({
+            type:   'ImageGroup',
+            content: [
+              {
+                type: 'ImageGroupControl'
+              },
+              ...images.map(image => {
+                return {
+                  type: 'ImageGroupItem',
+                  attrs: {
+                    src:       image.url,
+                    'data-id': image.id,
+                  }
+                }
+              })
+            ]
           });
-
-          console.log(content)
-
-          const node = {
-            type: 'w-image',
-            content,
-          };
-
-          this.editor.commands.insertContent(node);
         });
     }
   }
