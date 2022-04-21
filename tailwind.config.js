@@ -1,16 +1,11 @@
 module.exports = {
-  mode: 'jit',
-  purge: {
-    enabled: process.env.NODE_ENV === 'production',
-    content: [
-      'components/**/*.{js,vue}',
-      'layouts/**/*.{js,vue}',
-      'modules/**/*.{js,vue}',
-      'pages/**/*.vue',
-      'plugins/*.js',
-    ]
-  },
-  darkMode: false, // or 'media' or 'class'
+  content: [
+    'components/**/*.{js,vue}',
+    'layouts/**/*.{js,vue}',
+    'modules/**/*.{js,vue}',
+    'pages/**/*.vue',
+    'plugins/*.js',
+  ],
   theme: {
     extend: {
       fontWeight: {
@@ -24,7 +19,4 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-  ],
 }

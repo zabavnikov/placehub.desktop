@@ -1490,16 +1490,6 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@splidejs/splide@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@splidejs/splide/-/splide-4.0.1.tgz#386244b028d3be413a30a8b4a90c7676948ba48b"
-  integrity sha512-fgiYX5xLwOFluKKiq9hde9V1tU6wFoTzznX4fOvok95GjEKq9WvkkKBS3/WCuMDn7LXvg/Qpo3Eq0m9QQEr8tA==
-
-"@tailwindcss/aspect-ratio@latest":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/aspect-ratio/-/aspect-ratio-0.4.0.tgz#c635dd7331cbcc1b111cebdc2647dd3493ebdd3e"
-  integrity sha512-WJu0I4PpqNPuutpaA9zDUq2JXR+lorZ7PbLcKNLmb6GL9/HLfC7w3CRsMhJF4BbYd/lkY6CfXOvkYpuGnZfkpQ==
-
 "@tiptap/core@^2.0.0-beta.174":
   version "2.0.0-beta.174"
   resolved "https://registry.yarnpkg.com/@tiptap/core/-/core-2.0.0-beta.174.tgz#cfdf16b7d7401e4b255dc69147d784f5f537b942"
@@ -1907,24 +1897,24 @@
   resolved "https://registry.yarnpkg.com/@vue/shared/-/shared-3.2.32.tgz#1ca0c3b8c03a5e24129156e171df736b2c1d645f"
   integrity sha512-bjcixPErUsAnTQRQX4Z5IQnICYjIfNCyCl8p29v1M6kfVzvwOICPw+dz48nNuWlTOOx2RHhzHdazJibE8GSnsw==
 
-"@vueuse/core@^8.2.5":
-  version "8.2.5"
-  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-8.2.5.tgz#ca6a59091ecf16e6739c53f3d857b11967a5eb06"
-  integrity sha512-5prZAA1Ji2ltwNUnzreu6WIXYqHYP/9U2BiY5mD/650VYLpVcwVlYznJDFcLCmEWI3o3Vd34oS1FUf+6Mh68GQ==
+"@vueuse/core@^8.2.6":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/core/-/core-8.3.0.tgz#299afb7f3d316d112353f6b468a9d4a7686bd8ab"
+  integrity sha512-GDHM0vr/E3mw1fbh3yj4DJCJ/KvTXtOtT0OR2kCKuEUOo0Btk45MDGI6MdIqsHMjI0OXBJl8jH8WFv64KU2mOQ==
   dependencies:
-    "@vueuse/metadata" "8.2.5"
-    "@vueuse/shared" "8.2.5"
+    "@vueuse/metadata" "8.3.0"
+    "@vueuse/shared" "8.3.0"
     vue-demi "*"
 
-"@vueuse/metadata@8.2.5":
-  version "8.2.5"
-  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.2.5.tgz#51c7d95e04284ea378a5242a2e88b77494e2c117"
-  integrity sha512-Lk9plJjh9cIdiRdcj16dau+2LANxIdFCiTgdfzwYXbflxq0QnMBeOD2qHgKDE7fuVrtPcVWj8VSuZEx1HRfNQA==
+"@vueuse/metadata@8.3.0":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/metadata/-/metadata-8.3.0.tgz#80c3eeead16489cfe851828e70700731c23a79e1"
+  integrity sha512-7R/LNPQWp1r/owa2e71l3dFlJ21p89YE3ks14ZclP2VOTvhC6AzDRcpk+ChISNetv8spsFbWZj/Z7sFjbFZfuw==
 
-"@vueuse/shared@8.2.5":
-  version "8.2.5"
-  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-8.2.5.tgz#1ae200a240c4b8d42d41723b64d8f917aa57ff16"
-  integrity sha512-lNWo+7sk6JCuOj4AiYM+6HZ6fq4xAuVq1sVckMQKgfCJZpZRe4i8es+ZULO5bYTKP+VrOCtqrLR2GzEfrbr3YQ==
+"@vueuse/shared@8.3.0":
+  version "8.3.0"
+  resolved "https://registry.yarnpkg.com/@vueuse/shared/-/shared-8.3.0.tgz#5a65c9e584168c38ded720134e00bbd2ecd61ddc"
+  integrity sha512-xehtLfevPw9nsVIGFe/tWMtFvbvZjeAfXh7DT9Fptt/6/C5rLwpJtxsVguIBtPybjwobO4KCpQYS78aa9fg5Sw==
   dependencies:
     vue-demi "*"
 
@@ -8665,10 +8655,10 @@ svgo@^1.0.0:
     unquote "~1.1.1"
     util.promisify "~1.0.0"
 
-swiper@^8.1.0:
-  version "8.1.0"
-  resolved "https://registry.yarnpkg.com/swiper/-/swiper-8.1.0.tgz#5f295e97c0e6051d2c48179f668ccfffc10a73f8"
-  integrity sha512-Py2vuk7Nb3xlZMB2e201DQkjslTb6Uaju6wvr4BB7VjWrouSZegA0QjbxDVheJOsbKMUV092iDL3kymPBbuVzw==
+swiper@^8.1.1:
+  version "8.1.3"
+  resolved "https://registry.yarnpkg.com/swiper/-/swiper-8.1.3.tgz#a739a92e814073714150c69bb66a12efb0227f9d"
+  integrity sha512-S7UDkX1IRpyL3vadRUHq+YTq916d56AJZX4Whdh772Dc07PjJ+721AqBZZvLuXVPgm/v4QRvLBBjrWasMS001A==
   dependencies:
     dom7 "^4.0.4"
     ssr-window "^4.0.2"

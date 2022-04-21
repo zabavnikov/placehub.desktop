@@ -3,22 +3,22 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Component from './Component.vue'
 
 export default Node.create({
-  name: 'ImageGroup',
+  name: 'NodeWrapperControl',
 
-  group: 'block',
-
-  content: 'ImageGroupControl ImageGroupItem+',
-
-  selectable: true,
+  addOptions() {
+    return {
+      HTMLAttributes: {},
+    }
+  },
 
   parseHTML() {
     return [{
-        tag: this.name,
+      tag: this.name,
     }]
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [this.name, mergeAttributes(HTMLAttributes), 0];
+    return [this.name, mergeAttributes(HTMLAttributes, this.options['HTMLAttributes'])];
   },
 
   addNodeView() {

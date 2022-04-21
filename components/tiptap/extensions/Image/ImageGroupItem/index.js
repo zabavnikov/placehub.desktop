@@ -9,8 +9,6 @@ export default Node.create({
 
   selectable: true,
 
-  defining: true,
-
   addOptions() {
     return {
       HTMLAttributes: {},

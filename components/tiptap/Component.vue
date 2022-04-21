@@ -15,9 +15,10 @@ import Typography from '@tiptap/extension-typography';
 import Dropcursor from '@tiptap/extension-dropcursor';
 import Gapcursor from '@tiptap/extension-gapcursor'
 import History from '@tiptap/extension-history';
-import { ImageGroup, ImageGroupControl, ImageGroupItem } from './extensions/Image';
+import { ImageGroupControl, ImageGroupItem } from './extensions/Image';
+import { NodeWrapper, NodeWrapperControl } from './extensions/NodeWrapper';
 import Commands from './commands/commands'
-import suggestion from './commands/suggestion'
+import suggestion from './commands/suggestion';
 
 import { ref, onMounted, onBeforeUnmount } from '@nuxtjs/composition-api';
 
@@ -56,9 +57,10 @@ export default {
           }),
           Text,
           Typography,
-          ImageGroup,
           ImageGroupControl,
           ImageGroupItem,
+          NodeWrapper,
+          NodeWrapperControl
         ],
         onUpdate: () => {
           emit('input', editor.value.getHTML())
@@ -89,10 +91,13 @@ export default {
         .$post(`/api/images/posts`, formData)
         .then(images => {
           this.editor.commands.insertContent({
-            type:   'ImageGroup',
+            type: 'NodeWrapper',
+            attrs: {
+              type: 'images'
+            },
             content: [
               {
-                type: 'ImageGroupControl'
+                type: 'NodeWrapperControl',
               },
               ...images.map(image => {
                 return {
