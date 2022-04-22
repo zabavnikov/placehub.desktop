@@ -1,6 +1,8 @@
 <template>
   <node-view-wrapper draggable="true" style="position: relative;">
-    <div>image</div>
+    <div>
+      <img :src="node.attrs.src" :alt="node.attrs.datacaption">
+    </div>
   </node-view-wrapper>
 </template>
 

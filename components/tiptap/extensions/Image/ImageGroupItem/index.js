@@ -17,13 +17,13 @@ export default Node.create({
 
   addAttributes() {
     return {
-      'data-id': {
+      'dataid': {
         default: '',
       },
-      'data-caption': {
+      'datacaption': {
         default: '',
       },
-      'data-src': {
+      'datasrc': {
         default: '',
       },
       src: {
