@@ -3,13 +3,15 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Component from './Component.vue'
 
 export default Node.create({
-  name: 'NodeWrapper',
+  name: 'nodewrapper',
 
   group: 'block',
 
-  content: 'NodeWrapperControl ImageGroupItem*',
+  content: 'nodewrappercontrol ImageGroupItem*',
 
   selectable: true,
+
+  defining: true,
 
   addAttributes() {
     return {
@@ -26,7 +28,7 @@ export default Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [this.name, HTMLAttributes, 0];
+    return [this.name, HTMLAttributes, ['div', {'data-a': 1}, 0]];
   },
 
   addNodeView() {

@@ -7,13 +7,13 @@
 
 <script>
 import { Editor, EditorContent } from '@tiptap/vue-2';
-import Document from '@tiptap/extension-document';
 import Placeholder from '@tiptap/extension-placeholder';
 import Paragraph from '@tiptap/extension-paragraph';
 import Text from '@tiptap/extension-text';
 import Typography from '@tiptap/extension-typography';
 import Dropcursor from '@tiptap/extension-dropcursor';
-import Gapcursor from '@tiptap/extension-gapcursor'
+import Document from '@tiptap/extension-document';
+import Gapcursor from '@tiptap/extension-gapcursor';
 import History from '@tiptap/extension-history';
 import { ImageGroupControl, ImageGroupItem } from './extensions/Image';
 import { NodeWrapper, NodeWrapperControl } from './extensions/NodeWrapper';
@@ -49,7 +49,9 @@ export default {
             width: 2,
             color: '#90A4AE'
           }),
-          Gapcursor,
+          Gapcursor.configure({
+            group: 'block'
+          }),
           History,
           Paragraph,
           Placeholder.configure({
@@ -91,13 +93,13 @@ export default {
         .$post(`/api/images/posts`, formData)
         .then(images => {
           this.editor.commands.insertContent({
-            type: 'NodeWrapper',
+            type: 'nodewrapper',
             attrs: {
               type: 'images'
             },
             content: [
               {
-                type: 'NodeWrapperControl',
+                type: 'nodewrappercontrol',
               },
               ...images.map(image => {
                 return {

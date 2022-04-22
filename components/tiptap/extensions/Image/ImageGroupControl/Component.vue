@@ -8,14 +8,10 @@
 
 <script>
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-2';
-import NodeToolbar from '../../../toolbar/NodeToolbar';
-import NodeToolbarItem from '../../../toolbar/NodeToolbarItem';
 
 export default {
   components: {
     NodeViewWrapper,
-    NodeToolbar,
-    NodeToolbarItem
   },
 
   props: nodeViewProps,

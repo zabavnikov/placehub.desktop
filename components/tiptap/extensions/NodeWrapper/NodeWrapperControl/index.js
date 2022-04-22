@@ -3,7 +3,9 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Component from './Component.vue'
 
 export default Node.create({
-  name: 'NodeWrapperControl',
+  name: 'nodewrappercontrol',
+
+  group: 'nodewrapper',
 
   addOptions() {
     return {

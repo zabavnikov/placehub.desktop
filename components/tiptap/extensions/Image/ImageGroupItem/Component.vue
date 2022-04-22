@@ -1,23 +1,17 @@
 <template>
-  <node-view-wrapper draggable="true" style="position: relative;">
-    <div>
-      <img :src="node.attrs.src" :alt="node.attrs.datacaption">
-    </div>
+  <node-view-wrapper draggable="true" data-drag-handle>
+    <img :src="node.attrs.src" :alt="node.attrs.datacaption" style="object-fit: cover; object-position: center; width: 100%; height: 480px;">
   </node-view-wrapper>
 </template>
 
 <script>
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-2';
-import NodeToolbar from '../../../toolbar/NodeToolbar';
-import NodeToolbarItem from '../../../toolbar/NodeToolbarItem';
 import 'swiper/swiper-bundle.min.css';
 import VTextarea from '../../../../common/VTextarea';
 
 export default {
   components: {
     NodeViewWrapper,
-    NodeToolbar,
-    NodeToolbarItem,
     VTextarea
   },
 

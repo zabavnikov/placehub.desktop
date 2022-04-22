@@ -5,9 +5,9 @@ import Component from './Component.vue'
 export default Node.create({
   name: 'ImageGroupItem',
 
-  group: 'block',
+  group: 'nodewrapper',
 
-  selectable: true,
+  draggable: true,
 
   addOptions() {
     return {
@@ -17,13 +17,13 @@ export default Node.create({
 
   addAttributes() {
     return {
-      'dataid': {
+      'data-id': {
         default: '',
       },
-      'datacaption': {
+      'data-caption': {
         default: '',
       },
-      'datasrc': {
+      'data-src': {
         default: '',
       },
       src: {
