@@ -15,10 +15,13 @@ import Dropcursor from '@tiptap/extension-dropcursor';
 import Document from '@tiptap/extension-document';
 import Gapcursor from '@tiptap/extension-gapcursor';
 import History from '@tiptap/extension-history';
-import { ImageGroupControl, ImageGroupItem } from './extensions/Image';
-import { NodeWrapper, NodeWrapperControl } from './extensions/NodeWrapper';
 import Commands from './commands/commands'
 import suggestion from './commands/suggestion';
+
+import {
+  ImageWrapper,
+  Image,
+} from './extensions';
 
 import { ref, onMounted, onBeforeUnmount } from '@nuxtjs/composition-api';
 
@@ -59,10 +62,8 @@ export default {
           }),
           Text,
           Typography,
-          ImageGroupControl,
-          ImageGroupItem,
-          NodeWrapper,
-          NodeWrapperControl
+          ImageWrapper,
+          Image
         ],
         onUpdate: () => {
           emit('input', editor.value.getHTML())
@@ -93,24 +94,16 @@ export default {
         .$post(`/api/images/posts`, formData)
         .then(images => {
           this.editor.commands.insertContent({
-            type: 'nodewrapper',
-            attrs: {
-              type: 'images'
-            },
-            content: [
-              {
-                type: 'nodewrappercontrol',
-              },
-              ...images.map(image => {
-                return {
-                  type: 'ImageGroupItem',
-                  attrs: {
-                    src:       image.url,
-                    'data-id': image.id,
-                  }
+            type: 'imageWrapper',
+            content: images.map(image => {
+              return {
+                type: 'image',
+                attrs: {
+                  src:       image.url,
+                  'data-id': image.id,
                 }
-              })
-            ]
+              }
+            })
           });
         });
     }

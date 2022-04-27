@@ -1,18 +1,17 @@
 <template>
   <node-view-wrapper draggable="true" data-drag-handle>
-    <img :src="node.attrs.src" :alt="node.attrs.datacaption" style="object-fit: cover; object-position: center; width: 100%; height: 480px;">
+    <figure @click="deleteNode()">
+      <img :src="node.attrs.src" :alt="node.attrs.datacaption" style="object-fit: cover; object-position: center; width: 100%; height: 480px;">
+    </figure>
   </node-view-wrapper>
 </template>
 
 <script>
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-2';
-import 'swiper/swiper-bundle.min.css';
-import VTextarea from '../../../../common/VTextarea';
 
 export default {
   components: {
     NodeViewWrapper,
-    VTextarea
   },
 
   props: nodeViewProps
