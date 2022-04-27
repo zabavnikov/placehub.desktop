@@ -5,9 +5,7 @@ import Component from './Component.vue'
 export default Node.create({
   name: 'image',
 
-  group: 'imagewrapper',
-
-  draggable: true,
+  draggable: false,
 
   addOptions() {
     return {
@@ -34,12 +32,12 @@ export default Node.create({
 
   parseHTML() {
     return [{
-      tag: this.name,
+      tag: 'img',
     }]
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [this.name, mergeAttributes(this.options['HTMLAttributes'], HTMLAttributes), 0];
+    return ['img', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
   },
 
   addNodeView() {

@@ -18,7 +18,7 @@ export default Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return [this.name, mergeAttributes(HTMLAttributes, this.options['HTMLAttributes']), 0];
+    return [this.name, mergeAttributes(this.options.HTMLAttributes, HTMLAttributes), 0];
   },
 
   addNodeView() {
