@@ -83,13 +83,15 @@ export default {
   },
 
   methods: {
-    async onSwiper() {
+    onSwiper() {
       if (Swiper) {
-        await this.$nextTick();
-        this.swiper = new Swiper(this.$refs.swiper, {
-          autoHeight: true,
-          spaceBetween: 20,
-        })
+        this.$nextTick()
+          .then(() => {
+            this.swiper = new Swiper(this.$refs.swiper, {
+              autoHeight: true,
+              spaceBetween: 20,
+            })
+          });
       }
     },
     onUpload(event) {
@@ -136,6 +138,15 @@ export default {
   &--selected {
     background-color: aliceblue;
   }
+
+  .swiper-slide {
+    img {
+      object-fit: cover;
+      object-position: center;
+      width: 100%;
+      height: 480px;
+    }
+  }
 }
 .grid {
   display: grid;
@@ -145,6 +156,10 @@ export default {
   .swiper-slide {
     aspect-ratio: 1;
     width: 100%;
+
+    img {
+      height: 100%;
+    }
   }
 }
 </style>

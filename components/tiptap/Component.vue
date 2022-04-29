@@ -94,7 +94,7 @@ export default {
         .$post(`/api/images/posts`, formData)
         .then(images => {
           this.editor.commands.insertContent({
-            type: 'imageWrapper',
+            type: 'imagewrapper',
             content: images.map(image => {
               return {
                 type: 'image',

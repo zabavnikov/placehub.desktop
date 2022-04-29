@@ -3,13 +3,13 @@ import { VueNodeViewRenderer } from '@tiptap/vue-2'
 import Component from './Component.vue'
 
 export default Node.create({
-  name: 'imageWrapper',
+  name: 'imagewrapper',
 
   group: 'block',
 
-  content: 'image*',
+  content: 'image+',
 
-  selectable: true,
+  defining: false,
 
   parseHTML() {
     return [{

@@ -1,8 +1,6 @@
 <template>
-  <node-view-wrapper class="swiper-slide">
-    <figure>
-      <img :src="node.attrs.src" :alt="node.attrs.datacaption" style="object-fit: cover; object-position: center; width: 100%; height: 100%; max-height: 480px;">
-    </figure>
+  <node-view-wrapper class="swiper-slide" draggable="true" data-drag-handle>
+    <img @click="deleteNode" :src="node.attrs.src" :alt="node.attrs.datacaption" style="object-fit: cover; object-position: center; width: 100%; height: 100%; max-height: 480px;">
   </node-view-wrapper>
 </template>
 
@@ -15,10 +13,6 @@ export default {
   },
 
   props: nodeViewProps,
-
-  mounted() {
-    console.log(this.node)
-  }
 }
 </script>
 

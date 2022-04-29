@@ -5,7 +5,9 @@ import Component from './Component.vue'
 export default Node.create({
   name: 'image',
 
-  draggable: false,
+  group: 'imagewrapper',
+
+  draggable: true,
 
   addOptions() {
     return {
@@ -16,16 +18,16 @@ export default Node.create({
   addAttributes() {
     return {
       'data-id': {
-        default: '',
+        default: null,
       },
       'data-caption': {
-        default: '',
+        default: null,
       },
       'data-src': {
-        default: '',
+        default: null,
       },
       src: {
-        default: '/images/no-photo.svg',
+        default: null,
       },
     }
   },
@@ -37,7 +39,7 @@ export default Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
-    return ['img', mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
+    return [this.name, mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
   },
 
   addNodeView() {
