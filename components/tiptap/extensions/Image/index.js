@@ -39,6 +39,10 @@ export default Node.create({
   },
 
   renderHTML({ HTMLAttributes }) {
+    if (HTMLAttributes['data-id'] === null) {
+      HTMLAttributes['data-empty'] = true;
+    }
+
     return [this.name, mergeAttributes(this.options.HTMLAttributes, HTMLAttributes)]
   },
 

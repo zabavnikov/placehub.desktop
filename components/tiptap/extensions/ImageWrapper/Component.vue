@@ -59,8 +59,8 @@ export default {
   },
 
   watch: {
-    imageCount(newValue) {
-      if (newValue === 0) {
+    'node.firstChild.attrs.src'(newValue) {
+      if (newValue === null) {
         this.deleteNode();
       }
     },
@@ -74,11 +74,11 @@ export default {
   },
 
   computed: {
-    imageCount() {
-      return this.node.childCount;
-    },
     isSliderMode() {
-      return this.isEdit === false && this.swiper && this.imageCount;
+      return this.isEdit === false && this.swiper && this.childCount > 1;
+    },
+    childCount() {
+      return this.node.childCount;
     }
   },
 

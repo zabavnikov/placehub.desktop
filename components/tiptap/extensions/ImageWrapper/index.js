@@ -13,7 +13,7 @@ export default Node.create({
 
   parseHTML() {
     return [{
-      tag: this.name,
+      tag: 'div',
     }]
   },
 
@@ -23,5 +23,5 @@ export default Node.create({
 
   addNodeView() {
     return VueNodeViewRenderer(Component)
-  },
+  }
 });
