@@ -5,7 +5,7 @@ import Component from './Component.vue'
 export default Node.create({
   name: 'image',
 
-  group: 'imagewrapper',
+  group: 'block',
 
   draggable: true,
 

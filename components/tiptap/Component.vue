@@ -48,10 +48,7 @@ export default {
             suggestion,
           }),
           Document,
-          Dropcursor.configure({
-            width: 2,
-            color: '#90A4AE'
-          }),
+          Dropcursor,
           Gapcursor.configure({
             group: 'block'
           }),
@@ -62,7 +59,6 @@ export default {
           }),
           Text,
           Typography,
-          ImageWrapper,
           Image
         ],
         onUpdate: () => {
@@ -93,9 +89,8 @@ export default {
       this.$axios
         .$post(`/api/images/posts`, formData)
         .then(images => {
-          this.editor.commands.insertContent({
-            type: 'imagewrapper',
-            content: images.map(image => {
+          this.editor.commands.insertContent(
+            images.map(image => {
               return {
                 type: 'image',
                 attrs: {
@@ -104,7 +99,7 @@ export default {
                 }
               }
             })
-          });
+          );
         });
     }
   }

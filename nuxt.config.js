@@ -1,10 +1,6 @@
 const routes = require('./routes');
 
 module.exports = {
-  server: {
-    host: process.env.APP_HOST
-  },
-
   head: {
     titleTemplate: title => (title ? `${title} — ` : '') + 'PlaceHub - сервис микроблогов для путешественников',
     meta: [

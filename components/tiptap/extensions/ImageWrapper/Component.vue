@@ -1,14 +1,14 @@
 <template>
   <node-view-wrapper class="node-wrapper" :class="{'node-wrapper--selected': selected}">
-    <node-control @delete="deleteNode">
-      <node-control-item @click="isEdit = !isEdit">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
-        </svg>
-      </node-control-item>
+    <node-control>
       <node-control-item @click="$refs.file.click()">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
           <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      </node-control-item>
+      <node-control-item @click="onClickEdit">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
         </svg>
       </node-control-item>
     </node-control>
@@ -55,7 +55,7 @@ export default {
   },
 
   mounted() {
-    this.onSwiper();
+    this.initializeSwiper();
   },
 
   watch: {
@@ -68,32 +68,38 @@ export default {
       if (newValue) {
         this.swiper.destroy();
       } else {
-        this.onSwiper();
+        this.initializeSwiper();
       }
     }
   },
 
   computed: {
     isSliderMode() {
-      return this.isEdit === false && this.swiper && this.childCount > 1;
+      return this.isEdit === false
+          && (this.swiper instanceof Swiper)
+          && this.childCount > 1;
     },
+
     childCount() {
       return this.node.childCount;
     }
   },
 
   methods: {
-    onSwiper() {
-      if (Swiper) {
-        this.$nextTick()
-          .then(() => {
-            this.swiper = new Swiper(this.$refs.swiper, {
-              autoHeight: true,
-              spaceBetween: 20,
-            })
-          });
-      }
+    onClickEdit() {
+      this.isEdit = !this.isEdit;
     },
+
+    initializeSwiper() {
+      this.$nextTick()
+        .then(() => {
+          this.swiper = new Swiper(this.$refs.swiper, {
+            autoHeight: true,
+            spaceBetween: 20,
+          });
+        });
+    },
+
     onUpload(event) {
       const formData = new FormData();
       const images = event.target.files;
@@ -134,6 +140,7 @@ export default {
   padding: 8px;
   border: 1px solid #f1f1f1;
   border-radius: 8px;
+  position: relative;
 
   &--selected {
     background-color: aliceblue;
@@ -150,7 +157,7 @@ export default {
 }
 .grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-gap: 8px;
 
   .swiper-slide {
