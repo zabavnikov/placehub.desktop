@@ -5,7 +5,6 @@ export const POST_FRAGMENT = `
   user_id
   place_id
   shortText
-  image_order
   commentsCount
   likesCount
   is_draft

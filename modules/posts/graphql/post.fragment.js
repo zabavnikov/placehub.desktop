@@ -8,7 +8,6 @@ export default fragment('PostFragment', 'Post', {
   user_id:      types.number,
   place_id:     types.number,
   text:         types.string,
-  image_order:  types.string,
   created_at: params({
     relative: true
   }, types.string),

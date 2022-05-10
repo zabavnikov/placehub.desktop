@@ -29,7 +29,7 @@ export default {
   },
 
   async asyncData({ $axios, params, query, store }) {
-    const getPost = GQLQuery('getPost($id: Int!, $offset: Int, $subject_type: String!)', {
+    const getPost = GQLQuery('getPost($id: ID!, $offset: Int, $subject_type: String!)', {
       post: GQLParams({id: '$id'}, PostFragment),
       comments: GQLParams({
         subject_type: '$subject_type',
