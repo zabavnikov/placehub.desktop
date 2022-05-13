@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="m-6 text-base post-text" v-html="post.text"></div>
-<!--    <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>-->
+    <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
 
   <!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">
     <div v-for="image in post.images" class="ratio bg-center bg-cover rounded-lg"
@@ -42,6 +42,7 @@
   font-size: 12px;
   font-weight: 500;
   line-height: 24px;
+  white-space: pre-line;
 
   figcaption {
     font-style: italic;

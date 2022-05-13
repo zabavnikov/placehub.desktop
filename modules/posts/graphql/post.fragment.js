@@ -25,5 +25,4 @@ export default fragment('PostFragment', 'Post', {
   },
   place: PlaceCardFragment,
   user: ProfileCardFragment,
-  tags: TagsFragment,
 });

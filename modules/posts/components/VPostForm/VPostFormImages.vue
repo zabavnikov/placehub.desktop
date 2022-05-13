@@ -2,8 +2,8 @@
   <div>
     <client-only>
       <draggable v-model="images" @end="onDragEnd" handle=".handle" class="grid grid-cols-4 gap-2">
-        <div v-for="(image, index) in images" :key="image.id" class="handle relative">
-          <img :src="image.sizes.default" alt="" class="rounded-lg">
+        <div v-for="(image, index) in images" :key="image.id" class="handle relative aspect-square cursor-pointer">
+          <img :src="image.url" alt="" class="rounded-lg object-cover object-center w-full h-full">
           <div @click="onDelete(index)" class="absolute top-0 right-0 m-1 p cursor-pointer rounded-full bg-black bg-opacity-75">
             <v-icon name="x-circle" class="text-white" width="20" height="20"></v-icon>
           </div>

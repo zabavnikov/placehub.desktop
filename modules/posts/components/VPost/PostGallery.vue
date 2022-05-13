@@ -3,7 +3,7 @@
     <div v-for="image in images"
          :key="image.id"
         class="bg-center bg-cover aspect-w-1 aspect-h-1">
-      <img :src="image.sizes.default" alt="" class="w-full h-full object-center object-cover">
+      <img :src="image.url" alt="" class="w-full h-full object-center object-cover">
     </div>
   </div>
 </template>

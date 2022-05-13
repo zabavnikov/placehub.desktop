@@ -1,22 +1,26 @@
 <template>
   <div :class="{loading: parseProgress}">
     <div class="bg-white p-4 rounded-t-lg">
-      <tip-tap v-model="form.text" :images.sync="form.images"></tip-tap>
+      <VTextarea
+          v-model="form.text"
+          placeholder="Привет, что нового?"
+          parse-url
+          @parse-url-progress="parseProgress = $event"
+          @url="form.url_id = $event.id; form.url = $event"
+      />
 
-      <div v-if="form.tags.length > 0" class="flex mt-4 space-x-4">
-        <v-chip v-for="(tag, index) in form.tags" :key="tag.id" :text="tag.name" deletable @delete="form.tags.splice(index, 1)"></v-chip>
-      </div>
+      <v-post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></v-post-form-images>
 
-<!--      <div v-if="form.place && Object.keys(form.place).length > 0"
+      <div v-if="form.place && Object.keys(form.place).length > 0"
            class="mt-2 flex justify-between shadow-sm p-2 border rounded">
         <div>
           <div class="font-bold">{{ form.place.name }}</div>
           <div class="help">{{ form.place.parent_names }}</div>
         </div>
         <span @click="form.place = {}" class="cursor-pointer"><v-icon name="x" stroke="red"></v-icon></span>
-      </div>-->
+      </div>
 
-      <v-url v-if="form.url" :url="form.url" @delete="form.url = null; form.url_id = null" editable class="mt-2"></v-url>
+      <VUrl v-if="form.url" :url="form.url" @delete="form.url = null; form.url_id = null" editable class="mt-2"/>
 
       <div v-if="errors.any()" class="is-invalid mt-4">
         <div v-for="error in errors.all()" class="help">
@@ -28,20 +32,23 @@
     <div class="bg-gray-50 border-t border-solid border-t-gray-100 rounded-b-lg px-4 py-3 sticky bottom-0 z-10">
       <div class="flex items-center ">
         <div class="flex items-center space-x-2">
-          <!-- Добавление тегов. -->
-          <v-tags-select v-model="form.tags" v-tooltip="`Добавить теги`">
-            <button slot="trigger" type="button" class="post-form-tool" ref="triggerTags">
-              <v-icon name="tag" stroke="#b0bec5"></v-icon>
-            </button>
-          </v-tags-select>
-          <!-- / Добавление тегов. -->
+          <!-- Загрузка изображений. -->
+          <button
+              @click="$refs.upload.$el.click()"
+              v-tooltip="`Фото`"
+              type="button"
+              class="post-form-tool">
+            <v-icon name="camera" stroke="#b0bec5"></v-icon>
+          </button>
+          <v-upload ref="upload" to="posts" multiple v-model="form.images" class="hidden"></v-upload>
+          <!-- / Загрузка изображений. -->
 
           <!-- Выбор места. -->
           <button
               @click="$overlay.show(() => import('~/modules/places/components/VChoosePlaceOverlay'), mapOverlay)"
               type="button"
               class="post-form-tool"
-              v-tooltip="`Добавить место`"
+              v-tooltip="`Карта`"
               :style="{backgroundColor: errors.first('place_id') ? 'red' : undefined}">
             <v-icon name="location-marker" stroke="#b0bec5"></v-icon>
           </button>
@@ -61,20 +68,18 @@
 import Errors from "~/utils/errors"
 import VChip from '~/placehub-ui/components/VChip';
 import VPostFormAccess from "./VPostFormAccess";
+import VPostFormImages from "./VPostFormImages";
 import VProgressBar from "~/components/ui/VProgressBar";
-import VTagsSelect from '~/modules/tags/components/VTagsSelect';
 import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
 import cloneDeep from 'lodash/cloneDeep';
-import TipTap from '~/components/tiptap';
 
 const formInitialState = {
   id: null,
   place_id: null,
   text: '',
   place: {},
-  tags: [],
   images: [],
   url: null,
   is_draft: false
@@ -93,12 +98,11 @@ export default {
   components: {
     VChip,
     VPostFormAccess,
+    VPostFormImages,
     VProgressBar,
-    VTagsSelect,
     VTextarea,
     VUpload,
-    VUrl,
-    TipTap
+    VUrl
   },
 
   data() {
