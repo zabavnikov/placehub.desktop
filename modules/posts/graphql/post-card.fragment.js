@@ -8,6 +8,7 @@ export default fragment('PostCardFragment', 'Post', {
   shortText:       types.string,
   commentsCount:   types.number,
   is_draft:         types.boolean,
+  hashtags:     types.custom(),
   created_at: params({
     relative: true
   }, types.string),

@@ -1,6 +1,5 @@
 import {fragment, params, rawString, types} from 'typed-graphqlify';
 import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
-import TagsFragment from '~/modules/tags/graphql/tags.fragment';
 import PlaceCardFragment from '~/modules/places/graphql/place-card.graphql';
 
 export default fragment('PostFragment', 'Post', {
@@ -8,6 +7,7 @@ export default fragment('PostFragment', 'Post', {
   user_id:      types.number,
   place_id:     types.number,
   text:         types.string,
+  hashtags:     types.custom(),
   created_at: params({
     relative: true
   }, types.string),

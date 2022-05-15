@@ -9,6 +9,7 @@ export const POST = `
   likesCount
   is_draft
   created_at(relative: true)
+  hashtags
   images(sizes: "default@resize:auto:640:480") {
     id
     text
@@ -30,6 +31,7 @@ export const POST_FRAGMENT = `
   shortText
   commentsCount
   likesCount
+  hashtags
   is_draft
   created_at(relative: true)
   images(sizes: "default@resize:auto:640:480") {
