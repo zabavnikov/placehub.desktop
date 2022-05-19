@@ -3,7 +3,7 @@ export default ({ app, $axios, error }) => {
     if (response && response.hasOwnProperty('status')) {
       const code = parseInt(response.status);
 
-      if (app.hasOwnProperty('$toast') && code === 403 || code === 422) {
+      if (app.hasOwnProperty('$toast') && code === 403) {
         app.$toast.error(response.data.message);
       }
     }
