@@ -22,10 +22,14 @@
           'flex min-h-full': true,
           [this.reverse ? 'layout-revers' : 'layout-not-revers']: true
         }">
-          <div v-if="hasSidebarSlot" class="layout-sidebar">
-            <slot name="sidebar-before"></slot>
-            <slot name="sidebar"></slot>
-            <slot name="sidebar-after"></slot>
+          <div class="layout-sidebar">
+            <slot name="sidebar-before">
+            </slot>
+            <slot name="sidebar">
+            </slot>
+            <slot name="sidebar-after">
+              <latest-comments></latest-comments>
+            </slot>
           </div>
           <div class="layout-content">
             <slot name="content-before"></slot>
@@ -39,7 +43,11 @@
 </template>
 
 <script>
+import LatestComments from '../../modules/comments/components/LatestComments';
 export default {
+  components: {
+    LatestComments
+  },
   props: {
     heading: String,
     subheading: String,

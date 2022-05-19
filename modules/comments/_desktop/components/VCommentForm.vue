@@ -135,10 +135,10 @@ const initialState = {
         return this.mode === 'edit';
       },
       subjectType() {
-        return this.$store.state.comments.subjectType;
+        return this.$store.state.comments.modelType;
       },
       subjectId() {
-        return this.$store.state.comments.subjectId;
+        return this.$store.state.comments.modelId;
       }
     },
 

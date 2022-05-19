@@ -4,17 +4,22 @@ const initialState = {
   list: [],
   mode: null,
   selectedComment: {},
-  subjectType: null,
-  subjectId: null,
+  modelType: null,
+  modelId: null,
+  latest: []
 }
 
 const state = () => (cloneDeep(initialState));
 
 const mutations = {
-  SET(state, {comments, subjectType, subjectId}) {
-    state.list        = comments;
-    state.subjectType = subjectType;
-    state.subjectId   = subjectId;
+  SET_LATEST(state, comments) {
+    state.latest = comments;
+  },
+
+  SET(state, {comments, modelType, modelId}) {
+    state.list      = comments;
+    state.modelType = modelType;
+    state.modelId   = modelId;
   },
 
   MODE_EDIT(state, selectedComment) {

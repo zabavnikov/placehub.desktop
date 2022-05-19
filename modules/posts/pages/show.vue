@@ -1,6 +1,5 @@
 <template>
   <the-layout>
-    <template #sidebar>1</template>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
       <v-comments id="comments"></v-comments>
@@ -29,11 +28,11 @@ export default {
   },
 
   async asyncData({ $axios, params, query, store }) {
-    const getPost = GQLQuery('getPost($id: ID!, $offset: Int, $subject_type: String!)', {
+    const getPost = GQLQuery('getPost($id: ID!, $offset: Int, $modelType: String)', {
       post: GQLParams({id: '$id'}, PostFragment),
       comments: GQLParams({
-        subject_type: '$subject_type',
-        subject_id: "$id",
+        modelType: '$modelType',
+        modelId: "$id",
         offset: '$offset'
       }, CommentCardFragment)
     });
@@ -42,15 +41,15 @@ export default {
       query: getPost.toString(),
       variables: {
         id: parseInt(params.postId),
-        subject_type: 'posts',
+        modelType: 'posts',
         offset: parseInt(query.offset) || undefined,
       }
     });
 
     store.commit('comments/SET', {
       comments: data.comments,
-      subjectType: 'posts',
-      subjectId: params.postId
+      modelType: 'posts',
+      modelId: params.postId
     });
 
     return data;

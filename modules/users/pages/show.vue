@@ -4,16 +4,6 @@
       <profile-header :user="user"></profile-header>
     </template>
 
-    <template #sidebar>
-
-      <div v-if="$auth.loggedIn && user.id === $auth.user.id">
-        <n-link
-            :to="{name: 'users.edit', params: {userId: user.id}}"
-            class="button button-success block"
-        >Редактировать</n-link>
-      </div>
-    </template>
-
     <template #content>
       <v-post-form v-if="$auth.loggedIn" @create="getPosts.unshift($event)" class="mb-4"></v-post-form>
 
