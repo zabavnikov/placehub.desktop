@@ -28,7 +28,7 @@ module.exports = {
     'nuxt-graphql-request',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api/module',
-    ['@nuxtjs/laravel-echo', {
+    /*['@nuxtjs/laravel-echo', {
       broadcaster: 'pusher',
       authEndpoint: `${process.env.API_URL}/api/broadcasting/auth`,
       key: process.env.PUSHER_APP_KEY,
@@ -38,7 +38,7 @@ module.exports = {
       forceTLS: false,
       disableStats: true,
       enabledTransports: ['ws', 'wss'],
-    }],
+    }],*/
   ],
 
   modules: [

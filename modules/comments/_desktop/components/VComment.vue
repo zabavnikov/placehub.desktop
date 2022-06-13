@@ -100,7 +100,6 @@
 </template>
 
 <script>
-import {params as GQLParams, query as GQLQuery} from 'typed-graphqlify';
 import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 import VCommentForm from './VCommentForm';
 import VLike from '~/components/common/VLike';

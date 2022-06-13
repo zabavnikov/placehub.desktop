@@ -1,5 +1,4 @@
-import {sortRoutes} from '@nuxt/utils';
-import {existsSync, readdirSync} from 'fs';
+import { existsSync, readdirSync } from 'fs';
 
 const routes = [];
 
@@ -22,5 +21,5 @@ module.exports = (nuxtRoutes, resolve) => {
     nuxtRoutes.push(route);
   });
 
-  sortRoutes(nuxtRoutes);
+  return nuxtRoutes;
 }

@@ -16,9 +16,7 @@
 </template>
 
 <script>
-import { params as GQLParams, query as GQLQuery } from 'typed-graphqlify';
 import VPost from '~/modules/posts/components/VPost';
-import PostCardFragment from '~/modules/posts/graphql/post-card.fragment';
 
 export default {
   middleware: 'auth',

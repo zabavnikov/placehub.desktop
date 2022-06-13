@@ -5,30 +5,29 @@
     "start": "nuxt start"
   },
   "dependencies": {
-    "@nuxtjs/auth-next": "^5.0.0-1648802546.c9880dc",
+    "@nuxtjs/auth-next": "latest",
     "@nuxtjs/axios": "latest",
     "@nuxtjs/composition-api": "^0.32.0",
     "@nuxtjs/laravel-echo": "zabavnikov/laravel-echo",
     "@nuxtjs/toast": "latest",
-    "@vue/composition-api": "^1.6.1",
-    "@vueuse/core": "^8.4.2",
+    "@vue/composition-api": "latest",
+    "@vueuse/core": "latest",
     "js-cookie": "latest",
     "leaflet": "latest",
-    "nuxt": "latest",
-    "pusher-js": "^7.1.0-beta",
-    "swiper": "^8.1.4",
+    "nuxt-edge": "^2.16.0-27358576.777a4b7f",
+    "pusher-js": "^7.1.1-beta",
+    "swiper": "^8.2.3",
     "tippy.js": "latest",
-    "typed-graphqlify": "latest",
     "vue2-leaflet": "latest",
     "vuedraggable": "^2.24.3"
   },
   "devDependencies": {
-    "@nuxtjs/tailwindcss": "^5.0.4",
+    "@nuxtjs/tailwindcss": "^5.1.2",
     "graphql": "^16.5.0",
     "lodash": "latest",
-    "nuxt-graphql-request": "^5.1.0",
-    "postcss": "^8.4.13",
-    "sass": "^1.51.0",
+    "nuxt-graphql-request": "latest",
+    "postcss": "^8.4.14",
+    "sass": "^1.52.3",
     "sass-loader": "10.2.0"
   }
 }

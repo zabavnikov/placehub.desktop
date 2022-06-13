@@ -1,5 +1,4 @@
-import {fragment, params, rawString, types} from 'typed-graphqlify';
-import ProfileCardFragment from '~/modules/users/graphql/profile-card.fragment';
+
 import CommentCardChildFragment from '~/modules/comments/graphql/comment-card-child.fragment';
 
 export default fragment('CommentCardFragment', 'Comment', {
@@ -26,5 +25,4 @@ export default fragment('CommentCardFragment', 'Comment', {
     is_liked: types.boolean,
   },
   branch: CommentCardChildFragment,
-  user: ProfileCardFragment
 });

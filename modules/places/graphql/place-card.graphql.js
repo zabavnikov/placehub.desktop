@@ -1,4 +1,4 @@
-import {types} from 'typed-graphqlify';
+
 
 const fields = {
   id: types.number,

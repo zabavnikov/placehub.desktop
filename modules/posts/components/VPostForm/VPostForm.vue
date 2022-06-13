@@ -160,25 +160,29 @@ export default {
         method: this.isEdit ? 'put' : 'post'
       };
 
-      this.$axios(options)
-          .then(({data}) => {
-            // После редактирования переходим в запись,
-            // после создания просто чистим форма создания находится прямо в списке постов.
-            if (this.isEdit) {
-              this.$router.push({name: 'posts.show', params: {postId: this.post.id}});
-            } else {
-              if (!data.is_draft) {
-                this.$emit('create', data);
+      try {
+        this.$axios(options)
+            .then(({data}) => {
+              // После редактирования переходим в запись,
+              // после создания просто чистим форма создания находится прямо в списке постов.
+              if (this.isEdit) {
+                this.$router.push({name: 'posts.show', params: {postId: this.post.id}});
               } else {
-                this.$toast.info('Добавлено в черновики')
+                if (!data.is_draft) {
+                  this.$emit('create', data);
+                } else {
+                  this.$toast.info('Добавлено в черновики')
+                }
+                this.errors.clear();
               }
-              this.errors.clear();
-            }
 
-            this.form = cloneDeep(formInitialState);
-          })
-          .catch(error => this.errors.record(error))
-          .finally(() => this.loading = false);
+              this.form = cloneDeep(formInitialState);
+            })
+            .catch(error => this.errors.record(error))
+            .finally(() => this.loading = false);
+      } catch (e) {
+        console.log(e)
+      }
     },
   }
 }

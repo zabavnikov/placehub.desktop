@@ -14,9 +14,7 @@
 </template>
 
 <!--<script>
-import {query as GQLQuery} from 'typed-graphqlify';
 import VPost from '~/modules/posts/components/VPost';
-import PostCardFragment from '~/modules/posts/graphql/post-card.fragment';
 
 export default {
   components: { VPost },

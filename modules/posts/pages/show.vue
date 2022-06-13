@@ -2,20 +2,19 @@
   <the-layout>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
-      <v-comments id="comments"></v-comments>
+<!--      <v-comments id="comments"></v-comments>-->
     </template>
   </the-layout>
 </template>
 
 <script>
-import { params as GQLParams, query as GQLQuery } from 'typed-graphqlify';
-import VComments from "~/modules/comments/_desktop/components/VComments";
-import PostFragment from '~/modules/posts/graphql/post.fragment';
-import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
+import { gql } from 'nuxt-graphql-request';
+// import VComments from "~/modules/comments/_desktop/components/VComments";
 import VPost from '~/modules/posts/components/VPost';
+import { POST } from '../graphql';
 
 export default {
-  components: { VPost, VComments },
+  components: { VPost },
 
   head() {
     return {
@@ -27,32 +26,24 @@ export default {
     }
   },
 
-  async asyncData({ $axios, params, query, store }) {
-    const getPost = GQLQuery('getPost($id: ID!, $offset: Int, $modelType: String)', {
-      post: GQLParams({id: '$id'}, PostFragment),
-      comments: GQLParams({
-        modelType: '$modelType',
-        modelId: "$id",
-        offset: '$offset'
-      }, CommentCardFragment)
-    });
-
-    const { data } = await $axios.$post('/graphql', {
-      query: getPost.toString(),
-      variables: {
-        id: parseInt(params.postId),
-        modelType: 'posts',
-        offset: parseInt(query.offset) || undefined,
+  async asyncData({ $graphql, params }) {
+    const { post } = await $graphql.default.request(gql`
+      query ($id: ID!) {
+          ${POST}
       }
-    });
+    `, {
+      id: params.postId,
+    })
 
-    store.commit('comments/SET', {
+    /*store.commit('comments/SET', {
       comments: data.comments,
       modelType: 'posts',
       modelId: params.postId
-    });
+    });*/
 
-    return data;
+    return {
+      post
+    };
   },
 }
 </script>

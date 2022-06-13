@@ -1,6 +1,11 @@
 <template>
   <div>
     <div class="m-6 text-base post-text" v-html="post.text"></div>
+
+    <div v-if="post.hashtags.length > 0" class="m-6 space-x-2">
+      <nuxt-link v-for="hashtag in post.hashtags" :to="`/search/${hashtag}`">#{{ hashtag }}</nuxt-link>
+    </div>
+
     <post-gallery v-if="post.images.length > 0" :images="post.images"></post-gallery>
 
   <!--        <div v-if="post.images.length > 0" class="grid grid-cols-4 gap-2 m-6">

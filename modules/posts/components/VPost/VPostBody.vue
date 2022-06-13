@@ -1,6 +1,6 @@
 <template>
   <n-link :to="{name: 'posts.show', params: {postId: post.id}}" class="block my-6">
-    <div v-if="post.shortText" class="text-base leading-5 mx-6 mb-3" v-html="post.shortText"></div>
+    <div v-if="post.shortText" class="text-base post-text mx-6 mb-3" v-html="post.shortText"></div>
     <post-gallery v-if="post.images.length > 0" class="mt-6" :images="post.images"></post-gallery>
   </n-link>
 </template>

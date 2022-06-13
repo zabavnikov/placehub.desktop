@@ -1,6 +1,5 @@
 <template>
   <the-layout>
-    <template #sidebar>.</template>
     <v-post-form :post="form" slot="content"></v-post-form>
   </the-layout>
 </template>
