@@ -16,7 +16,7 @@
     "leaflet": "latest",
     "nuxt-edge": "^2.16.0-27358576.777a4b7f",
     "pusher-js": "^7.1.1-beta",
-    "swiper": "^8.2.3",
+    "swiper": "^8.2.4",
     "tippy.js": "latest",
     "vue2-leaflet": "latest",
     "vuedraggable": "^2.24.3"
