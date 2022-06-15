@@ -100,7 +100,6 @@
 </template>
 
 <script>
-import CommentCardFragment from '~/modules/comments/graphql/comment-card.fragment';
 import VCommentForm from './VCommentForm';
 import VLike from '~/components/common/VLike';
 import VDropdown from "~/components/ui/VDropdown";
@@ -164,7 +163,7 @@ export default {
           });
     },
 
-    async onClickMore(list) {
+    /*async onClickMore(list) {
       const getComments = GQLQuery('getComments($subject_type: String!, $subject_id: Int!, $offset: Int, $branch_id: Int)', {
         comments: GQLParams({
           subject_id: '$subject_id',
@@ -185,7 +184,7 @@ export default {
       });
 
       data.comments.forEach(comment => this.$store.commit('comments/ADD_COMMENT_INTO_BRANCH', comment))
-    },
+    },*/
   }
 }
 </script>
