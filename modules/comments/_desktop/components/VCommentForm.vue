@@ -32,11 +32,13 @@
 </template>
 
 <script>
-import cloneDeep from 'lodash/cloneDeep';
+import { gql } from 'nuxt-graphql-request';
+import { cloneDeep, pick } from 'lodash';
 import Errors from '~/utils/errors';
 import VTextarea from '~/components/common/VTextarea';
 import VAttachments from '~/components/common/VAttachments';
 import VUpload from '~/components/common/VUpload';
+import { UPDATE_COMMENT } from '../../graphql';
 
 const initialState = {
     parent_id: null,
@@ -143,7 +145,7 @@ const initialState = {
     },
 
     methods: {
-      onSubmit() {
+      async onSubmit() {
         if (this.loading || this.disabled) {
           return;
         }
@@ -161,25 +163,40 @@ const initialState = {
           this.form.image = null;
         }
 
-        const options = {
-          url: `/api/comments/${this.isEdit ? this.selectedComment.id : ''}`,
-          data: this.form,
-          method: this.isEdit ? 'put' : 'post',
-        };
-
-        this.$axios(options)
-          .then(({ data }) => {
-            if (this.isEdit) {
-              this.$store.commit('comments/UPDATE_COMMENT', this.form);
-            } else {
-              this.$store.commit('comments/ADD_COMMENT', data);
+        if (this.isEdit) {
+          const { updateComment } = await this.$graphql.default.request(gql`
+            ${UPDATE_COMMENT}
+          `, {
+            id: this.form.id,
+            input: {
+              parentId:   this.form.parent_id || undefined,
+              text:       this.form.text
             }
-          })
-          .catch(error => this.errors.record(error))
-          .finally(() => {
-            this.loading = false;
-            this.$store.commit('comments/MODE_RESET');
           });
+
+          if (updateComment) {
+            this.$store.commit('comments/UPDATE_COMMENT', this.form);
+            this.$store.commit('comments/MODE_RESET');
+            this.loading = false;
+          }
+        } else {
+
+          const options = {
+            url: `/api/comments/${this.isEdit ? this.selectedComment.id : ''}`,
+            data: this.form,
+            method: 'post',
+          };
+
+          this.$axios(options)
+              .then(({data}) => {
+                this.$store.commit('comments/ADD_COMMENT', data);
+              })
+              .catch(error => this.errors.record(error))
+              .finally(() => {
+                this.loading = false;
+                this.$store.commit('comments/MODE_RESET');
+              });
+        }
       },
     },
 

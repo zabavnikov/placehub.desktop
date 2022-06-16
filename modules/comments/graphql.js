@@ -38,3 +38,9 @@ export const COMMENT = `
     }
   }
 `;
+
+export const UPDATE_COMMENT = `
+  mutation ($id: Int!, $input: CommentInput!) {
+    updateComment(id: $id, input: $input)
+  }
+`;
