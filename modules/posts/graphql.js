@@ -57,21 +57,14 @@ export const GET_POSTS = `
 // Mutations
 export const CREATE_POST = `
   mutation($input: PostInput!) {
-    createPost(input: $input) {
-      id
-      shortText
-      isDraft
-      created_at(relative: true)
-      images(sizes: "default@resize:auto:640:480") {
-        id
-        url
-        sizes
-      }
-      user {
-        id
-        name
-        avatar
-      }
+    postForm: createPost(input: $input) {
+      ${POST_FRAGMENT}
     }
+  }
+`;
+
+export const UPDATE_POST = `
+  mutation($id: Int!, $input: PostInput!) {
+    postForm: updatePost(id: $id, input: $input)
   }
 `;

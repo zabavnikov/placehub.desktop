@@ -75,7 +75,7 @@ import VProgressBar from "~/components/ui/VProgressBar";
 import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
-import { CREATE_POST } from '../../graphql';
+import { CREATE_POST, UPDATE_POST } from '../../graphql';
 
 const formInitialState = {
   placeId: null,
@@ -160,16 +160,26 @@ export default {
 
         input.images = input.images.map(image => image.id);
 
-        const { createPost } = await this.$graphql.default
-          .request(gql`${CREATE_POST}`, {
-            input
-          })
+        const variables = {
+          id: this.isEdit
+              ? parseInt(this.$route.params.postId)
+              : undefined,
+          input
+        };
+
+        const { postForm } = await this.$graphql.default
+          .request(gql`${this.isEdit
+            ? UPDATE_POST
+            : CREATE_POST
+          }`, variables)
           .finally(() => this.loading = false);
 
         if (! this.isEdit) {
-          if (! createPost.isDraft) {
-            this.$emit('create', createPost);
+          if (! postForm.isDraft) {
+            this.$emit('create', postForm);
           }
+        } else {
+          await this.$router.push({name: 'posts.show', params: {postId: this.$route.params.postId}});
         }
 
         this.form = cloneDeep(formInitialState);
