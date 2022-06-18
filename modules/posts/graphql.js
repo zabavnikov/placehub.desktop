@@ -1,4 +1,4 @@
-import {USER_FIELDS} from '~/modules/users/graphql';
+import { USER_FIELDS } from '~/modules/users/graphql';
 
 export const POST = `
   post(id: $id) {
@@ -51,5 +51,21 @@ export const POST_FRAGMENT = `
 export const GET_POSTS = `
   getPosts(userId: $userId) {
     ${POST_FRAGMENT}
+  }
+`;
+
+// Mutations
+export const CREATE_POST = `
+  mutation($input: PostInput!) {
+    createPost(input: $input) {
+      id
+      shortText
+      created_at(relative: true)
+      images(sizes: "default@resize:auto:640:480") {
+        id
+        url
+        sizes
+      }
+    }
   }
 `;

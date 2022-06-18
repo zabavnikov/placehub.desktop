@@ -49,14 +49,14 @@
               type="button"
               class="post-form-tool"
               v-tooltip="`Карта`"
-              :style="{backgroundColor: errors.first('place_id') ? 'red' : undefined}">
+              :style="{backgroundColor: errors.first('placeId') ? 'red' : undefined}">
             <v-icon name="location-marker" stroke="#b0bec5"></v-icon>
           </button>
           <!-- / Выбор места. -->
         </div>
 
         <div class="ml-auto space-x-2 flex items-center">
-          <v-post-form-access v-model="form.is_draft"></v-post-form-access>
+          <v-post-form-access v-model="form.isDraft"></v-post-form-access>
           <button @click="onSubmit" :class="{loading}" class="button">Отправить</button>
         </div>
       </div>
@@ -65,6 +65,8 @@
 </template>
 
 <script>
+import { cloneDeep, pick } from 'lodash';
+import { gql } from 'nuxt-graphql-request';
 import Errors from "~/utils/errors"
 import VChip from '~/placehub-ui/components/VChip';
 import VPostFormAccess from "./VPostFormAccess";
@@ -73,16 +75,15 @@ import VProgressBar from "~/components/ui/VProgressBar";
 import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
-import cloneDeep from 'lodash/cloneDeep';
+import { CREATE_POST } from '../../graphql';
 
 const formInitialState = {
-  id: null,
-  place_id: null,
+  placeId: null,
   text: '',
   place: {},
   images: [],
   url: null,
-  is_draft: false
+  isDraft: false
 };
 
 export default {
@@ -133,12 +134,12 @@ export default {
 
   watch: {
     'form.place.id'(newValue) {
-      // Если прилетел undefined, то axios его пропустит и на сервер place_id не улетит,
+      // Если прилетел undefined, то axios его пропустит и на сервер placeId не улетит,
       // а значит сервер тоже пропустит это поле и не обновит его, по этому если undefined, то заменим его на null.
-      this.form.place_id = newValue || null;
+      this.form.placeId = newValue || null;
 
       if (newValue) {
-        this.errors.clear('place_id');
+        this.errors.clear('placeId');
       }
     },
     'form.images'(newValue) {
@@ -149,7 +150,25 @@ export default {
   },
 
   methods: {
-    onSubmit() {
+    async onSubmit() {
+      if (this.loading) return;
+
+      this.loading = true;
+
+      try {
+        const { createPost } = await this.$graphql.default
+          .request(gql`${CREATE_POST}`, {
+            input: pick(this.form, ['placeId', 'linkId', 'isDraft', 'text', 'images'])
+          })
+          .finally(() => this.loading = false);
+
+        console.log(createPost);
+      } catch (error) {
+        console.log(error)
+      }
+    },
+
+    /*onSubmit() {
       if (this.loading) return;
 
       this.loading = true;
@@ -168,7 +187,7 @@ export default {
               if (this.isEdit) {
                 this.$router.push({name: 'posts.show', params: {postId: this.post.id}});
               } else {
-                if (!data.is_draft) {
+                if (!data.isDraft) {
                   this.$emit('create', data);
                 } else {
                   this.$toast.info('Добавлено в черновики')
@@ -183,7 +202,7 @@ export default {
       } catch (e) {
         console.log(e)
       }
-    },
+    },*/
   }
 }
 </script>
