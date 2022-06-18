@@ -60,11 +60,17 @@ export const CREATE_POST = `
     createPost(input: $input) {
       id
       shortText
+      isDraft
       created_at(relative: true)
       images(sizes: "default@resize:auto:640:480") {
         id
         url
         sizes
+      }
+      user {
+        id
+        name
+        avatar
       }
     }
   }

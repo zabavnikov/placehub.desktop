@@ -156,15 +156,27 @@ export default {
       this.loading = true;
 
       try {
+        const input = pick(this.form, ['placeId', 'linkId', 'isDraft', 'text', 'images']);
+
+        input.images = input.images.map(image => image.id);
+
         const { createPost } = await this.$graphql.default
           .request(gql`${CREATE_POST}`, {
-            input: pick(this.form, ['placeId', 'linkId', 'isDraft', 'text', 'images'])
+            input
           })
           .finally(() => this.loading = false);
 
-        console.log(createPost);
+        if (! this.isEdit) {
+          if (! createPost.isDraft) {
+            this.$emit('create', createPost);
+          }
+        }
+
+        this.form = cloneDeep(formInitialState);
       } catch (error) {
         console.log(error)
+      } finally {
+        this.loading = false;
       }
     },
 
