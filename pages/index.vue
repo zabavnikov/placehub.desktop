@@ -2,35 +2,39 @@
   <the-layout>
     <template #sidebar>&nbsp;</template>
     <template #content>
-<!--      <v-post
-          v-for="(post, index) in posts.data"
-          @delete="posts.data.splice(index, 1)"
+      <v-post
+          v-for="(post, index) in getPosts"
+          @delete="getPosts.splice(index, 1)"
           :key="post.id"
           :content="post"
           class="mb-6">
-      </v-post>-->
+      </v-post>
     </template>
   </the-layout>
 </template>
 
-<!--<script>
+<script>
 import VPost from '~/modules/posts/components/VPost';
+import { gql } from 'nuxt-graphql-request';
+import { POST_FRAGMENT } from '~/modules/posts/graphql';
 
 export default {
   components: { VPost },
 
-  async asyncData({ $axios }) {
-    const getPosts = GQLQuery('query', {
-      posts: {
-        data: PostCardFragment
-      },
-    });
+  async asyncData({ $graphql }) {
+    const query = gql`
+      query {
+        getPosts {
+          ${POST_FRAGMENT}
+        }
+      }
+    `;
 
-    const { data } = await $axios.$post('/graphql', {
-      query: getPosts.toString(),
-    });
+    const { getPosts } = await $graphql.default.request(query);
 
-    return {...data};
+    return {
+      getPosts
+    };
   },
 }
-</script>-->
+</script>

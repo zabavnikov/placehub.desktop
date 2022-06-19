@@ -2,26 +2,27 @@ import { USER_FIELDS } from '~/modules/users/graphql';
 
 export const POST = `
   post(id: $id) {
+    id
+    user_id
+    place_id
+    text
+    can
+    commentsCount
+    likesCount
+    is_draft
+    created_at(relative: true)
+    hashtags
+    images(sizes: "default@resize:auto:640:480") {
       id
-      user_id
-      place_id
-      text
-      commentsCount
-      likesCount
-      is_draft
-      created_at(relative: true)
-      hashtags
-      images(sizes: "default@resize:auto:640:480") {
-        id
-        url
-        sizes
-      }
-      like {
-        is_liked
-      }
-      user {
-        ${USER_FIELDS}
-      }
+      url
+      sizes
+    }
+    like {
+      is_liked
+    }
+    user {
+      ${USER_FIELDS}
+    }
   }
 `;
 
@@ -34,6 +35,7 @@ export const POST_FRAGMENT = `
   likesCount
   hashtags
   is_draft
+  can
   created_at(relative: true)
   images(sizes: "default@resize:auto:640:480") {
     id

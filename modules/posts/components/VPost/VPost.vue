@@ -3,6 +3,7 @@
     <header class="flex items-center m-6">
       <v-profile :user="content.user" :sub="content.created_at"></v-profile>
       <d-content-card-menu
+          :can="content.can"
           model-type="posts"
           :model-id="content.id"
           route-name="posts"
