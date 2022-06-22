@@ -3,7 +3,7 @@
     <div class="bg-white p-4 rounded-t-lg">
       <VTextarea
           v-model="form.text"
-          placeholder="Привет, что нового?"
+          :placeholder="isReply ? 'Что ответим?' : 'Привет, что нового?'"
           parse-url
           @parse-url-progress="parseProgress = $event"
           @url="form.url_id = $event.id; form.url = $event"
@@ -56,7 +56,6 @@
         </div>
 
         <div class="ml-auto space-x-2 flex items-center">
-          <v-post-form-access v-model="form.isDraft"></v-post-form-access>
           <button @click="onSubmit" :class="{loading}" class="button">Отправить</button>
         </div>
       </div>
@@ -69,13 +68,12 @@ import { cloneDeep, pick } from 'lodash';
 import { gql } from 'nuxt-graphql-request';
 import Errors from "~/utils/errors"
 import VChip from '~/placehub-ui/components/VChip';
-import VPostFormAccess from "./VPostFormAccess";
 import VPostFormImages from "./VPostFormImages";
 import VProgressBar from "~/components/ui/VProgressBar";
 import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
-import { CREATE_POST, UPDATE_POST } from '../../graphql';
+import { CREATE_POST, UPDATE_POST, CREATE_POST_REPLY, UPDATE_POST_REPLY } from '../../graphql';
 
 const formInitialState = {
   placeId: null,
@@ -83,7 +81,6 @@ const formInitialState = {
   place: {},
   images: [],
   url: null,
-  isDraft: false
 };
 
 export default {
@@ -93,12 +90,21 @@ export default {
       default() {
         return cloneDeep(formInitialState)
       }
+    },
+    isReply: {
+      type: Boolean,
+      default: false
+    },
+    postId: {
+      type: Number,
+    },
+    parentId: {
+      type: Number
     }
   },
 
   components: {
     VChip,
-    VPostFormAccess,
     VPostFormImages,
     VProgressBar,
     VTextarea,
@@ -129,6 +135,26 @@ export default {
           input: selectedPlace => this.form.place = selectedPlace,
         }
       }
+    },
+    mutationName() {
+      if (this.isReply === false) {
+        return this.isEdit
+          ? UPDATE_POST
+          : CREATE_POST;
+      }
+
+      return this.isEdit
+          ? UPDATE_POST_REPLY
+          : CREATE_POST_REPLY;
+    },
+    pickFormFields() {
+      const fields = ['placeId', 'linkId', 'text', 'images'];
+
+      if (this.isReply) {
+        fields.push('parentId');
+      }
+
+      return fields;
     }
   },
 
@@ -156,7 +182,7 @@ export default {
       this.loading = true;
 
       try {
-        const input = pick(this.form, ['placeId', 'linkId', 'isDraft', 'text', 'images']);
+        const input = pick(this.form, ['placeId', 'linkId', 'text', 'images']);
 
         input.images = input.images.map(image => image.id);
 
@@ -168,10 +194,7 @@ export default {
         };
 
         const { postForm } = await this.$graphql.default
-          .request(gql`${this.isEdit
-            ? UPDATE_POST
-            : CREATE_POST
-          }`, variables)
+          .request(gql`${this.mutationName}`, variables)
           .finally(() => this.loading = false);
 
         if (! this.isEdit) {
@@ -189,42 +212,6 @@ export default {
         this.loading = false;
       }
     },
-
-    /*onSubmit() {
-      if (this.loading) return;
-
-      this.loading = true;
-
-      const options = {
-        url: '/api/posts' + (this.isEdit ? `/${this.post.id}` : ''),
-        data: this.form,
-        method: this.isEdit ? 'put' : 'post'
-      };
-
-      try {
-        this.$axios(options)
-            .then(({data}) => {
-              // После редактирования переходим в запись,
-              // после создания просто чистим форма создания находится прямо в списке постов.
-              if (this.isEdit) {
-                this.$router.push({name: 'posts.show', params: {postId: this.post.id}});
-              } else {
-                if (!data.isDraft) {
-                  this.$emit('create', data);
-                } else {
-                  this.$toast.info('Добавлено в черновики')
-                }
-                this.errors.clear();
-              }
-
-              this.form = cloneDeep(formInitialState);
-            })
-            .catch(error => this.errors.record(error))
-            .finally(() => this.loading = false);
-      } catch (e) {
-        console.log(e)
-      }
-    },*/
   }
 }
 </script>

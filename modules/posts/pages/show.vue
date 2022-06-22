@@ -2,22 +2,27 @@
   <the-layout>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
-      <v-comments id="comments"></v-comments>
+      <v-post-form
+          v-if="$auth.loggedIn"
+          @create="postReplies.unshift($event)"
+          is-reply
+          :parent-id="post.id"
+          class="mb-4">
+      </v-post-form>
     </template>
   </the-layout>
 </template>
 
 <script>
 import { gql } from 'nuxt-graphql-request';
-import VComments from "~/modules/comments/_desktop/components/VComments";
+import VPostForm from '~/modules/posts/components/VPostForm';
 import VPost from '~/modules/posts/components/VPost';
 import { POST } from '../graphql';
-import { COMMENT } from '../../comments/graphql';
 
 export default {
   components: {
     VPost,
-    VComments
+    VPostForm
   },
 
   head() {
@@ -31,23 +36,19 @@ export default {
   },
 
   async asyncData({ $graphql, params, store }) {
-    const { post, comments } = await $graphql.default.request(gql`
-      query ($id: ID!, $modelType: String) {
+    const { post } = await $graphql.default.request(gql`
+      query ($id: ID!) {
         ${POST}
-        comments(modelType: $modelType, modelId: $id) {
-          ${COMMENT}
-        }
       }
     `, {
       id: params.postId,
-      modelType: 'posts',
     })
 
-    store.commit('comments/SET', {
+    /*store.commit('comments/SET', {
       comments: comments,
       modelType: 'posts',
       modelId: params.postId
-    });
+    });*/
 
     return {
       post

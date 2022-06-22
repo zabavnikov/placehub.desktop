@@ -7,29 +7,6 @@ export default {
       //const {visitTypes, complaintCategories} = await app.$axios.$get('/api/initial-state');
       //commit('places/setVisitTypes', visitTypes);
       //commit('complaints/setCategories', complaintCategories);
-
-      const query = gql`
-        query {
-          comments(modelType: "posts", limit: 5) {
-            id
-            text
-            model_id
-            user_id
-            created_at(relative: true)
-            user {
-              id
-              name
-              avatar
-            }
-          }
-        }
-      `;
-
-      const { comments } = await app.$graphql.default.request(query);
-
-      if (comments.length) {
-        commit('comments/SET_LATEST', comments);
-      }
     }
   },
   mutations: {
