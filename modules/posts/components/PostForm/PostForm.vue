@@ -2,14 +2,14 @@
   <div :class="{loading: parseProgress}">
     <div class="bg-white p-4 rounded-t-lg">
       <VTextarea
-          v-model="form.text"
-          :placeholder="isReply ? 'Что ответим?' : 'Привет, что нового?'"
-          parse-url
-          @parse-url-progress="parseProgress = $event"
-          @url="form.url_id = $event.id; form.url = $event"
+        v-model="form.text"
+        placeholder="Привет, что нового?"
+        parse-url
+        @parse-url-progress="parseProgress = $event"
+        @url="form.url_id = $event.id; form.url = $event"
       />
 
-      <v-post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></v-post-form-images>
+      <post-form-images v-if="form.images.length > 0" class="mt-2" v-model="form.images"></post-form-images>
 
       <div v-if="form.place && Object.keys(form.place).length > 0"
            class="mt-2 flex justify-between shadow-sm p-2 border rounded">
@@ -66,14 +66,14 @@
 <script>
 import { cloneDeep, pick } from 'lodash';
 import { gql } from 'nuxt-graphql-request';
-import Errors from "~/utils/errors"
+import Validation from "~/utils/validation"
 import VChip from '~/placehub-ui/components/VChip';
-import VPostFormImages from "./VPostFormImages";
+import PostFormImages from "./partials/PostFormImages";
 import VProgressBar from "~/components/ui/VProgressBar";
 import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
-import { CREATE_POST, UPDATE_POST, CREATE_POST_REPLY, UPDATE_POST_REPLY } from '../../graphql';
+import { CREATE_POST, UPDATE_POST } from '../../graphql';
 
 const formInitialState = {
   placeId: null,
@@ -91,21 +91,11 @@ export default {
         return cloneDeep(formInitialState)
       }
     },
-    isReply: {
-      type: Boolean,
-      default: false
-    },
-    postId: {
-      type: Number,
-    },
-    parentId: {
-      type: Number
-    }
   },
 
   components: {
     VChip,
-    VPostFormImages,
+    PostFormImages,
     VProgressBar,
     VTextarea,
     VUpload,
@@ -114,7 +104,7 @@ export default {
 
   data() {
     return {
-      errors: new Errors(),
+      errors: new Validation(),
       form: this.post,
       loading: false,
       parseProgress: false,
@@ -136,26 +126,6 @@ export default {
         }
       }
     },
-    mutationName() {
-      if (this.isReply === false) {
-        return this.isEdit
-          ? UPDATE_POST
-          : CREATE_POST;
-      }
-
-      return this.isEdit
-          ? UPDATE_POST_REPLY
-          : CREATE_POST_REPLY;
-    },
-    pickFormFields() {
-      const fields = ['placeId', 'linkId', 'text', 'images'];
-
-      if (this.isReply) {
-        fields.push('parentId');
-      }
-
-      return fields;
-    }
   },
 
   watch: {
@@ -194,20 +164,21 @@ export default {
         };
 
         const { postForm } = await this.$graphql.default
-          .request(gql`${this.mutationName}`, variables)
+          .request(gql`${this.isEdit
+            ? UPDATE_POST
+            : CREATE_POST}`, variables)
           .finally(() => this.loading = false);
 
         if (! this.isEdit) {
-          if (! postForm.isDraft) {
-            this.$emit('create', postForm);
-          }
+          this.$emit('create', postForm);
         } else {
           await this.$router.push({name: 'posts.show', params: {postId: this.$route.params.postId}});
         }
 
         this.form = cloneDeep(formInitialState);
-      } catch (error) {
-        console.log(error)
+        this.errors.clear();
+      } catch ({ response }) {
+        this.errors.record(response.errors)
       } finally {
         this.loading = false;
       }

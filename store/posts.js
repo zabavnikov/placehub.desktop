@@ -2,7 +2,9 @@ import set from 'lodash/set';
 
 const state = () => ({
   // ID редактируемого поста.
-  editableId: 0
+  editableId: 0,
+
+  replies: [],
 });
 
 const mutations = {
@@ -15,6 +17,14 @@ const mutations = {
   },
   EDIT(state, postId) {
     state.editableId = postId;
+  },
+
+  SET_REPLIES(state, replies) {
+    state.replies = replies;
+  },
+
+  ADD_REPLY(state, reply) {
+    state.replies.unshift(reply);
   }
 };
 

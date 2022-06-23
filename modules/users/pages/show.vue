@@ -5,7 +5,7 @@
     </template>
 
     <template #content>
-      <v-post-form v-if="$auth.loggedIn" @create="getPosts.unshift($event)" class="mb-4"></v-post-form>
+      <post-form v-if="$auth.loggedIn" @create="getPosts.unshift($event)" class="mb-4"></post-form>
 
       <div v-if="getPosts.length">
         <v-post v-for="(post, index) in getPosts" @delete="getPosts.splice(index, 1)" :key="post.id" :content="post" class="mb-6"></v-post>
@@ -17,14 +17,14 @@
 
 <script>
 import VPost from '~/modules/posts/components/VPost';
-import VPostForm from '~/modules/posts/components/VPostForm';
+import { PostForm } from '~/modules/posts/components/PostForm';
 import ProfileHeader from '../components/ProfileHeader';
 import { gql } from 'nuxt-graphql-request';
 import { GET_USER } from '~/modules/users/graphql';
 import { GET_POSTS } from '~/modules/posts/graphql';
 
 export default {
-  components: {VPost, VPostForm, ProfileHeader},
+  components: {VPost, PostForm, ProfileHeader},
 
   async asyncData({ $graphql, params }) {
     const query = gql`

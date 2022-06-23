@@ -1,7 +1,7 @@
 import { USER_FIELDS } from '~/modules/users/graphql';
 
 export const POST = `
-  post(id: $id) {
+  post(id: $postId) {
     id
     user_id
     place_id
@@ -66,16 +66,48 @@ export const UPDATE_POST = `
     postForm: updatePost(id: $id, input: $input)
   }
 `;
+
+//
+// Replies
+//
+export const POST_REPLY_FRAGMENT = `
+  id
+  user_id
+  place_id
+  text
+  likesCount
+  hashtags
+  can
+  created_at(relative: true)
+  images(sizes: "default@resize:auto:640:480") {
+    id
+    url
+    sizes
+  }
+  like {
+    is_liked
+  }
+  user {
+    ${USER_FIELDS}
+  }
+`;
+
+export const POST_REPLIES = `
+  postReplies(postId: $postId) {
+    ${POST_REPLY_FRAGMENT}
+  }
+`;
+
 export const CREATE_POST_REPLY = `
-  mutation($input: PostInput!) {
+  mutation($input: PostReplyInput!) {
     postReplyForm: createPostReply(input: $input) {
-      ${POST_FRAGMENT}
+      ${POST_REPLY_FRAGMENT}
     }
   }
 `;
 
 export const UPDATE_POST_REPLY = `
-  mutation($id: Int!, $input: PostInput!) {
+  mutation($id: Int!, $input: PostReplyInput!) {
     postReplyForm: createPostReply(id: $id, input: $input)
   }
 `;

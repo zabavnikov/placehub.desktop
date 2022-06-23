@@ -2,27 +2,21 @@
   <the-layout>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
-      <v-post-form
-          v-if="$auth.loggedIn"
-          @create="postReplies.unshift($event)"
-          is-reply
-          :parent-id="post.id"
-          class="mb-4">
-      </v-post-form>
+      <post-replies :post-id="post.id"></post-replies>
     </template>
   </the-layout>
 </template>
 
 <script>
 import { gql } from 'nuxt-graphql-request';
-import VPostForm from '~/modules/posts/components/VPostForm';
+import PostReplies from '~/modules/posts/components/PostReplies';
 import VPost from '~/modules/posts/components/VPost';
-import { POST } from '../graphql';
+import { POST, POST_REPLIES } from '../graphql';
 
 export default {
   components: {
     VPost,
-    VPostForm
+    PostReplies
   },
 
   head() {
@@ -36,19 +30,16 @@ export default {
   },
 
   async asyncData({ $graphql, params, store }) {
-    const { post } = await $graphql.default.request(gql`
-      query ($id: ID!) {
+    const { post, postReplies } = await $graphql.default.request(gql`
+      query ($postId: Int!) {
         ${POST}
+        ${POST_REPLIES}
       }
     `, {
-      id: params.postId,
+      postId: parseInt(params.postId),
     })
 
-    /*store.commit('comments/SET', {
-      comments: comments,
-      modelType: 'posts',
-      modelId: params.postId
-    });*/
+    store.commit('posts/SET_REPLIES', postReplies);
 
     return {
       post
