@@ -2,7 +2,7 @@
   <the-layout>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
-      <post-replies :post-id="post.id"></post-replies>
+      <post-replies></post-replies>
     </template>
   </the-layout>
 </template>
@@ -39,7 +39,8 @@ export default {
       postId: parseInt(params.postId),
     })
 
-    store.commit('posts/SET_REPLIES', postReplies);
+    store.commit('posts/replies/SET_POST_ID', parseInt(params.postId));
+    store.commit('posts/replies/ADD', postReplies);
 
     return {
       post

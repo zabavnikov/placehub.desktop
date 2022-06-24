@@ -108,6 +108,6 @@ export const CREATE_POST_REPLY = `
 
 export const UPDATE_POST_REPLY = `
   mutation($id: Int!, $input: PostReplyInput!) {
-    postReplyForm: createPostReply(id: $id, input: $input)
+    postReplyForm: updatePostReply(id: $id, input: $input)
   }
 `;

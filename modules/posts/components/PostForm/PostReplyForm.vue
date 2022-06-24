@@ -56,7 +56,8 @@
         </div>
 
         <div class="ml-auto space-x-2 flex items-center">
-          <button @click="onSubmit" :class="{loading}" class="button">Отправить</button>
+          <button @click="$store.commit('posts/replies/RESET_FORM')" :class="{loading}" class="button">Отмена</button>
+          <button @click="onSubmit" :class="{loading}" class="button button-primary">Отправить</button>
         </div>
       </div>
     </div>
@@ -66,7 +67,7 @@
 <script>
 import { cloneDeep, pick } from 'lodash';
 import { gql } from 'nuxt-graphql-request';
-import Errors from "~/utils/errors"
+import Validation from "~/utils/validation"
 import VChip from '~/placehub-ui/components/VChip';
 import PostFormImages from "./partials/PostFormImages";
 import VProgressBar from "~/components/ui/VProgressBar";
@@ -85,15 +86,11 @@ const formInitialState = {
 
 export default {
   props: {
-    reply: {
+    value: {
       type: Object,
       default() {
         return cloneDeep(formInitialState)
       }
-    },
-    postId: {
-      type: Number,
-      required: true,
     },
     isReply: {
       type: Boolean,
@@ -115,8 +112,8 @@ export default {
 
   data() {
     return {
-      errors: new Errors(),
-      form: this.reply,
+      errors: new Validation(),
+      form: {...this.value},
       loading: false,
       parseProgress: false,
       showTags: false,
@@ -124,8 +121,11 @@ export default {
   },
 
   computed: {
+    postId() {
+      return this.$store.state.posts.replies.postId;
+    },
     isEdit() {
-      return this.reply.id > 0;
+      return this.value.id > 0;
     },
     mapOverlay() {
       return {
@@ -171,7 +171,7 @@ export default {
 
         const variables = {
           id: this.isEdit
-            ? parseInt(this.$route.params.postId)
+            ? parseInt(this.value.id)
             : undefined,
           input
         };
@@ -182,11 +182,16 @@ export default {
             : CREATE_POST_REPLY}`, variables)
           .finally(() => this.loading = false);
 
-        this.$emit('create', postReplyForm);
+        if (this.isEdit) {
+          this.$emit('input', this.form);
+          this.$store.commit('posts/replies/RESET_FORM')
+        } else {
+          this.$emit('created', postReplyForm);
+        }
 
         this.form = cloneDeep(formInitialState);
-      } catch (error) {
-        console.log(error)
+      } catch ({ response }) {
+        this.errors.record(response.errors)
       } finally {
         this.loading = false;
       }

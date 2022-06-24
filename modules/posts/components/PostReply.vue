@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div class="flex">
+    <post-reply-form v-if="selectedReply.id === content.id" v-model="content"></post-reply-form>
+    <div class="flex" @click="$store.commit('posts/replies/MODE_EDIT', content)" v-else>
       <nuxt-link :to="{name: 'users.show', params: {userId: content.user.id}}" class="mr-2 flex-shrink-0">
         <img :src="content.user.avatar" :alt="content.user.name" class="w-8 h-8 rounded-full">
       </nuxt-link>
@@ -21,11 +22,21 @@
 </template>
 
 <script>
+import { PostReplyForm } from '~/modules/posts/components/PostForm';
+
 export default {
+  components: {
+    PostReplyForm
+  },
   props: {
     content: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    selectedReply() {
+      return this.$store.state.posts.replies.selected;
     }
   }
 }
