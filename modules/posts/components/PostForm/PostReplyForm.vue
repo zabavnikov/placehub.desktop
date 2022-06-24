@@ -1,9 +1,8 @@
 <template>
-  <div :class="{loading: parseProgress}">
+  <div :class="{loading: parseProgress}" ref="target" style="max-width: 640px;">
     <div class="bg-white p-4 rounded-t-lg">
       <VTextarea
           v-model="form.text"
-          :placeholder="isReply ? 'Что ответим?' : 'Привет, что нового?'"
           parse-url
           @parse-url-progress="parseProgress = $event"
           @url="form.url_id = $event.id; form.url = $event"
@@ -56,7 +55,7 @@
         </div>
 
         <div class="ml-auto space-x-2 flex items-center">
-          <button @click="$store.commit('posts/replies/RESET_FORM')" :class="{loading}" class="button">Отмена</button>
+          <button @click="$store.commit('posts/replies/RESET_FORM'); $overlay.hide()" :class="{loading}" class="button">Отмена</button>
           <button @click="onSubmit" :class="{loading}" class="button button-primary">Отправить</button>
         </div>
       </div>
@@ -65,12 +64,13 @@
 </template>
 
 <script>
+import { ref, computed } from '@vue/composition-api'
+import { useStore } from '@nuxtjs/composition-api'
+import { onClickOutside } from '@vueuse/core'
 import { cloneDeep, pick } from 'lodash';
 import { gql } from 'nuxt-graphql-request';
 import Validation from "~/utils/validation"
-import VChip from '~/placehub-ui/components/VChip';
 import PostFormImages from "./partials/PostFormImages";
-import VProgressBar from "~/components/ui/VProgressBar";
 import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
@@ -92,22 +92,30 @@ export default {
         return cloneDeep(formInitialState)
       }
     },
-    isReply: {
-      type: Boolean,
-      default: false
-    },
-    parentId: {
-      type: Number
-    }
   },
 
   components: {
-    VChip,
     PostFormImages,
-    VProgressBar,
     VTextarea,
     VUpload,
     VUrl
+  },
+
+  setup(props) {
+    const store = useStore()
+    const target = ref(null)
+    const isEdit = computed(() => props.value.id > 0)
+
+    if (isEdit) {
+      onClickOutside(target, async () => {
+        store.commit('posts/replies/RESET_FORM');
+      })
+    }
+
+    return {
+      target,
+      isEdit
+    }
   },
 
   data() {
@@ -116,17 +124,10 @@ export default {
       form: {...this.value},
       loading: false,
       parseProgress: false,
-      showTags: false,
     }
   },
 
   computed: {
-    postId() {
-      return this.$store.state.posts.replies.postId;
-    },
-    isEdit() {
-      return this.value.id > 0;
-    },
     mapOverlay() {
       return {
         props: {
@@ -166,8 +167,8 @@ export default {
         const input = pick(this.form, ['placeId', 'linkId', 'text', 'images']);
 
         input.images = input.images.map(image => image.id);
-        input.postId = this.postId;
-        input.parentId = this.parentId;
+        input.postId = this.$store.state.posts.replies.postId;
+        input.parentId = this.$store.state.posts.replies.parentId;
 
         const variables = {
           id: this.isEdit
@@ -184,10 +185,12 @@ export default {
 
         if (this.isEdit) {
           this.$emit('input', this.form);
-          this.$store.commit('posts/replies/RESET_FORM')
         } else {
           this.$emit('created', postReplyForm);
         }
+
+        this.$store.commit('posts/replies/RESET_FORM');
+        this.$overlay.hide();
 
         this.form = cloneDeep(formInitialState);
       } catch ({ response }) {

@@ -48,7 +48,6 @@ module.exports = {
     '~/placehub-ui/modules/overlay'
   ],
 
-
   router: {
     extendRoutes: (nuxtRoutes, resolve) => routes(nuxtRoutes, resolve)
   },

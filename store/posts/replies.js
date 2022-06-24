@@ -2,6 +2,7 @@ const state = () => ({
   postId:   null,
   parentId: null,
 
+  original: {},
   selected: {},
   list: [],
   mode: null
@@ -22,7 +23,9 @@ const mutations = {
 
   MODE_REPLY(state, selected) {
     state.mode = 'reply';
-    state.selected = selected;
+    state.original = selected;
+    state.parentId = selected.id;
+    state.selected = {};
   },
 
   RESET_FORM(state) {

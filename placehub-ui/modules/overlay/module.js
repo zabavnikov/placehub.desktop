@@ -2,7 +2,7 @@ const { resolve } = require('path')
 
 export default function(moduleOptions) {
   const defaultOptions = {
-    placement: 'center',
+    placement: 'top',
     width: 'auto',
     offset: '16px',
   };

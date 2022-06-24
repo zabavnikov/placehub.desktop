@@ -60,9 +60,9 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 99999;
-  background-color: rgba(0, 0, 0, .64);
+  background-color: rgba(0, 0, 0, .24);
   overflow-y: auto;
-  backdrop-filter: blur(4px);
+  backdrop-filter: blur(2px);
 }
 .v-overlay-placement {
   display: flex;
