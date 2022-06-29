@@ -19,9 +19,17 @@ export default {
     PostReplyForm,
     PostReply
   },
-  computed: {
-    replies() {
-      return this.$store.state.posts.replies.list;
+  props: {
+    items: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
+  setup(props) {
+    return {
+      replies: props.items
     }
   }
 }

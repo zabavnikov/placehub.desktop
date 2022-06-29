@@ -2,7 +2,7 @@
   <the-layout>
     <template #content>
       <v-post :content="post" full class="mb-6"></v-post>
-      <post-replies></post-replies>
+      <post-replies :items="replies"></post-replies>
     </template>
   </the-layout>
 </template>
@@ -12,6 +12,7 @@ import { gql } from 'nuxt-graphql-request';
 import PostReplies from '~/modules/posts/components/PostReplies';
 import VPost from '~/modules/posts/components/VPost';
 import { POST, POST_REPLIES } from '../graphql';
+import { usePostsStore, useRepliesStore } from '~/stores/posts'
 
 export default {
   components: {
@@ -29,7 +30,7 @@ export default {
     }
   },
 
-  async asyncData({ $graphql, params, store }) {
+  async asyncData({ $graphql, params, $pinia }) {
     const { post, postReplies } = await $graphql.default.request(gql`
       query ($postId: Int!) {
         ${POST}
@@ -39,11 +40,14 @@ export default {
       postId: parseInt(params.postId),
     })
 
-    store.commit('posts/replies/SET_POST_ID', parseInt(params.postId));
-    store.commit('posts/replies/ADD', postReplies);
+    const postsStore = usePostsStore($pinia)
+    const repliesStore = useRepliesStore($pinia)
+
+    postsStore.currentPost = post
 
     return {
-      post
+      post,
+      replies: postReplies
     };
   },
 }

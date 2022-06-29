@@ -28,6 +28,7 @@ module.exports = {
     'nuxt-graphql-request',
     '@nuxtjs/tailwindcss',
     '@nuxtjs/composition-api/module',
+    ['@pinia/nuxt', { disableVuex: false }],
     /*['@nuxtjs/laravel-echo', {
       broadcaster: 'pusher',
       authEndpoint: `${process.env.API_URL}/api/broadcasting/auth`,

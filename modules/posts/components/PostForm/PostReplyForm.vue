@@ -55,7 +55,7 @@
         </div>
 
         <div class="ml-auto space-x-2 flex items-center">
-          <button @click="$store.commit('posts/replies/RESET_FORM'); $overlay.hide()" :class="{loading}" class="button">Отмена</button>
+          <button @click="$overlay.hide()" :class="{loading}" class="button">Отмена</button>
           <button @click="onSubmit" :class="{loading}" class="button button-primary">Отправить</button>
         </div>
       </div>
@@ -75,9 +75,10 @@ import VTextarea from "~/components/common/VTextarea";
 import VUpload from '~/components/common/VUpload';
 import VUrl from "~/modules/urls/components/VUrl";
 import { CREATE_POST_REPLY, UPDATE_POST_REPLY } from '../../graphql';
+import { usePostsStore, useRepliesStore } from '~/stores/posts'
 
 const formInitialState = {
-  placeId: null,
+  place_id: null,
   text: '',
   place: {},
   images: [],
@@ -101,20 +102,24 @@ export default {
     VUrl
   },
 
-  setup(props) {
+  setup(props, { $pinia }) {
     const store = useStore()
     const target = ref(null)
     const isEdit = computed(() => props.value.id > 0)
 
+    const postsStore = usePostsStore($pinia)
+    const repliesStore = useRepliesStore($pinia)
+
     if (isEdit) {
       onClickOutside(target, async () => {
-        store.commit('posts/replies/RESET_FORM');
       })
     }
 
     return {
       target,
-      isEdit
+      isEdit,
+      postsStore,
+      repliesStore
     }
   },
 
@@ -159,16 +164,16 @@ export default {
 
   methods: {
     async onSubmit() {
-      if (this.loading) return;
+      if (this.loading) return
 
-      this.loading = true;
+      this.loading = true
 
       try {
-        const input = pick(this.form, ['placeId', 'linkId', 'text', 'images']);
+        const input = pick(this.form, ['place_id', 'link_id', 'text', 'images']);
 
-        input.images = input.images.map(image => image.id);
-        input.postId = this.$store.state.posts.replies.postId;
-        input.parentId = this.$store.state.posts.replies.parentId;
+        input.images = input.images.map(image => image.id)
+        input.post_id = this.postsStore.post.id
+        input.parent_id = this.repliesStore.parent.id
 
         const variables = {
           id: this.isEdit
@@ -189,12 +194,12 @@ export default {
           this.$emit('created', postReplyForm);
         }
 
-        this.$store.commit('posts/replies/RESET_FORM');
-        this.$overlay.hide();
+        // this.$store.commit('posts/replies/RESET_FORM');
+        // this.$overlay.hide();
 
         this.form = cloneDeep(formInitialState);
       } catch ({ response }) {
-        this.errors.record(response.errors)
+        // this.errors.record(response.errors)
       } finally {
         this.loading = false;
       }

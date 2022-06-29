@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { usePostsStore, useRepliesStore } from '~/stores/posts'
 
 export default {
   props: {
@@ -32,9 +33,15 @@ export default {
       required: true
     }
   },
+  setup(_, { $pinia }) {
+    return {
+      postsStore: usePostsStore($pinia),
+      repliesStore: useRepliesStore($pinia)
+    }
+  },
   computed: {
     selectedReply() {
-      return this.$store.state.posts.replies.selected;
+      return this.repliesStore.parent;
     },
     isSelected() {
       return this.selectedReply.id === this.content.id;
@@ -53,6 +60,8 @@ export default {
       this.$store.commit('posts/replies/MODE_EDIT', this.content);
     },
     onReply() {
+      this.repliesStore.parent = this.content;
+
       this.$overlay.show(() => import('~/modules/posts/components/PostReplyFormDialog.vue'), {
         props: {
           value: this.content
@@ -60,8 +69,7 @@ export default {
         on: {
           input: value => this.content = value
         }
-      });
-      this.$store.commit('posts/replies/MODE_REPLY', this.content);
+      })
     }
   }
 }
