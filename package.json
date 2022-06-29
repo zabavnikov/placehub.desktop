@@ -10,7 +10,7 @@
     "@nuxtjs/composition-api": "^0.32.0",
     "@nuxtjs/laravel-echo": "zabavnikov/laravel-echo",
     "@nuxtjs/toast": "latest",
-    "@vue/composition-api": "latest",
+    "@vue/composition-api": "^1.6.3",
     "@vueuse/core": "^8.7.3",
     "js-cookie": "latest",
     "leaflet": "latest",

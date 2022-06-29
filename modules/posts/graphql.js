@@ -28,7 +28,7 @@ export const POST_FRAGMENT = `
   id
   user_id
   place_id
-  shortText
+  text(words: 24)
   likesCount
   hashtags
   can
@@ -47,7 +47,7 @@ export const POST_FRAGMENT = `
 `;
 
 export const GET_POSTS = `
-  getPosts(userId: $userId) {
+  posts(userId: $userId) {
     ${POST_FRAGMENT}
   }
 `;
